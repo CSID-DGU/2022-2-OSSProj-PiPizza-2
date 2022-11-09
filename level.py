@@ -14,4 +14,4 @@ class Level:
         self.display_surface.fill('black')          # 이전 프레임을 가린다
         self.all_sprites.draw(self.display_surface) # 디스플레이 서피스 위에 그린다
         self.all_sprites.update()                   # 스프라이트를 업데이트한다
-        print('게임 실행')
+        # print('게임 실행')
