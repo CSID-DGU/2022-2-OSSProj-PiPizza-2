@@ -22,7 +22,6 @@ class Game:
         
         self.btn_soundOn_pos = (WIDTH - int(4.2*btn_menu_w), int(3* btn_menu_h))
         self.btn_soundOff_pos = (WIDTH - int(3.2*btn_menu_w), int(3* btn_menu_h))
-
         self.btn_backToMenu_pos = (WIDTH - int(3*btn_menu_w), int(6* btn_menu_h))
 
         self.import_assets() # 이미지 로드
@@ -32,7 +31,7 @@ class Game:
         # 이미지 폴더 경로
         self.path_images = 'images/'
         # 메뉴 레이아웃? 어디서 쓰이는지 모르겠음
-        self.leading = 50
+        # self.leading = 50
 
         # 메뉴화면 배경
         self.background_surf = pygame.image.load(f'{self.path_images}temp_menu_background.png').convert_alpha()
@@ -105,6 +104,7 @@ class Game:
             self.level.run(df)          
             pygame.display.update()
     
+    # 마우스 클릭 체크
     def check_click(self):
         self.is_clicked = False
         for event in pygame.event.get():
@@ -121,20 +121,24 @@ class Game:
 
         while True:
             self.screen.blit(self.background_surf, self.background_rect)
-            
+            # 마우스 위치
             mouse_x, mouse_y = pygame.mouse.get_pos()
 
              # 버튼 클릭 시
             if self.is_clicked:
+                # 소리 켜기
                 if self.btn_soundOn.collidepoint(mouse_x, mouse_y):
                     self.soundOn()
+                # 소리 끄기
                 elif self.btn_soundOff.collidepoint(mouse_x, mouse_y):
                     self.soundOff()
+                # 메뉴로 돌아가기
                 elif self.btn_backToMenu.collidepoint(mouse_x, mouse_y):
                     self.menu()
                 else:
                     pass
-             # 마우스 클릭 이벤트 체크
+            
+            # 마우스 클릭 이벤트 체크
             self.check_click()
 
             # 화면 업데이트
@@ -156,7 +160,7 @@ class Game:
             sys.exit()
 
          
-# checking if we are in the run file
+# checking if we are in the run file?
 # 게임 실행 (실행 시 시작화면은 메인 메뉴)
 # 실행 안 되는 문제를 해결했는데, 원래 코드 '__run__'을 run 대신 main으로 바꾸(고 변수와 조건문을 일부 주석처리하)니 해결됨 이유는 모르겠다.
 if __name__ == '__main__':
