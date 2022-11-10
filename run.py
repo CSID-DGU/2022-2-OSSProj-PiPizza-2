@@ -37,10 +37,6 @@ class Game:
         self.background_surf = pygame.image.load(f'{self.path_images}temp_menu_background.png').convert_alpha()
         self.background_surf = pygame.transform.scale(self.background_surf, (WIDTH, HEIGHT))
         self.background_rect = self.background_surf.get_rect(topleft=(0, 0))
-
-        # 종료 버튼 -> 게임 종료, 화면 닫음
-        # self.exit_button_surf = pygame.image.load(f'{self.main_path}menu_exit.png').convert_alpha()
-        # self.exit_button = self.exit_button_surf.get_rect(center=self.exit_button_pos)
         
         # 메뉴화면 버튼들
         self.btn_start_surf = pygame.image.load(f'{self.path_images}temp_btn_menu.png').convert_alpha()
@@ -97,7 +93,9 @@ class Game:
         self.level = Level()
         while True:
             for event in pygame.event.get():
-                quit(event)
+                if event.type == QUIT:
+                    pygame.quit()
+                    sys.exit()
 
             # delta time 잘 모르겠음
             df = self.clock.tick(FPS)
@@ -108,10 +106,12 @@ class Game:
     def check_click(self):
         self.is_clicked = False
         for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
             if event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1:
                     self.is_clicked = True
-            quit(event)
 
     # 환경설정
     def gameSetting(self):
@@ -154,10 +154,10 @@ class Game:
     def soundOff(self):
         pass
 
-    def quit(event):
-        if event.type == QUIT:
-            pygame.quit()
-            sys.exit()
+    # def quit(event):
+    #     if event.type == QUIT:
+    #         pygame.quit()
+    #         sys.exit()
 
          
 # checking if we are in the run file?
