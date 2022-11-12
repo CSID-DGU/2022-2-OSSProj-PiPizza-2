@@ -16,13 +16,13 @@ class Game:
         self.is_clicked = False
 
         # 버튼 위치(center)
-        self.btn_start_pos = (WIDTH - int(3*btn_menu_w), int(2.5* btn_menu_h))
-        self.btn_exit_pos = (WIDTH - int(3.2*btn_menu_w), int(4* btn_menu_h))
-        self.btn_gameSetting_pos = (WIDTH - int(3.4*btn_menu_w), int(5.5* btn_menu_h))
+        self.btn_start_pos = (WIDTH - int(2*btn_menu_w), int(2.5* btn_menu_h))
+        self.btn_exit_pos = (WIDTH - int(2.2*btn_menu_w), int(4* btn_menu_h))
+        self.btn_gameSetting_pos = (WIDTH - int(2.4*btn_menu_w), int(5.5* btn_menu_h))
         
-        self.btn_soundOn_pos = (WIDTH - int(4.2*btn_menu_w), int(3* btn_menu_h))
-        self.btn_soundOff_pos = (WIDTH - int(3.2*btn_menu_w), int(3* btn_menu_h))
-        self.btn_backToMenu_pos = (WIDTH - int(3*btn_menu_w), int(6* btn_menu_h))
+        self.btn_soundOn_pos = (WIDTH - int(10*btn_gameSetting_w), int(4* btn_menu_h))
+        self.btn_soundOff_pos = (WIDTH - int(8*btn_gameSetting_w), int(4* btn_menu_h))
+        self.btn_backToMenu_pos = (WIDTH - int(3.8*btn_menu_w), int(6* btn_menu_h))
 
         self.import_assets() # 이미지 로드
 
@@ -39,16 +39,16 @@ class Game:
         self.background_rect = self.background_surf.get_rect(topleft=(0, 0))
         
         # 메뉴화면 버튼들
-        self.btn_start_surf = pygame.image.load(f'{self.path_images}temp_btn_menu.png').convert_alpha()
+        self.btn_start_surf = pygame.image.load(f'{self.path_images}temp_btn_start.png').convert_alpha()
         self.btn_start = self.btn_start_surf.get_rect(center=self.btn_start_pos)
-        self.btn_exit_surf = pygame.image.load(f'{self.path_images}temp_btn_menu.png').convert_alpha()
+        self.btn_exit_surf = pygame.image.load(f'{self.path_images}temp_btn_exit.png').convert_alpha()
         self.btn_exit = self.btn_exit_surf.get_rect(center=self.btn_exit_pos)
-        self.btn_gameSetting_surf = pygame.image.load(f'{self.path_images}temp_btn_menu.png').convert_alpha()
+        self.btn_gameSetting_surf = pygame.image.load(f'{self.path_images}temp_btn_gameSetting.png').convert_alpha()
         self.btn_gameSetting = self.btn_gameSetting_surf.get_rect(center=self.btn_gameSetting_pos)
         # 환경설정화면 버튼들
-        self.btn_soundOn_surf = pygame.image.load(f'{self.path_images}temp_btn_menu.png').convert_alpha()
-        self.btn_soundOff_surf = pygame.image.load(f'{self.path_images}temp_btn_menu.png').convert_alpha()
-        self.btn_backToMenu_surf = pygame.image.load(f'{self.path_images}temp_btn_menu.png').convert_alpha()
+        self.btn_soundOn_surf = pygame.image.load(f'{self.path_images}temp_btn_soundOn.png').convert_alpha()
+        self.btn_soundOff_surf = pygame.image.load(f'{self.path_images}temp_btn_soundOff.png').convert_alpha()
+        self.btn_backToMenu_surf = pygame.image.load(f'{self.path_images}temp_btn_backToMenu.png').convert_alpha()
         self.btn_soundOn = self.btn_soundOn_surf.get_rect(center=self.btn_soundOn_pos)
         self.btn_soundOff = self.btn_soundOff_surf.get_rect(center=self.btn_soundOff_pos)
         self.btn_backToMenu = self.btn_backToMenu_surf.get_rect(center=self.btn_backToMenu_pos)
@@ -72,7 +72,7 @@ class Game:
                     pygame.quit()
                     sys.exit()
                 # 환경설정
-                elif self.btn_set.collidepoint(mouse_x, mouse_y):
+                elif self.btn_gameSetting.collidepoint(mouse_x, mouse_y):
                     self.gameSetting()
                 else:
                     pass
@@ -118,13 +118,13 @@ class Game:
         
         # 사운드 슬라이더로 배경음악&효과음 볼륨 조절 가능하도록 구현
         # 이 아니라 소리 끄고 켜기로 수정함
-
+        
         while True:
             self.screen.blit(self.background_surf, self.background_rect)
             # 마우스 위치
             mouse_x, mouse_y = pygame.mouse.get_pos()
 
-             # 버튼 클릭 시
+            # 버튼 클릭 시
             if self.is_clicked:
                 # 소리 켜기
                 if self.btn_soundOn.collidepoint(mouse_x, mouse_y):
@@ -162,7 +162,7 @@ class Game:
          
 # checking if we are in the run file?
 # 게임 실행 (실행 시 시작화면은 메인 메뉴)
-# 실행 안 되는 문제를 해결했는데, 원래 코드 '__run__'을 run 대신 main으로 바꾸(고 변수와 조건문을 일부 주석처리하)니 해결됨 이유는 모르겠다.
+# 실행 안 되는 문제를 해결했는데, 원래 코드 '__run__'을 run 대신 main으로 바꿈
 if __name__ == '__main__':
     game = Game()
     game.menu()
