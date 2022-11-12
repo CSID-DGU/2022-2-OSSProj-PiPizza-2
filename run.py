@@ -97,7 +97,7 @@ class Game:
                     pygame.quit()
                     sys.exit()
 
-            # delta time 잘 모르겠음
+            # delta frame으로 수정
             df = self.clock.tick(FPS)
             self.level.run(df)          
             pygame.display.update()
@@ -149,10 +149,11 @@ class Game:
             pygame.display.update()
 
     def soundOn(self):
-        pass
+        print("소리 켜기 버튼 눌림")
+        
 
     def soundOff(self):
-        pass
+        print("소리 끄기 버튼 눌림")
 
     # def quit(event):
     #     if event.type == QUIT:
