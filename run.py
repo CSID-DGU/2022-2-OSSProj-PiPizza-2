@@ -20,8 +20,8 @@ class Game:
         self.btn_exit_pos = (WIDTH - int(2.2*btn_menu_w), int(4* btn_menu_h))
         self.btn_gameSetting_pos = (WIDTH - int(2.4*btn_menu_w), int(5.5* btn_menu_h))
         
-        self.btn_soundOn_pos = (WIDTH - int(10*btn_gameSetting_w), int(4* btn_menu_h))
-        self.btn_soundOff_pos = (WIDTH - int(8*btn_gameSetting_w), int(4* btn_menu_h))
+        self.btn_soundOn_pos = (WIDTH - int(8.5*btn_gameSetting_w), int(4* btn_menu_h))
+        self.btn_soundOff_pos = (WIDTH - int(6.5*btn_gameSetting_w), int(4* btn_menu_h))
         self.btn_backToMenu_pos = (WIDTH - int(3.8*btn_menu_w), int(6* btn_menu_h))
 
         self.import_assets() # 이미지 로드
