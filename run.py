@@ -20,38 +20,52 @@ class Game:
         self.btn_exit_pos = (WIDTH - int(2.2*btn_menu_w), int(4* btn_menu_h))
         self.btn_gameSetting_pos = (WIDTH - int(2.4*btn_menu_w), int(5.5* btn_menu_h))
         
-        self.btn_soundOn_pos = (WIDTH - int(8.5*btn_gameSetting_w), int(4* btn_menu_h))
-        self.btn_soundOff_pos = (WIDTH - int(6.5*btn_gameSetting_w), int(4* btn_menu_h))
-        self.btn_backToMenu_pos = (WIDTH - int(3.8*btn_menu_w), int(6* btn_menu_h))
+        self.btn_soundOn_pos = (WIDTH - int(8.3*btn_gameSetting_w), int(4* btn_menu_h))
+        self.btn_soundOff_pos = (WIDTH - int(6.3*btn_gameSetting_w), int(4* btn_menu_h))
+        self.btn_backToMenu_pos = (WIDTH - int(3.6*btn_menu_w), int(6* btn_menu_h))
 
         self.import_assets() # 이미지 로드
 
 
     def import_assets(self):
+        
         # 이미지 폴더 경로
         self.path_images = 'images/'
+        self.path_btn = 'images/Button/'
+        self.path_bg = 'images/background/'
+        self.path_dial = 'images/Dialog/'
+        # self.path_obstcls = 'images/obstacles'
+        # self.path_sprts = 'images/sprites'
+        
         # 메뉴 레이아웃? 어디서 쓰이는지 모르겠음
         # self.leading = 50
 
         # 메뉴화면 배경
-        self.background_surf = pygame.image.load(f'{self.path_images}menu_background.jpg').convert_alpha()
+        self.background_surf = pygame.image.load(f'{self.path_bg}menu_background.png').convert_alpha()
+        self.background_set_surf = pygame.image.load(f'{self.path_bg}menu_background_set.png').convert_alpha()
         self.background_surf = pygame.transform.scale(self.background_surf, (WIDTH, HEIGHT))
+        self.background_set_surf = pygame.transform.scale(self.background_set_surf, (WIDTH, HEIGHT))
         self.background_rect = self.background_surf.get_rect(topleft=(0, 0))
+        self.background_set_rect = self.background_set_surf.get_rect(topleft=(0, 0))
         
         # 메뉴화면 버튼들
-        self.btn_start_surf = pygame.image.load(f'{self.path_images}temp_btn_start.png').convert_alpha()
+        self.btn_start_surf = pygame.image.load(f'{self.path_btn}btn_start.png').convert_alpha()
         self.btn_start = self.btn_start_surf.get_rect(center=self.btn_start_pos)
-        self.btn_exit_surf = pygame.image.load(f'{self.path_images}temp_btn_exit.png').convert_alpha()
+        self.btn_exit_surf = pygame.image.load(f'{self.path_btn}btn_exit.png').convert_alpha()
         self.btn_exit = self.btn_exit_surf.get_rect(center=self.btn_exit_pos)
-        self.btn_gameSetting_surf = pygame.image.load(f'{self.path_images}temp_btn_gameSetting.png').convert_alpha()
+        self.btn_gameSetting_surf = pygame.image.load(f'{self.path_btn}btn_gameSetting.png').convert_alpha()
         self.btn_gameSetting = self.btn_gameSetting_surf.get_rect(center=self.btn_gameSetting_pos)
         # 환경설정화면 버튼들
-        self.btn_soundOn_surf = pygame.image.load(f'{self.path_images}temp_btn_soundOn.png').convert_alpha()
-        self.btn_soundOff_surf = pygame.image.load(f'{self.path_images}temp_btn_soundOff.png').convert_alpha()
-        self.btn_backToMenu_surf = pygame.image.load(f'{self.path_images}temp_btn_backToMenu.png').convert_alpha()
+        self.btn_soundOn_surf = pygame.image.load(f'{self.path_btn}temp_btn_soundOn.png').convert_alpha()
+        self.btn_soundOff_surf = pygame.image.load(f'{self.path_btn}temp_btn_soundOff.png').convert_alpha()
+        self.btn_backToMenu_surf = pygame.image.load(f'{self.path_btn}temp_btn_backToMenu.png').convert_alpha()
         self.btn_soundOn = self.btn_soundOn_surf.get_rect(center=self.btn_soundOn_pos)
         self.btn_soundOff = self.btn_soundOff_surf.get_rect(center=self.btn_soundOff_pos)
         self.btn_backToMenu = self.btn_backToMenu_surf.get_rect(center=self.btn_backToMenu_pos)
+
+        # 다이얼로그
+
+        
     
     
     # 메인 메뉴화면
@@ -120,7 +134,7 @@ class Game:
         # 이 아니라 소리 끄고 켜기로 수정함
         
         while True:
-            self.screen.blit(self.background_surf, self.background_rect)
+            self.screen.blit(self.background_set_surf, self.background_set_rect)
             # 마우스 위치
             mouse_x, mouse_y = pygame.mouse.get_pos()
 
