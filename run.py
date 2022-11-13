@@ -34,7 +34,7 @@ class Game:
         # self.leading = 50
 
         # 메뉴화면 배경
-        self.background_surf = pygame.image.load(f'{self.path_images}temp_menu_background.png').convert_alpha()
+        self.background_surf = pygame.image.load(f'{self.path_images}temp_menu_background.jpg').convert_alpha()
         self.background_surf = pygame.transform.scale(self.background_surf, (WIDTH, HEIGHT))
         self.background_rect = self.background_surf.get_rect(topleft=(0, 0))
         
