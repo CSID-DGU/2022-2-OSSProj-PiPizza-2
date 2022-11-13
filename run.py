@@ -2,6 +2,7 @@ import pygame, sys
 from pygame.locals import *
 from settings import *
 from level import *
+from sound import *
 
 class Game:
     def __init__(self):
@@ -138,14 +139,17 @@ class Game:
             # 마우스 위치
             mouse_x, mouse_y = pygame.mouse.get_pos()
 
+            # sound 인스턴스 생성
+            sound = Sound()
+            
             # 버튼 클릭 시
             if self.is_clicked:
                 # 소리 켜기
                 if self.btn_soundOn.collidepoint(mouse_x, mouse_y):
-                    self.soundOn()
+                    sound.set_soundOn()
                 # 소리 끄기
                 elif self.btn_soundOff.collidepoint(mouse_x, mouse_y):
-                    self.soundOff()
+                    sound.set_soundOff()
                 # 메뉴로 돌아가기
                 elif self.btn_backToMenu.collidepoint(mouse_x, mouse_y):
                     self.menu()
@@ -161,13 +165,6 @@ class Game:
             self.screen.blit(self.btn_backToMenu_surf, self.btn_backToMenu)
             
             pygame.display.update()
-
-    def soundOn(self):
-        print("소리 켜기 버튼 눌림")
-        
-
-    def soundOff(self):
-        print("소리 끄기 버튼 눌림")
 
     # def quit(event):
     #     if event.type == QUIT:
