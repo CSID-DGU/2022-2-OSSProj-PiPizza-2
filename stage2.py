@@ -213,7 +213,7 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
 
-        #SCREEN.fill((247, 155 , 96))
+        # SCREEN.fill((247, 155 , 96))
         SCREEN.fill((255, 255 , 255))        
         userInput = pygame.key.get_pressed()
 
