@@ -1,3 +1,3 @@
-class StageFinal():
+class StageFinal:
     def __init__(self):
         pass

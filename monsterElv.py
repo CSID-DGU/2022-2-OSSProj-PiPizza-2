@@ -1,3 +1,3 @@
-class MonsterElv():
+class MonsterElv:
     def __init__(self):
         pass
