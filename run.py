@@ -3,6 +3,7 @@ from pygame.locals import *
 from settings import *
 from level import *
 from sound import *
+from description import *
 
 class Game:
     def __init__(self):
@@ -27,6 +28,9 @@ class Game:
 
         self.import_assets() # 이미지 로드
 
+        # 디스크립션(다이얼로그)
+        self.dial = Description()
+
 
     def import_assets(self):
         
@@ -34,7 +38,7 @@ class Game:
         self.path_images = 'images/'
         self.path_btn = 'images/Button/'
         self.path_bg = 'images/background/'
-        self.path_dial = 'images/Dialog/'
+        # self.path_dial = 'images/Dialog/'
         # self.path_obstcls = 'images/obstacles'
         # self.path_sprts = 'images/sprites'
         
@@ -106,16 +110,22 @@ class Game:
     # 메인 게임 시작
     def run(self):
         self.level = Level()
+        
+        # dial1
+        self.dial.dial1()
+        
         while True:
+            
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
-
+            
             # delta frame으로 수정
             df = self.clock.tick(FPS)
             self.level.run(df)          
             pygame.display.update()
+            
     
     # 마우스 클릭 체크
     def check_click(self):
@@ -139,7 +149,7 @@ class Game:
             # 마우스 위치
             mouse_x, mouse_y = pygame.mouse.get_pos()
 
-            # sound 인스턴스 생성
+            # 클래스 Sound의 sound 인스턴스 생성
             sound = Sound()
             
             # 버튼 클릭 시

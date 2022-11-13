@@ -1,11 +1,15 @@
-import pygame
+import pygame, sys
+from pygame.locals import *
+from settings import *
+pygame.init()
 
 class Description:
     def __init__(self):
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.path_dial = 'images/Dialog/'
 
         # 디스크립션 이미지
-        self.dial1_surf = pygame.image.load(f'{self.path_dial}dialog1.png').convert_alpha()
+        self.dial1_surf = pygame.image.load(f'{self.path_dial}temp_dialog1.png').convert_alpha()
         self.dial1_rect = self.dial1_surf.get_rect(topleft=(0, 0))
         self.clear1_surf = pygame.image.load(f'{self.path_dial}description1.png').convert_alpha()
         self.clear1_rect = self.clear1_surf.get_rect(topleft=(0, 0))
@@ -18,9 +22,16 @@ class Description:
         # self.clear3_surf
 
     def dial1(self):
+        self.num = 0
         while True:
-            self.screen.blit(self.dial1_surf, self.dial1_rect)
-            pygame.display.update()
+            if self.num == 0:
+                self.screen.blit(self.dial1_surf, self.dial1_rect)
+                pygame.display.update()
+            else:
+                return
+
+            if self.is_returnKey_pressed():
+                self.num += 1
 
     def clear1(self):
         while True:
@@ -40,4 +51,14 @@ class Description:
     def dial3(self):
         while True:
             self.screen.blit(self.dial3_surf, self.dial3_rect)
-            pygame.display.update()                
+            pygame.display.update()    
+
+    def is_returnKey_pressed(self):
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                    pygame.quit()
+                    sys.exit()
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_RETURN:
+                    return True
+        return False            
