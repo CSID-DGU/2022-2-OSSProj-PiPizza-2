@@ -18,7 +18,7 @@ SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 RUNNING = [pygame.image.load(os.path.join("images/sprites", "Bike1.png")),
            pygame.image.load(os.path.join("images/sprites", "Bike2.png"))]
-JUMPING = pygame.image.load(os.path.join("images/spries", "Bike2.png"))
+JUMPING = pygame.image.load(os.path.join("images/sprites", "Bike2.png"))
 DUCKING = [pygame.image.load(os.path.join("images/sprites", "BikeDuck1.png")),
            pygame.image.load(os.path.join("images/sprites", "BikeDuck1.png"))]
 
