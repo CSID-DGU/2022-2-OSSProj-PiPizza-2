@@ -7,6 +7,9 @@ pygame.init()
 
 # Global Constants
 
+#화면 타이틀 설정
+pygame.display.set_caption("배달의 달인")
+
 isClear = False
 start_ticks = pygame.time.get_ticks() # 현재 tick 을 받아옴
 total_time = 20 #총 시간
@@ -24,10 +27,10 @@ DUCKING = [pygame.image.load(os.path.join("images/sprites", "BikeDuck1.png")),
 
 
 
-SMALL_CACTUS = [pygame.image.load(os.path.join("images/obstacles", "Traffic1.png")),
+Traffic_Light = [pygame.image.load(os.path.join("images/obstacles", "Traffic1.png")),
                 pygame.image.load(os.path.join("images/obstacles", "Traffic3.png")),
                 pygame.image.load(os.path.join("images/obstacles", "Traffic4.png"))]
-LARGE_CACTUS = [pygame.image.load(os.path.join("images/obstacles", "RoadBlock.png")),
+Traffic_Cone = [pygame.image.load(os.path.join("images/obstacles", "RoadBlock.png")),
                 pygame.image.load(os.path.join("images/obstacles", "TrafficCone.png")),
                 pygame.image.load(os.path.join("images/obstacles", "TrafficCone2.png"))]
 
@@ -39,7 +42,7 @@ CLOUD = pygame.image.load(os.path.join("images/obstacles", "Cloud.png"))
 BG = pygame.image.load(os.path.join("images/obstacles", "Track.png"))
 
 
-class Dinosaur:
+class Bike:
     X_POS = SCREEN_WIDTH/5 #90
     Y_POS = SCREEN_HEIGHT*0.66 #310
     Y_POS_DUCK = SCREEN_HEIGHT*0.75
@@ -50,66 +53,69 @@ class Dinosaur:
         self.run_img = RUNNING
         self.jump_img = JUMPING
 
-        self.dino_duck = False
-        self.dino_run = True
-        self.dino_jump = False
+        self.bike_duck = False
+        self.bike_run = True
+        self.bike_jump = False
 
         self.step_index = 0
         self.jump_vel = self.JUMP_VEL
         self.image = self.run_img[0]
-        self.dino_rect = self.image.get_rect()
-        self.dino_rect.x = self.X_POS
-        self.dino_rect.y = self.Y_POS
+        self.bike_rect = self.image.get_rect()
+        self.bike_rect.x = self.X_POS
+        self.bike_rect.y = self.Y_POS
+
 
     def update(self, userInput):
-        if self.dino_duck:
+        if self.bike_duck:
             self.duck()
-        if self.dino_run:
+        if self.bike_run:
             self.run()
-        if self.dino_jump:
+        if self.bike_jump:
             self.jump()
 
         if self.step_index >= 10:
             self.step_index = 0
 
-        if userInput[pygame.K_UP] and not self.dino_jump:
-            self.dino_duck = False
-            self.dino_run = False
-            self.dino_jump = True
-        elif userInput[pygame.K_DOWN] and not self.dino_jump:
-            self.dino_duck = True
-            self.dino_run = False
-            self.dino_jump = False
-        elif not (self.dino_jump or userInput[pygame.K_DOWN]):
-            self.dino_duck = False
-            self.dino_run = True
-            self.dino_jump = False
+
+        if userInput[pygame.K_UP] and not self.bike_jump:
+            self.bike_duck = False
+            self.bike_run = False
+            self.bike_jump = True
+        elif userInput[pygame.K_DOWN] and not self.bike_jump:
+            self.bike_duck = True
+            self.bike_run = False
+            self.bike_jump = False
+        elif not (self.bike_jump or userInput[pygame.K_DOWN]):
+            self.bike_duck = False
+            self.bike_run = True
+            self.bike_jump = False
 
     def duck(self):
         self.image = self.duck_img[self.step_index // 5]
-        self.dino_rect = self.image.get_rect()
-        self.dino_rect.x = self.X_POS
-        self.dino_rect.y = self.Y_POS_DUCK
+        self.bike_rect = self.image.get_rect()
+        self.bike_rect.x = self.X_POS
+        self.bike_rect.y = self.Y_POS_DUCK
         self.step_index += 1
 
     def run(self):
         self.image = self.run_img[self.step_index // 5]
-        self.dino_rect = self.image.get_rect()
-        self.dino_rect.x = self.X_POS
-        self.dino_rect.y = self.Y_POS
+        self.bike_rect = self.image.get_rect()
+        self.bike_rect.x = self.X_POS
+        self.bike_rect.y = self.Y_POS
         self.step_index += 1
+
 
     def jump(self):
         self.image = self.jump_img
-        if self.dino_jump:
-            self.dino_rect.y -= self.jump_vel * 4
+        if self.bike_jump:
+            self.bike_rect.y -= self.jump_vel * 4
             self.jump_vel -= 0.8
         if self.jump_vel < - self.JUMP_VEL:
-            self.dino_jump = False
+            self.bike_jump = False
             self.jump_vel = self.JUMP_VEL
 
     def draw(self, SCREEN):
-        SCREEN.blit(self.image, (self.dino_rect.x, self.dino_rect.y))
+        SCREEN.blit(self.image, (self.bike_rect.x, self.bike_rect.y))
 
 
 class Cloud:
@@ -145,18 +151,19 @@ class Obstacle:
         SCREEN.blit(self.image[self.type], self.rect)
 
 
-class SmallCactus(Obstacle):
+class TrafficLight(Obstacle):
     def __init__(self, image):
         self.type = random.randint(0, 2)
         super().__init__(image, self.type)
-        self.rect.y = SCREEN_HEIGHT*2/3
+        self.rect.y = HEIGHT*2/3
 
 
-class LargeCactus(Obstacle):
+class TrafficCone(Obstacle):
     def __init__(self, image):
         self.type = random.randint(0, 2)
         super().__init__(image, self.type)
-        self.rect.y = SCREEN_HEIGHT*0.78
+        self.rect.y = HEIGHT*0.78
+
 
  
 class Dust(Obstacle):
@@ -177,7 +184,7 @@ def main():
     global game_speed, x_pos_bg, y_pos_bg, points, obstacles
     run = True
     clock = pygame.time.Clock()
-    player = Dinosaur()
+    player = Bike()
     cloud = Cloud()
     game_speed = 22.5
     x_pos_bg = 0
@@ -213,7 +220,7 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
 
-        # SCREEN.fill((247, 155 , 96))
+        #SCREEN.fill((247, 155 , 96))
         SCREEN.fill((255, 255 , 255))        
         userInput = pygame.key.get_pressed()
 
@@ -232,7 +239,7 @@ def main():
         for obstacle in obstacles:
             obstacle.draw(SCREEN)
             obstacle.update()
-            if player.dino_rect.colliderect(obstacle.rect):
+            if player.bike_rect.colliderect(obstacle.rect):
                 pygame.time.delay(2000)
                 elapsed_time = 0
                 death_count += 1
