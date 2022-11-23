@@ -155,14 +155,14 @@ class TrafficLight(Obstacle):
     def __init__(self, image):
         self.type = random.randint(0, 2)
         super().__init__(image, self.type)
-        self.rect.y = HEIGHT*2/3
+        self.rect.y = SCREEN_HEIGHT*2/3
 
 
 class TrafficCone(Obstacle):
     def __init__(self, image):
         self.type = random.randint(0, 2)
         super().__init__(image, self.type)
-        self.rect.y = HEIGHT*0.78
+        self.rect.y = SCREEN_HEIGHT*0.78
 
 
  
@@ -229,12 +229,12 @@ def main():
 
         if len(obstacles) == 0:
             if random.randint(0, 2) == 0:
-                obstacles.append(SmallCactus(SMALL_CACTUS))
+                obstacles.append(TrafficLight(Traffic_Light))
             elif random.randint(0, 2) == 1:
-                obstacles.append(LargeCactus(LARGE_CACTUS))
+                obstacles.append(TrafficCone(Traffic_Cone))
             elif random.randint(0, 2) == 2:
                 obstacles.append(Dust(DUST))
-       
+
 
         for obstacle in obstacles:
             obstacle.draw(SCREEN)
@@ -291,7 +291,7 @@ def menu(death_count):
             #scoreRect = score.get_rect()
             #scoreRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50)
             #SCREEN.blit(score, scoreRect)
-        if isClear:
+        elif isClear:
             text=font.render("Stage 2 Clear!", True, (0, 0, 0))
             
         textRect = text.get_rect()
