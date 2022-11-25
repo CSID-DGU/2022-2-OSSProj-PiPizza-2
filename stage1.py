@@ -1,176 +1,77 @@
 import pygame, sys
 import os
 import random
+import time
 from settings import *
+from obstacles import *
 
-pygame.init()
-
-#화면 타이틀 설정
-pygame.display.set_caption("배달의 달인")
-
-isClear = False
-start_ticks = pygame.time.get_ticks() # 현재 tick 을 받아옴
-total_time = 40 #총 시간
-elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
-
-SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
-
-RUNNING = [pygame.image.load(os.path.join("images/sprites", "Bike1.png")),
-           pygame.image.load(os.path.join("images/sprites", "Bike2.png"))]
-JUMPING = pygame.image.load(os.path.join("images/sprites", "Bike2.png"))
-DUCKING = [pygame.image.load(os.path.join("images/sprites", "BikeDuck1.png")),
-           pygame.image.load(os.path.join("images/sprites", "BikeDuck1.png"))]
-
-
-
-Traffic_Light = [pygame.image.load(os.path.join("images/obstacles", "Traffic1.png")),
-                pygame.image.load(os.path.join("images/obstacles", "Traffic3.png")),
-                pygame.image.load(os.path.join("images/obstacles", "Traffic4.png"))]
-Traffic_Cone = [pygame.image.load(os.path.join("images/obstacles", "RoadBlock.png")),
-                pygame.image.load(os.path.join("images/obstacles", "TrafficCone.png")),
-                pygame.image.load(os.path.join("images/obstacles", "TrafficCone2.png"))]
-
-DUST = [pygame.image.load(os.path.join("images/obstacles", "Dust1.png")),
-        pygame.image.load(os.path.join("images/obstacles", "Dust2.png"))]
-
-CLOUD = pygame.image.load(os.path.join("images/obstacles", "Cloud.png"))
-
-BG = pygame.image.load(os.path.join("images/obstacles", "Track.png"))
-
-
-class Bike:
-    X_POS = WIDTH/5 #90
-    Y_POS = HEIGHT*0.66 #310
-    Y_POS_DUCK = HEIGHT*0.75
-    JUMP_VEL = HEIGHT/52.5
-
+class Game:
     def __init__(self):
-        self.duck_img = DUCKING
-        self.run_img = RUNNING
-        self.jump_img = JUMPING
+        pygame.init()
+        SCREEN = pygame.display.set_mode((WIDTH, HEIGHT)) #디스플레이 설정
+        pygame.display.set_caption("배달의 달인") #게임 제목
 
-        self.bike_duck = False
-        self.bike_run = True
-        self.bike_jump = False
+        #배경음악
 
-        self.step_index = 0
-        self.jump_vel = self.JUMP_VEL
-        self.image = self.run_img[0]
-        self.bike_rect = self.image.get_rect()
-        self.bike_rect.x = self.X_POS
-        self.bike_rect.y = self.Y_POS
-
-    def update(self, userInput):
-        if self.bike_duck:
-            self.duck()
-        if self.bike_run:
-            self.run()
-        if self.bike_jump:
-            self.jump()
-
-        if self.step_index >= 10:
-            self.step_index = 0
-
-        if userInput[pygame.K_UP] and not self.bike_jump:
-            self.bike_duck = False
-            self.bike_run = False
-            self.bike_jump = True
-        elif userInput[pygame.K_DOWN] and not self.bike_jump:
-            self.bike_duck = True
-            self.bike_run = False
-            self.bike_jump = False
-        elif not (self.bike_jump or userInput[pygame.K_DOWN]):
-            self.bike_duck = False
-            self.bike_run = True
-            self.bike_jump = False
-
-    def duck(self):
-        self.image = self.duck_img[self.step_index // 5]
-        self.bike_rect = self.image.get_rect()
-        self.bike_rect.x = self.X_POS
-        self.bike_rect.y = self.Y_POS_DUCK
-        self.step_index += 1
+        #FPS 초당 프레임
+        self.clock = pygame.time.Clock()
+        self.level = Level()
+        
+        #플레이어 기록 설정
+        self.user_name = "이름 입력"
+        self.game_start_time = None #stage1 시작 시간
+        self.game_end_time = None #stage3 클리어 시간
+        self.time_score = None #게임 끝났을 때 시간 계산 후 저장
 
     def run(self):
-        self.image = self.run_img[self.step_index // 5]
-        self.bike_rect = self.image.get_rect()
-        self.bike_rect.x = self.X_POS
-        self.bike_rect.y = self.Y_POS
-        self.step_index += 1
+        self.level = Level()
+        self.game_start_time = pygame.time.get_ticks() # 현재 tick 을 받아옴
+        while True:
+            time = (pygame.time.get_ticks() - self.game_start_time)/1000
+            self.level.time = time
 
-    def jump(self):
-        self.image = self.jump_img
-        if self.bike_jump:
-            self.bike_rect.y -= self.jump_vel * 4
-            self.jump_vel -= 0.8
-        if self.jump_vel < - self.JUMP_VEL:
-            self.bike_jump = False
-            self.jump_vel = self.JUMP_VEL
+            df = self.clock.tick(FPS)
+            self.level.run(df)
 
-    def draw(self, SCREEN):
-        SCREEN.blit(self.image, (self.bike_rect.x, self.bike_rect.y))
+            if self.level.done:
+                break
+        
+        self.game_end_time = pygame.time.get_ticks()
+        self.time_score = (self.game_end_time - self.game_start_time) / 1000
+
+        if self.level.is_clear:
+            self.win()
+        else:
+            self.lose()
+
+    def win(self):
+        self.user_name = "이름 입력"
+
+    def lose(self):
+        while True:
+            
+            if self.is_return_key_pressed():
+                self.intro_music.play()
+                return
+
+    def is_return_key_pressed(self):
+        for event in pygame.event.get():
+            quit_check(event)
+
+            
+
+isClear = False
+total_time = 10 #총 시간
 
 
-class Cloud:
+class Level:
     def __init__(self):
-        self.x = WIDTH + random.randint(800, 1000)
-        self.y = random.randint(50, 100)
-        self.image = CLOUD
-        self.width = self.image.get_width()
+        self.stage_changing = False
+        self.can_change_stage = True
 
-    def update(self):
-        self.x -= game_speed
-        if self.x < -self.width:
-            self.x = WIDTH + random.randint(2500, 3000)
-            self.y = random.randint(50, 100)
-
-    def draw(self, SCREEN):
-        SCREEN.blit(self.image, (self.x, self.y))
-
-
-class Obstacle:
-    def __init__(self, image, type):
-        self.image = image
-        self.type = type
-        self.rect = self.image[self.type].get_rect()
-        self.rect.x = WIDTH
-
-    def update(self):
-        self.rect.x -= game_speed
-        if self.rect.x < -self.rect.width:
-            obstacles.pop()
-
-    def draw(self, SCREEN):
-        SCREEN.blit(self.image[self.type], self.rect)
-
-
-class TrafficLight(Obstacle):
-    def __init__(self, image):
-        self.type = random.randint(0, 2)
-        super().__init__(image, self.type)
-        self.rect.y = HEIGHT*2/3
-
-
-class TrafficCone(Obstacle):
-    def __init__(self, image):
-        self.type = random.randint(0, 2)
-        super().__init__(image, self.type)
-        self.rect.y = HEIGHT*0.78
-
- 
-class Dust(Obstacle):
-    def __init__(self, image):
-        self.type = 0
-        super().__init__(image, self.type)
-        self.rect.y = HEIGHT*0.50
-        self.index = 0
-
-    def draw(self, SCREEN):
-        if self.index >= 9:
-            self.index = 0
-        SCREEN.blit(self.image[self.index//5], self.rect)
-        self.index += 1
-
+        self.time = None
+        self.is_clear = False
+        self.done = False
 
 def main():
     global game_speed, x_pos_bg, y_pos_bg, points, obstacles
@@ -186,16 +87,9 @@ def main():
     obstacles = []
     death_count = 0
 
-    # def score():
-    #     global points, game_speed
-    #     points += 1
-    #     if points % 100 == 0:
-    #         game_speed += 1
+    def win(self):
+        print("Game clear")
 
-    #     text = font.render("Points: " + str(points), True, (0, 0, 0))
-    #     textRect = text.get_rect()
-    #     textRect.center = (1000, 40)
-    #     SCREEN.blit(text, textRect)
 
     def background():
         global x_pos_bg, y_pos_bg
@@ -239,20 +133,15 @@ def main():
 
         
         #시간
-        elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
-
         timer = font.render("TIMER: "+str(int(elapsed_time)),True,(0,0,0))
         
         SCREEN.blit(timer,(10,10))
 
         if total_time - elapsed_time <= 0:
-            print("Game Clear")
             timer = font.render(str(int(total_time-elapsed_time)),True,(0,0,0))
             timerRect = timer.get_rect()
             timerRect.center = (WIDTH // 2, HEIGHT // 2 + 50)
             SCREEN.blit(timer, timerRect)
-            run=False # 다이얼로그로 넘어가야 함
-
 
 
         background()
@@ -267,7 +156,6 @@ def main():
 
 
 def menu(death_count):
-    global points
     run = True
     while run:
         SCREEN.fill((255, 255, 255))
@@ -277,11 +165,11 @@ def menu(death_count):
             text = font.render("Press any Key to Start", True, (0, 0, 0))
             elapsed_time = 0
         elif death_count > 0:
-            text = font.render("Press any Key to Restart", True, (0, 0, 0))
-            #score = font.render("Your Score: " + str(points), True, (0, 0, 0))
-            #scoreRect = score.get_rect()
-            #scoreRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50)
-            #SCREEN.blit(score, scoreRect)
+            text = font.render("Press any Key to Continue", True, (0, 0, 0))
+            score = font.render("Your Time: " + points), True, (0, 0, 0)
+            scoreRect = score.get_rect()
+            scoreRect.center = (WIDTH // 2, HEIGHT // 2 + 50)
+            SCREEN.blit(score, scoreRect)
             
         textRect = text.get_rect()
         textRect.center = (WIDTH // 2, HEIGHT // 2)
