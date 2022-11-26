@@ -1,4 +1,4 @@
-import pygame
+import pygame, sys
 import os
 pygame.init()
 
@@ -34,3 +34,9 @@ DUST = [pygame.image.load(os.path.join("images/obstacles", "Dust1.png")),
 CLOUD = pygame.image.load(os.path.join("images/obstacles", "Cloud.png"))
 
 BG = pygame.image.load(os.path.join("images/obstacles", "Track.png"))
+
+
+def quit_check(event):
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
