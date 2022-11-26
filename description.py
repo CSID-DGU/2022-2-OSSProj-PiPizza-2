@@ -35,27 +35,47 @@ class Description:
 
     def clear1(self):
         while True:
-            self.screen.blit(self.clear1_surf, self.clear1_rect)
-            pygame.display.update()
-            pygame.time.delay(WAIT_FOR_DESCRIPTION)
+            if self.num == 0:
+                self.screen.blit(self.clear1_surf, self.clear1_rect)
+                pygame.display.update()
+            else:
+                return
+
+            if self.is_returnKey_pressed():
+                self.num += 1
 
     def dial2(self):
         while True:
-            self.screen.blit(self.dial2_surf, self.dial2_rect)
-            pygame.display.update()
-            pygame.time.delay(WAIT_FOR_DESCRIPTION)        
+            if self.num == 0:
+                self.screen.blit(self.dial2_surf, self.dial2_rect)
+                pygame.display.update()
+            else:
+                return
+
+            if self.is_returnKey_pressed():
+                self.num += 1    
 
     def clear2(self):
         while True:
-            self.screen.blit(self.clear2_surf, self.clear2_rect)
-            pygame.display.update()
-            pygame.time.delay(WAIT_FOR_DESCRIPTION)
+            if self.num == 0:
+                self.screen.blit(self.clear2_surf, self.clear2_rect)
+                pygame.display.update()
+            else:
+                return
+
+            if self.is_returnKey_pressed():
+                self.num += 1
 
     def dial3(self):
         while True:
-            self.screen.blit(self.dial3_surf, self.dial3_rect)
-            pygame.display.update()
-            pygame.time.delay(WAIT_FOR_DESCRIPTION)    
+            if self.num == 0:
+                self.screen.blit(self.dial3_surf, self.dial3_rect)
+                pygame.display.update()
+            else:
+                return
+
+            if self.is_returnKey_pressed():
+                self.num += 1 
 
     def is_returnKey_pressed(self):
         for event in pygame.event.get():
