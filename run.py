@@ -39,8 +39,8 @@ class Game:
         self.path_btn = 'images/Button/'
         self.path_bg = 'images/background/'
         # self.path_dial = 'images/Dialog/'
-        # self.path_obstcls = 'images/obstacles'
-        # self.path_sprts = 'images/sprites'
+        # self.path_obstcls = 'images/obstacles/'
+        # self.path_sprts = 'images/sprites/'
         
         # 메뉴 레이아웃? 어디서 쓰이는지 모르겠음
         # self.leading = 50
