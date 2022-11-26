@@ -23,7 +23,7 @@ MONSTER_HP    = 100
 
 # 캐릭터 사이즈
 PLAYER_SIZE     = (120, 120)
-MONSTER_SIZE      = (300, 300)
+MONSTER_SIZE    = (300, 300)
 
 # player settings
 PLAYER_SPELL1_MP = 10
@@ -59,11 +59,11 @@ MonsterElv_IMG_INFO = {#'idleL': {'idx': 8, 'size': DEVIL_SIZE},
 
 
 # MonsterElv 스킬 설정
-# DEVIL_ELECMARBLE_SIZE = (560, 372)
-# DEVIL_ELECMARBLE_INFO = {'darkbolt': {'idx': 11, 'size': DEVIL_DARKBOLT_SIZE}}
-# DEVIL_ELECRAIN_SIZE = (560, 372)
-# DEVIL_ELECRAIN_INFO = {'firebomb': {'idx': 14, 'size': DEVIL_FIREBOMB_SIZE}}
-# DEVIL_SHOCKWAVE_SIZE = 
-# DEVIL_SHOCKWAVE_INFO = 
-# DEVIL_TORNADO_SIZE = 
-# DEVIL_TORNADO_INFO = 
+# MonsterElv_ELECMARBLE_SIZE = (560, 372)
+# MonsterElv_ELECMARBLE_INFO = {'darkbolt': {'idx': 11, 'size': DEVIL_DARKBOLT_SIZE}}
+# MonsterElv_ELECRAIN_SIZE = (560, 372)
+# MonsterElv_ELECRAIN_INFO = {'firebomb': {'idx': 14, 'size': DEVIL_FIREBOMB_SIZE}}
+# MonsterElv_SHOCKWAVE_SIZE = 
+# MonsterElv_SHOCKWAVE_INFO = 
+# MonsterElv_TORNADO_SIZE = 
+# MonsterElv_TORNADO_INFO = 
