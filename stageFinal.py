@@ -10,8 +10,9 @@ from run import *
 
 class StageFinal(MonsterElv):
     def __init__(self, pos, MONSTER_SIZE, groups, sprites_obstacles):
-        self.image = pygame.image.load()
-        self.image = pygame.transform.scale(self.iamge, MONSTER_SIZE)
+        self.path_sprts = 'images/sprites/'
+        self.monElv_surf = pygame.image.load(f'{self.path_sprts}temp_MonsterElv_idleL.png').convert_Alpha()
+        self.monElv_surf = pygame.transform.scale(self.monElv_surf, MONSTER_SIZE)
 
         super(StageFinal, self).__init__(pos, MONSTER_SIZE, groups, sprites_obstacles)
         # self.speed = 6
