@@ -1,10 +1,11 @@
 import random
 import pygame
+from pygame.locals import *
 
 from settings import *
 from level import *
 from monsterElv import *
-from monsterElv_ElecRain import *
+from monsterElv_elecRain import *
 from run import *
 
 class StageFinal(MonsterElv):

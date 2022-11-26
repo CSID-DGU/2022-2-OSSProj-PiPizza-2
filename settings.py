@@ -1,4 +1,5 @@
 import pygame
+from pygame.locals import *
 
 SCRREEN_SIZE = WIDTH, HEIGHT = (900, 450)
 FPS = 60

@@ -1,4 +1,5 @@
 import pygame
+from pygame.locals import *
 from settings import *
 
 class Level:

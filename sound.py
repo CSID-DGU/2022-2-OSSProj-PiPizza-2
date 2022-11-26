@@ -1,3 +1,6 @@
+import pygame
+from pygame.locals import *
+
 class Sound:
     def __init__(self):
         pass
