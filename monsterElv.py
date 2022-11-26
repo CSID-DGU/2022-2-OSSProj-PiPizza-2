@@ -27,3 +27,4 @@ class MonsterElv(pygame.sprite.Sprite):
 
         for spr_name in self.spr.keys():
             # self.spr[spr_name] = import_sprites_image(path, spr_name +'.png' )
+            pass
