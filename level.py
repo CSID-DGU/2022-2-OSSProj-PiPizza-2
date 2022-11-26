@@ -1,6 +1,8 @@
 import pygame
 from pygame.locals import *
 from settings import *
+from player import *
+from monsterElv import *
 
 class Level:
     def __init__(self):
@@ -12,6 +14,14 @@ class Level:
         self.all_sprites = pygame.sprite.Group()
 
         self.isClear = False
+
+    def create_map(self):
+        # player 생성
+        self.player = Player(PLAYER_COOR_ini, PLAYER_SIZE, [self.visible_sprites], self.sprites_obstacles)
+        # monster 생성
+        self.monster = MonsterElv(MonsterElv_COOR_ini, MONSTER_SIZE, [self.visible_sprites], self.sprites_obstacle)
+        # scene 생성
+        #self.scene = Scene(self.player, self.monster, self.scene_num, self.game_state, self.visible_sprites) #시작은 game_state = 'intro'임
 
     def run(self, df):
         self.display_surface.fill('black')          # 이전 프레임을 가린다
@@ -27,4 +37,4 @@ class Level:
             pass
 
         if game_state == 'level3': # boss 생성 후 바꿔야함
-            return stageFinal(DEVIL_COOR_ini, DEVIL_SIZE, [self.visible_sprites], self.obstacle_sprites)
+            return stageFinal(MonsterElv_COOR_ini, MONSTER_SIZE, [self.visible_sprites], self.obstacle_sprites)
