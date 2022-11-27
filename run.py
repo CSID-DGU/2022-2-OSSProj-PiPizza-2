@@ -109,7 +109,6 @@ class Game:
 
     # 메인 게임 시작
     def run(self):
-        self.level = Level()
         
         # dial1
         #self.dial.dial1()
