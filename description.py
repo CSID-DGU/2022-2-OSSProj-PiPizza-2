@@ -19,7 +19,8 @@ class Description:
         self.clear2_rect = self.clear2_surf.get_rect(topleft=(0, 0))
         self.dial3_surf = pygame.image.load(f'{self.path_dial}dialog3.png').convert_alpha()
         self.dial3_rect = self.dial3_surf.get_rect(topleft=(0, 0))
-        # self.clear3_surf
+        self.clear3_surf = pygame.image.load(f'images/temp_allclear.png').convert_alpha()
+        self.dial3_rect = self.clear3_surf.get_rect(topleft=(0, 0))
 
     def dial1(self):
         self.num = 0
@@ -33,32 +34,29 @@ class Description:
             if self.is_returnKey_pressed():
                 self.num += 1
 
-    def clear1(self):
+    def clear1_dial2(self):
+        self.num = 0
         while True:
             if self.num == 0:
                 self.screen.blit(self.clear1_surf, self.clear1_rect)
                 pygame.display.update()
-            else:
-                return
-
-            if self.is_returnKey_pressed():
-                self.num += 1
-
-    def dial2(self):
-        while True:
-            if self.num == 0:
+            elif self.num == 1:
                 self.screen.blit(self.dial2_surf, self.dial2_rect)
                 pygame.display.update()
             else:
                 return
 
             if self.is_returnKey_pressed():
-                self.num += 1    
+                self.num += 1
 
-    def clear2(self):
+    def clear2_dial3(self):
+        self.num = 0
         while True:
             if self.num == 0:
                 self.screen.blit(self.clear2_surf, self.clear2_rect)
+                pygame.display.update()
+            elif self.num == 1:
+                self.screen.blit(self.dial3_surf, self.dial3_rect)
                 pygame.display.update()
             else:
                 return
@@ -66,16 +64,17 @@ class Description:
             if self.is_returnKey_pressed():
                 self.num += 1
 
-    def dial3(self):
+    def clear3(self):
+        self.num = 0
         while True:
             if self.num == 0:
-                self.screen.blit(self.dial3_surf, self.dial3_rect)
+                self.screen.blit(self.temp_allclear_surf, self.allclear_rect)
                 pygame.display.update()
             else:
                 return
 
             if self.is_returnKey_pressed():
-                self.num += 1 
+                self.num += 1
 
     def is_returnKey_pressed(self):
         for event in pygame.event.get():
