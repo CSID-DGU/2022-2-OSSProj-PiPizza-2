@@ -292,9 +292,12 @@ def menu(death_count):
     global points
     run = True
     while run:
+        fullscreen = False
         SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
         SCREEN.fill((255, 255, 255))
         font = pygame.font.Font('freesansbold.ttf', 30)
+
+        monitor_size = [pygame.display.Info().current_w, pygame.display.Info().current_h]
 
         #시작
         if death_count == 0:
@@ -325,7 +328,7 @@ def menu(death_count):
                 if event.key == pygame.K_f:
                     fullscreen = not fullscreen
                     if fullscreen:
-                        SCREEN = pygame.display.set_mode((SCREEN.get_width(), SCREEN.get_height()), pygame.FULLSCREEN)
+                        SCREEN = pygame.display.set_mode((monitor_size), pygame.FULLSCREEN)
                     else:
                         SCREEN = pygame.display.set_mode((SCREEN.get_width(), SCREEN.get_height()), pygame.FULLSCREEN)
 
