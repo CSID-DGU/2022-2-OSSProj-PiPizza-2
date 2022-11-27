@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
 
-class Player:
-    def __init__(self):
+class Player(pygame.sprite.Sprite):
+    def __init__(self, pos, PLAYER_SIZE, groups, obstacle_sprites):
         pass
