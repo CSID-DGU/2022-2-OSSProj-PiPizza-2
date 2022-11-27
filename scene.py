@@ -1,6 +1,9 @@
 import pygame
 from pygame.locals import *
 
+import random
+import time
+
 from settings import *
 from player import *
 from monsterElv import *
@@ -9,14 +12,14 @@ from stageFinal import *
 pygame.init()
 
 class Scene:
-    def __init__(self, player, monster, sceneNum, gameState, visible_sprites):
+    def __init__(self, player, monsterElv, sceneNum, gameState, visible_sprites):
         self.display_surface = pygame.display.get_surface()
         self.gameState = gameState
         self.sceneNum = sceneNum
         self.sceneChange = False
         
         self.player = player
-        self.monster = monster
+        self.monsterElv = monsterElv
         self.player.set_state_ini()
 
         self.visible_sprites = visible_sprites
@@ -29,8 +32,8 @@ class Scene:
         self.fade_surf.set_alpha(self.alpha)
 
     def update(self, df, time):
-        self.BGM.play(True)
-        self.visibile_sprites.custom_draw(self.player, self.game_state, self.monster)
+        
+        self.visibile_sprites.custom_draw(self.player, self.gameState, self.monster)
 
         self.monster.setTargetPos(self.player.hitbox.centerx)  # 플레이어 hitbox x 값 monster targetpos 로 넘겨주기.
         self.monster.update(df)
@@ -38,11 +41,7 @@ class Scene:
         self.player.setTargetPos(self.monster.getHitBox()[0])  # 몬스터 hitbox x 값 player targetpos 로 넘겨주기.
         self.player.update(df)
 
-        # 시간 오른쪽 상단에 위치시킴
-        self.time_render(time)
-
         self.fade_in()
-        self.dazzle(self.monster, self.player) #dazzle
         pygame.display.update()
 
     def fade_in(self):
@@ -58,4 +57,13 @@ class Scene:
             self.fade_surf.set_alpha(alpha)
             self.display_surface.blit(self.fade_surf, (0, 0))
             pygame.display.update()
-    
+
+    def draw(self, player, gameState, monsterElv):
+        if gameState == 'stageFinal':
+            self.display_surface.blit("images/temp_menu_background.png")
+            # self.display_surface.blit("")
+
+            self.drawBar(player, monsterElv)
+            self.setCircle()
+
+            pygame.draw.rect(self.display_surface, (255,0,0))

@@ -1,9 +1,12 @@
 import pygame, sys
+import os
 from pygame.locals import *
 from settings import *
+
 from level import *
 from sound import *
 from description import *
+from stage2 import *
 
 class Game:
     def __init__(self):
@@ -106,13 +109,16 @@ class Game:
            
             pygame.display.update()
 
+    def checkClear(self):
+        if stageTwo().isClear == True:
+            self.level.isOneClear = True
 
     # 메인 게임 시작
     def run(self):
         
         # dial1
-        #self.dial.dial1()
-        self.dial.clear1_dial2()
+        self.dial.dial1()
+        #self.dial.clear1_dial2()
         
         while True:
             
@@ -120,11 +126,15 @@ class Game:
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
-            
+
+            stageTwo(death_count=0)
+
             # delta frame으로 수정
             df = self.clock.tick(FPS)
             self.level.run(df)          
             pygame.display.update()
+
+            
 
             # 게임 클리어 플래그 (while문 탈출 및 시간 저장)
             if self.level.isOneClear or self.level.isTwoClear or self.level.isFinalClear:
