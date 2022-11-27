@@ -1,3 +1,4 @@
+
 import pygame, sys
 import os
 pygame.init()
@@ -10,6 +11,7 @@ FPS = 60
 GAME_STATES = ['stage1', 'stage2', 'stage3']
 
 # 메뉴화면 버튼 크기
+
 btn_menu_w = int(WIDTH/6.8)
 btn_menu_h = int(HEIGHT/8)
 btn_gameSetting_w = int(btn_menu_w/2)
