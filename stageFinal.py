@@ -23,7 +23,14 @@ class StageFinal(MonsterElv):
 
         self.attackBox = pygame.Rect()
 
-    def lose(self):
-        pass
-    def win(self):
-        pass
+    def import_monster_assets(self):
+        self.spr = {'idleL':[], 'idleR':[],
+                    # 'walkL':[], 'walkR':[],
+                    # 'attack1L':[], 'attack1R':[],
+                    # 'cast_explosionL':[], 'cast_explosionR':[],
+                    # 'cast_dazzleL':[], 'cast_dazzleR':[],
+                    # 'cast_thunderL':[], 'cast_thunderR':[],
+                    # 'deathL':[], 'deathR':[],
+                    'hurtL':[], 'hurtR':[]}
+
+        super(MonsterElv, self).import_monster_assets('image/sprites/', MonsterElv_IMG_INFO, 'L')
