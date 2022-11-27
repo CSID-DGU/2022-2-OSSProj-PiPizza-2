@@ -9,6 +9,11 @@ btn_menu_w = int(WIDTH/6.8)
 btn_menu_h = int(HEIGHT/8)
 btn_gameSetting_w = int(btn_menu_w/2)
 
+GAME_STATES = [ 'stage1', 'stage2', 'stageFinal']
+
+# 디스크립션(설명화면) 지속 시간
+WAIT_FOR_DESCRIPTION = 2000
+
 # 색상
 WHITE   = (255, 255, 255)
 BLACK   = (0, 0, 0)
@@ -46,7 +51,7 @@ PLAYER_IMG_INFO = {'idle': {'idx': 11, 'size': PLAYER_SIZE}, 'idleL': {'idx': 11
 # MonsterElv 설정
 MonsterElv_POWER = 30
 MonsterElv_COOR_ini = (1000, 125) # 몬스터3(Devil) 초기 위치
-MonsterElv_IMG_INFO = {#'idleL': {'idx': 8, 'size': DEVIL_SIZE}, 
+MonsterElv_IMG_INFO = {'idleL': {'idx': 8, 'size': MONSTER_SIZE}, 
                         #'idleR': {'idx': 8, 'size': DEVIL_SIZE},
                     # 'walkL': {'idx': 8, 'size': DEVIL_SIZE}, 'walkR': {'idx': 8, 'size': DEVIL_SIZE},
                     # 'attack1L': {'idx': 8, 'size': DEVIL_SIZE}, 'attack1R': {'idx': 8, 'size': DEVIL_SIZE},
