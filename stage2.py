@@ -272,7 +272,7 @@ def main():
             SCREEN.blit(timer, timerRect)
             death_count = -1
             run=False
-            menu(death_count)
+            stageTwo(death_count)
             #run=False # 다이얼로그로 넘어가야 함
 
 
