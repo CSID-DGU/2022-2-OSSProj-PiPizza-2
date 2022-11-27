@@ -22,8 +22,13 @@ SCREEN_HEIGHT = 450
 SCREEN_WIDTH = 900
 SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
 
-RUNNING = [pygame.image.load(os.path.join("images/sprites", "Bike1.png")),
-           pygame.image.load(os.path.join("images/sprites", "Bike2.png"))]
+# def resize(name, w, h, color):
+#     global width, height, resized_screen
+#     print("resized_screen: (",resized_screen.get_width(),",",resized_screen.get_height(),")")
+#     return (name, w*resized_screen.get_width()//width, h*resized_screen.get_height()//height, color)
+
+RUNNING = [pygame.image.load(os.path.join(("images/sprites", "Bike1.png")),
+           pygame.image.load(os.path.join("images/sprites", "Bike2.png")))]
 JUMPING = pygame.image.load(os.path.join("images/sprites", "Bike2.png"))
 DUCKING = [pygame.image.load(os.path.join("images/sprites", "BikeDuck1.png")),
            pygame.image.load(os.path.join("images/sprites", "BikeDuck1.png"))]
@@ -44,6 +49,7 @@ DUST = [pygame.image.load(os.path.join("images/obstacles", "Dust1.png")),
 CLOUD = pygame.image.load(os.path.join("images/obstacles", "Cloud.png"))
 
 BG = pygame.image.load(os.path.join("images/obstacles", "Track.png"))
+
 
 
 
@@ -288,7 +294,7 @@ def clear(self):  # True를 반환하면 다시 시작
 def fail(self):
     pass
 
-def menu(death_count):
+def stageTwo(death_count):
     global points
     run = True
     while run:
@@ -307,19 +313,21 @@ def menu(death_count):
         elif death_count > 0:
             text = font.render("Press any Key to Restart", True, (0, 0, 0))
             total_time = 0
-            #score = font.render("Your Score: " + str(points), True, (0, 0, 0))
+            #score = font.render("Your Score: " + str(points), Trpygame.image.load(os.path.joinue, (0, 0, 0))
             #scoreRect = score.get_rect()
             #scoreRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50)
             #SCREEN.blit(score, scoreRect)
         #클리어
         elif death_count < 0:
             text=font.render("Stage 2 Clear!", True, (0, 0, 0))
+            isClear=True
             #stage 3로 넘어가는 코드
         textRect = text.get_rect()
         textRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
         SCREEN.blit(text, textRect)
         SCREEN.blit(RUNNING[0], (SCREEN_WIDTH // 2 - 20, SCREEN_HEIGHT // 2 - 140))
         pygame.display.update()
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
@@ -341,5 +349,5 @@ def menu(death_count):
 
 
 pygame.time.delay(100)
-menu(death_count=0)
+stageTwo(death_count=0)
 pygame.quit()
