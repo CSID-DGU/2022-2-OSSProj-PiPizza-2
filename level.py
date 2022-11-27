@@ -3,6 +3,7 @@ from pygame.locals import *
 from settings import *
 from player import *
 from monsterElv import *
+from run import *
 
 class Level:
     def __init__(self):
@@ -40,7 +41,8 @@ class Level:
 
     def monster_create(self, game_state):
         if game_state == 'level3': # boss 생성 후 바꿔야함
-            return StageFinal(MonsterElv_COOR_ini, MONSTER_SIZE, [self.visible_sprites], self.obstacle_sprites)
+            pass
+            #return StageFinal(MonsterElv_COOR_ini, MONSTER_SIZE, [self.visible_sprites], self.obstacle_sprites)
 
     def scene_manager(self):
         
@@ -51,4 +53,4 @@ class Level:
 
             self.gameState = GAME_STATES[self.sceneNum]
 
-            self.scene = Scene(self.player, self.monster, self.scene_num, self.game_state, self.visible_sprites)
+            #self.scene = Scene(self.player, self.monster, self.scene_num, self.game_state, self.visible_sprites)
