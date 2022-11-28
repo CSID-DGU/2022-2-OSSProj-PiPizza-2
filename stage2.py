@@ -13,6 +13,7 @@ pygame.display.set_caption("배달의 달인")
 
 fullscreen = False
 
+global isClear
 isClear = False
 start_ticks = pygame.time.get_ticks()  # 현재 tick 을 받아옴
 total_time = 10  # 총 시간
