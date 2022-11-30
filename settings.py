@@ -5,7 +5,7 @@ import os
 pygame.init()
 
 #화면 크기
-SCRREEN_SIZE = WIDTH, HEIGHT = (900, 450)
+SCREEN_SIZE = WIDTH, HEIGHT = (900, 450)
 FPS = 60
 
 # 메뉴화면 버튼 크기
@@ -16,8 +16,17 @@ btn_gameSetting_w = int(btn_menu_w/2)
 
 GAME_STATES = [ 'stage1', 'stage2', 'stageFinal']
 
-# 디스크립션(설명화면) 지속 시간
-WAIT_FOR_DESCRIPTION = 2000
+# 화면 크기 조정
+#위 2-1 로 게임창 크기 적용
+ScreenResized = pygame.display.set_mode((SCREEN_SIZE), RESIZABLE)
+# screen 변수에 크기옵션 집어넣어 앞으로 그릴 내용 담음
+screen = ScreenResized.copy()
+
+
+resized_screen_centerpos = (0,0)
+rwidth = ScreenResized.get_width()
+rheight = ScreenResized.get_height()
+button_offset = 0.18
 
 # 색상
 WHITE   = (255, 255, 255)
