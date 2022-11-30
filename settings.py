@@ -23,10 +23,10 @@ ScreenResized = pygame.display.set_mode((SCREEN_SIZE), RESIZABLE)
 screen = ScreenResized.copy()
 
 
-resized_screen_centerpos = (0,0)
-rwidth = ScreenResized.get_width()
-rheight = ScreenResized.get_height()
-button_offset = 0.18
+ScreenResized_centerpos = (0,0)
+rWidth = ScreenResized.get_width()
+rHeight = ScreenResized.get_height()
+# button_offset = 0.18 뭔지 모름
 
 # 색상
 WHITE   = (255, 255, 255)
