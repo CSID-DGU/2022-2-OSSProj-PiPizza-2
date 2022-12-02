@@ -11,11 +11,11 @@
 배경화면 이미지 추가
 
 * **개발 환경**
-    * 언어 : python 3.9.2 <img alt="Python" src ="https://img.shields.io/badge/-python-skyblue?logo=python"/>
-    * 개발 모듈 : pygame 2.1.2 <img alt="" src ="https://img.shields.io/badge/pygame-2.1.2-lightsalmon">
-    * 환경 : Visual Studio Code <img alt="" src ="https://img.shields.io/badge/IDE-VSCode-indianred">
-    * 운영 체제 : Window, Linux / Ubuntu <img alt="" src ="https://img.shields.io/badge/OS-Window|Linux-coral">
-    * 협업 툴: GitHub, Slack, Google Drive <img alt="Github" src ="https://img.shields.io/badge/-github-black?logo=github"/> <img alt ="Slack" src = "https://img.shields.io/badge/-notion-orange?logo=slack">
+    * 언어 :<img alt="Python" src ="https://img.shields.io/badge/-python-skyblue?logo=python"/>
+    * 개발 모듈 : <img alt="" src ="https://img.shields.io/badge/pygame-2.1.2-lightsalmon">
+    * 환경 : <img alt="" src ="https://img.shields.io/badge/IDE-VSCode-indianred">
+    * 운영 체제 : <img alt="" src ="https://img.shields.io/badge/OS-Window|Linux|Ubuntu-coral">
+    * 협업 툴: Google Drive <img alt="Github" src ="https://img.shields.io/badge/-github-black?logo=github"/> <img alt ="Slack" src = "https://img.shields.io/badge/-Slack-yellow?logo=slack"> <img alt ="Google Drive" src = "https://img.shields.io/badge/-Google Drive-lightgrey?logo=google drive">
 
 
 ### 설치 방법 (OS: Ubuntu, Window)
