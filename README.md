@@ -9,7 +9,7 @@
 ## 배달의 달인
 배경화면 이미지 추가
 
-### Chrome의 이스터에그 게임인 T-rex Rush을 모티브로 공격 기능, 보스 스테이지를 추가하여 배달 컨셉의 게임 
+### Chrome의 이스터에그 게임인 T-rex Rush을 모티브로 공격 기능, 보스 스테이지를 추가한 배달 컨셉의 게임 
 
 * **개발 환경**
     * 언어 : <img alt="Python" src ="https://img.shields.io/badge/-python-skyblue?logo=python"/>
