@@ -5,7 +5,7 @@ pygame.init()
 
 class Description:
     def __init__(self):
-        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        # self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.path_dial = 'images/Dialog/'
 
         # 디스크립션 이미지
@@ -25,6 +25,14 @@ class Description:
     def dial1(self):
         self.num = 0
         while True:
+
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.VIDEORESIZE:
+                    checkscrsize(event.w, event.h)
+
             if self.num == 0:
                 self.screen.blit(self.dial1_surf, self.dial1_rect)
                 pygame.display.update()
