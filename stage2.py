@@ -27,28 +27,27 @@ SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE
 #     print("resized_screen: (",resized_screen.get_width(),",",resized_screen.get_height(),")")
 #     return (name, w*resized_screen.get_width()//width, h*resized_screen.get_height()//height, color)
 
-RUNNING = [pygame.image.load(os.path.join(("images/sprites", "Bike1.png")),
-           pygame.image.load(os.path.join("images/sprites", "Bike2.png")))]
-JUMPING = pygame.image.load(os.path.join("images/sprites", "Bike2.png"))
-DUCKING = [pygame.image.load(os.path.join("images/sprites", "BikeDuck1.png")),
-           pygame.image.load(os.path.join("images/sprites", "BikeDuck1.png"))]
+RUNNING = [pygame.image.load(os.path.join("Images/sprites", "Bike1.png")),
+           pygame.image.load(os.path.join("Images/sprites", "Bike2.png"))]
+JUMPING = pygame.image.load(os.path.join("Images/sprites", "Bike2.png"))
+DUCKING = [pygame.image.load(os.path.join("Images/sprites", "BikeDuck1.png")),
+           pygame.image.load(os.path.join("Images/sprites", "BikeDuck1.png"))]
 
 
-Traffic_Light = [pygame.image.load(os.path.join("images/obstacles", "Traffic1.png")),
-                pygame.image.load(os.path.join(
-                    "images/obstacles", "Traffic3.png")),
-                pygame.image.load(os.path.join("images/obstacles", "Traffic4.png"))]
-Traffic_Cone = [pygame.image.load(os.path.join("images/obstacles", "RoadBlock.png")),
-                pygame.image.load(os.path.join(
-                    "images/obstacles", "TrafficCone.png")),
-                pygame.image.load(os.path.join("images/obstacles", "TrafficCone2.png"))]
 
-DUST = [pygame.image.load(os.path.join("images/obstacles", "Dust1.png")),
-        pygame.image.load(os.path.join("images/obstacles", "Dust2.png"))]
+Traffic_Light = [pygame.image.load(os.path.join("Images/obstacles", "Traffic1.png")),
+                pygame.image.load(os.path.join("Images/obstacles", "Traffic3.png")),
+                pygame.image.load(os.path.join("Images/obstacles", "Traffic4.png"))]
+Traffic_Cone = [pygame.image.load(os.path.join("Images/obstacles", "RoadBlock.png")),
+                pygame.image.load(os.path.join("Images/obstacles", "TrafficCone.png")),
+                pygame.image.load(os.path.join("Images/obstacles", "TrafficCone2.png"))]
 
-CLOUD = pygame.image.load(os.path.join("images/obstacles", "Cloud.png"))
+DUST = [pygame.image.load(os.path.join("Images/obstacles", "Dust1.png")),
+        pygame.image.load(os.path.join("Images/obstacles", "Dust2.png"))]
 
-BG = pygame.image.load(os.path.join("images/obstacles", "Track.png"))
+CLOUD = pygame.image.load(os.path.join("Images/obstacles", "Cloud.png"))
+
+BG = pygame.image.load(os.path.join("Images/obstacles", "Track.png"))
 
 
 
@@ -191,7 +190,8 @@ class Dust(Obstacle):
         SCREEN.blit(self.image[self.index//5], self.rect)
         self.index += 1
 
-
+def timeReset():
+    elapsed_time = 0
 
 def main():
     global game_speed, x_pos_bg, y_pos_bg, points, obstacles
@@ -256,7 +256,7 @@ def main():
                 pygame.time.delay(2000)
                 elapsed_time = 0
                 death_count += 1
-                menu(death_count)
+                stageTwo(death_count)
    
         
         #시간
@@ -297,6 +297,7 @@ def fail(self):
 def stageTwo(death_count):
     global points
     run = True
+    isClear=False
     while run:
         fullscreen = False
         SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
@@ -308,11 +309,10 @@ def stageTwo(death_count):
         #시작
         if death_count == 0:
             text = font.render("Press any Key to Start", True, (0, 0, 0))
-            elapsed_time = 0
         #Fail
         elif death_count > 0:
-            text = font.render("Press any Key to Restart", True, (0, 0, 0))
-            total_time = 0
+            text = font.render("GAME OVER!", True, (0, 0, 0))
+            timeReset()
             #score = font.render("Your Score: " + str(points), Trpygame.image.load(os.path.joinue, (0, 0, 0))
             #scoreRect = score.get_rect()
             #scoreRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50)
