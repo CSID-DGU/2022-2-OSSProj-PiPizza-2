@@ -1,6 +1,6 @@
 # 변수 명 바꿔야 함
 
-import pygame
+import pygame, sys
 import os
 import random
 pygame.init()
@@ -13,9 +13,12 @@ pygame.display.set_caption("배달의 달인")
 
 fullscreen = False
 
+global isClear
 isClear = False
 start_ticks = pygame.time.get_ticks()  # 현재 tick 을 받아옴
-total_time = 10  # 총 시간
+
+total_time = 30  # 총 시간
+
 elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
 
 SCREEN_HEIGHT = 450
@@ -27,27 +30,29 @@ SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE
 #     print("resized_screen: (",resized_screen.get_width(),",",resized_screen.get_height(),")")
 #     return (name, w*resized_screen.get_width()//width, h*resized_screen.get_height()//height, color)
 
-RUNNING = [pygame.image.load(os.path.join("Images/sprites", "Bike1.png")),
-           pygame.image.load(os.path.join("Images/sprites", "Bike2.png"))]
-JUMPING = pygame.image.load(os.path.join("Images/sprites", "Bike2.png"))
-DUCKING = [pygame.image.load(os.path.join("Images/sprites", "BikeDuck1.png")),
-           pygame.image.load(os.path.join("Images/sprites", "BikeDuck1.png"))]
+
+RUNNING = [pygame.image.load("images/sprites/Bike1.png"),
+           pygame.image.load("images/sprites/Bike2.png")]
+JUMPING = pygame.image.load("images/sprites/Bike2.png")
+DUCKING = [pygame.image.load("images/sprites/BikeDuck1.png"),
+           pygame.image.load("images/sprites/BikeDuck1.png")]
 
 
+Traffic_Light = [pygame.image.load("images/obstacles/Traffic1.png"),
+                pygame.image.load(
+                    "images/obstacles/Traffic3.png"),
+                pygame.image.load("images/obstacles/Traffic4.png")]
+Traffic_Cone = [pygame.image.load("images/obstacles/RoadBlock.png"),
+                pygame.image.load(
+                    "images/obstacles/TrafficCone.png"),
+                pygame.image.load("images/obstacles/TrafficCone2.png")]
 
-Traffic_Light = [pygame.image.load(os.path.join("Images/obstacles", "Traffic1.png")),
-                pygame.image.load(os.path.join("Images/obstacles", "Traffic3.png")),
-                pygame.image.load(os.path.join("Images/obstacles", "Traffic4.png"))]
-Traffic_Cone = [pygame.image.load(os.path.join("Images/obstacles", "RoadBlock.png")),
-                pygame.image.load(os.path.join("Images/obstacles", "TrafficCone.png")),
-                pygame.image.load(os.path.join("Images/obstacles", "TrafficCone2.png"))]
+DUST = [pygame.image.load("images/obstacles/Dust1.png"),
+        pygame.image.load("images/obstacles/Dust2.png")]
 
-DUST = [pygame.image.load(os.path.join("Images/obstacles", "Dust1.png")),
-        pygame.image.load(os.path.join("Images/obstacles", "Dust2.png"))]
+CLOUD = pygame.image.load("images/obstacles/Cloud.png")
 
-CLOUD = pygame.image.load(os.path.join("Images/obstacles", "Cloud.png"))
-
-BG = pygame.image.load(os.path.join("Images/obstacles", "Track.png"))
+BG = pygame.image.load("images/obstacles/Track.png")
 
 
 
@@ -331,6 +336,7 @@ def stageTwo(death_count):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+                # sys.exit()
             if event.type == pygame.KEYDOWN:
                 main()
                 if event.key == pygame.K_f:
@@ -348,6 +354,6 @@ def stageTwo(death_count):
 
 
 
-pygame.time.delay(100)
-stageTwo(death_count=0)
-pygame.quit()
+# pygame.time.delay(100)
+# stageTwo(death_count=0)
+# pygame.quit()
