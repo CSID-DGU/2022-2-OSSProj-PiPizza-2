@@ -31,7 +31,7 @@ class Description:
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.VIDEORESIZE:
-                    checkscrsize(event.w, event.h)
+                    self.checkscrsize(event.w, event.h)
 
             if self.num == 0:
                 self.screen.blit(self.dial1_surf, self.dial1_rect)
