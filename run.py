@@ -10,10 +10,12 @@ from stage2 import *
 
 class Game:
     def __init__(self):
-        pygame.init()
-        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption("배달의 달인")
-        
+        # pygame.init()
+        # screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        # pygame.display.set_caption("배달의 달인")
+        global screen
+        self.screen = screen
+
         self.clock = pygame.time.Clock()
         self.level = Level()
 
@@ -78,6 +80,7 @@ class Game:
     
     # 메인 메뉴화면
     def menu(self):
+
         while True:
             self.screen.blit(self.background_surf, self.background_rect)
         

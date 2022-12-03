@@ -11,10 +11,12 @@ FPS = 60
 # 게임 단계
 GAME_STATES = [ 'stage1', 'stage2', 'stageFinal']
 
+pygame.init()
 # 화면 크기 조정
 ScreenResized = pygame.display.set_mode((SCREEN_SIZE), RESIZABLE)
 # screen 변수에 크기옵션 집어넣어 앞으로 그릴 내용 담음
 screen = ScreenResized.copy()
+pygame.display.set_caption("배달의 달인")
 
 ScreenResized_centerpos = (0,0)
 rWIDTH = ScreenResized.get_width()
@@ -28,6 +30,11 @@ def checkscrsize(wEvent, hEvent):
         if hEvent/wEvent != WIDTH/HEIGHT: #고정화면비
             heightAdjusted = int(wEvent/(rWIDTH/rHEIGHT))
             ScreenResized = pygame.display.set_mode((wEvent,heightAdjusted), RESIZABLE)
+
+def resize(name, w, h):
+        global WIDTH, HEIGHT, ScreenResized
+        print("ScreenResized: (",ScreenResized.get_width(),",",ScreenResized.get_height(),")")
+        return (name, w*ScreenResized.get_width()//WIDTH, h*ScreenResized.get_height()//HEIGHT)
 
 # 메뉴화면 버튼 크기
 btn_menu_w = int(rWIDTH/6.8)
