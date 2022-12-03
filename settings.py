@@ -8,25 +8,31 @@ pygame.init()
 SCREEN_SIZE = WIDTH, HEIGHT = (900, 450)
 FPS = 60
 
-# 메뉴화면 버튼 크기
-
-btn_menu_w = int(WIDTH/6.8)
-btn_menu_h = int(HEIGHT/8)
-btn_gameSetting_w = int(btn_menu_w/2)
-
+# 게임 단계
 GAME_STATES = [ 'stage1', 'stage2', 'stageFinal']
 
 # 화면 크기 조정
-#위 2-1 로 게임창 크기 적용
 ScreenResized = pygame.display.set_mode((SCREEN_SIZE), RESIZABLE)
 # screen 변수에 크기옵션 집어넣어 앞으로 그릴 내용 담음
 screen = ScreenResized.copy()
 
-
 ScreenResized_centerpos = (0,0)
-rWidth = ScreenResized.get_width()
-rHeight = ScreenResized.get_height()
+rWIDTH = ScreenResized.get_width()
+rHEIGHT = ScreenResized.get_height()
 # button_offset = 0.18 뭔지 모름
+
+def checkscrsize(wEvent, hEvent):
+    if (wEvent < WIDTH and hEvent < HEIGHT) or wEvent < WIDTH or hEvent < HEIGHT: #최소해상도
+        ScreenResized = pygame.display.set_mode((SCREEN_SIZE), RESIZABLE)
+    else:
+        if hEvent/wEvent != WIDTH/HEIGHT: #고정화면비
+            heightAdjusted = int(wEvent/(rWIDTH/rHEIGHT))
+            ScreenResized = pygame.display.set_mode((wEvent,heightAdjusted), RESIZABLE)
+
+# 메뉴화면 버튼 크기
+btn_menu_w = int(rWIDTH/6.8)
+btn_menu_h = int(rHEIGHT/8)
+btn_gameSetting_w = int(btn_menu_w/2)
 
 # 색상
 WHITE   = (255, 255, 255)
@@ -36,7 +42,7 @@ GREEN   = (0, 255, 0)
 BLUE    = (0, 0, 255)
 
 # 캐릭터 HP 정보
-PLAYER_HP   = 100
+PLAYER_HP   = 99
 MONSTER_HP    = 100
 
 
