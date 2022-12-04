@@ -123,4 +123,73 @@ CLOUD = pygame.image.load(os.path.join("images/obstacles", "Cloud.png"))
 BG = pygame.image.load(os.path.join("images/obstacles", "Track.png"))
 
 
+def pausing():
+    global resized_screen
+    introFlag = False
+    gameQuit = False
+    pause_pic, pause_pic_rect = load_image('paused.png', 360, 75, -1)
+    pause_pic_rect.centerx = width * 0.5
+    pause_pic_rect.centery = height * 0.2
 
+    pygame.mixer.music.pause()  # 일시정지상태가 되면 배경음악도 일시정지
+
+    # BUTTON IMG LOAD
+    retbutton_image, retbutton_rect = load_image('main_button.png', 70, 62, -1)
+    resume_image, resume_rect = load_image('continue_button.png', 70, 62, -1)
+
+    resized_retbutton_image, resized_retbutton_rect = load_image(*resize('main_button.png', 70, 62, -1))
+    resized_resume_image, resized_resume_rect = load_image(*resize('continue_button.png', 70, 62, -1))
+
+    # BUTTONPOS
+    retbutton_rect.centerx = width * 0.4;
+    retbutton_rect.top = height * 0.52
+    resume_rect.centerx = width * 0.6;
+    resume_rect.top = height * 0.52
+
+    resized_retbutton_rect.centerx = resized_screen.get_width() * 0.4
+    resized_retbutton_rect.top = resized_screen.get_height() * 0.52
+    resized_resume_rect.centerx = resized_screen.get_width() * 0.6
+    resized_resume_rect.top = resized_screen.get_height() * 0.52
+
+    while not gameQuit:
+        if pygame.display.get_surface() is None:
+            print("Couldn't load display surface")
+            gameQuit = True
+        else:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    gameQuit = True
+
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        pygame.mixer.music.unpause()  # pausing상태에서 다시 esc누르면 배경음악 일시정지 해제
+                        #첫번째 return 값은 pause상태, 두번째는 introFlag
+                        return False, introFlag
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if pygame.mouse.get_pressed() == (1, 0, 0):
+                        x, y = event.pos
+                        if resized_retbutton_rect.collidepoint(x, y):
+                            introFlag = True
+                            gameQuit = True
+                            return None, introFlag
+
+                        if resized_resume_rect.collidepoint(x, y):
+                            pygame.mixer.music.unpause()  # pausing상태에서 오른쪽의 아이콘 클릭하면 배경음악 일시정지 해제
+                            return False, introFlag
+
+                if event.type == pygame.VIDEORESIZE:
+                    checkscrsize(event.w, event.h)
+
+            screen.fill(255,255,255)
+            screen.blit(pause_pic, pause_pic_rect)
+            screen.blit(retbutton_image, retbutton_rect)
+            screen.blit(resume_image, resume_rect)
+            resized_screen.blit(
+                pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
+                resized_screen_centerpos)
+            pygame.display.update()
+        clock.tick(FPS)
+
+    pygame.quit()
+    quit()

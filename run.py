@@ -10,12 +10,10 @@ from stage2 import *
 
 class Game:
     def __init__(self):
-        # pygame.init()
-        # screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        # pygame.display.set_caption("배달의 달인")
-        global screen
-        self.screen = screen
-
+        pygame.init()
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.display.set_caption("배달의 달인")
+        
         self.clock = pygame.time.Clock()
         self.level = Level()
 
@@ -80,7 +78,6 @@ class Game:
     
     # 메인 메뉴화면
     def menu(self):
-
         while True:
             self.screen.blit(self.background_surf, self.background_rect)
         
@@ -129,6 +126,17 @@ class Game:
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
+
+                if event.key == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        paused = not paused
+                        paused_value, return_home_value = pausing()
+                        if paused_value != None:
+                            paused = paused_value
+                        else:
+                            introFlag = return_home_value
+                            gameQuit = True
+                            return introFlag
 
             stageTwo(death_count=0)
 
@@ -221,4 +229,3 @@ class Game:
 if __name__ == '__main__':
     game = Game()
     game.menu()
-
