@@ -202,6 +202,82 @@ class Game:
         for event in pygame.event.get():
             quit_check(event)
 
+    def pausing():
+    global gameOver
+    global gameQuit
+    global resized_screen
+    global paused
+    gameQuit = False
+    pause_pic, pause_pic_rect = alpha_image('paused.png', width, height, -1)
+
+    pygame.mixer.music.pause()  # 일시정지상태가 되면 배경음악도 일시정지
+
+    # BUTTON IMG LOAD
+    retbutton_image, retbutton_rect = load_image('main_button.png', 70, 62, -1)
+    resume_image, resume_rect = load_image('continue_button.png', 70, 62, -1)
+
+    resized_retbutton_image, resized_retbutton_rect = load_image(*resize('main_button.png', 70, 62, -1))
+    resized_resume_image, resized_resume_rect = load_image(*resize('continue_button.png', 70, 62, -1))
+
+    # BUTTONPOS
+    retbutton_rect.centerx = width * 0.4
+    retbutton_rect.top = height * 0.52
+    resume_rect.centerx = width * 0.6
+    resume_rect.top = height * 0.52
+
+    resized_retbutton_rect.centerx = resized_screen.get_width() * 0.4
+    resized_retbutton_rect.top = resized_screen.get_height() * 0.52
+    resized_resume_rect.centerx = resized_screen.get_width() * 0.6
+    resized_resume_rect.top = resized_screen.get_height() * 0.52
+
+    while not gameQuit:
+        if pygame.display.get_surface() is None:
+            print("Couldn't load display surface")
+            gameQuit = True
+        else:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    gameQuit = True
+                    gameOver = True
+
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        paused = False
+                        pygame.mixer.music.unpause()  # pausing상태에서 다시 esc누르면 배경음악 일시정지 해제
+                        return False
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if pygame.mouse.get_pressed() == (1, 0, 0):
+                        x, y = event.pos
+                        if resized_retbutton_rect.collidepoint(x, y):
+                            ingame_m.stop() 
+                            gameOver = False
+                            gameQuit = True
+                            introscreen()
+                            
+
+                        if resized_resume_rect.collidepoint(x, y):
+                            gameOver = False
+                            paused = False
+                            pygame.mixer.music.unpause()  # pausing상태에서 오른쪽의 아이콘 클릭하면 배경음악 일시정지 해제
+
+                            return False
+
+                if event.type == pygame.VIDEORESIZE:
+                    checkscrsize(event.w, event.h)
+
+            screen.fill(white)
+            screen.blit(pause_pic, pause_pic_rect)
+            screen.blit(retbutton_image, retbutton_rect)
+            screen.blit(resume_image, resume_rect)
+            resized_screen.blit(
+                pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
+                resized_screen_centerpos)
+            pygame.display.update()
+        clock.tick(FPS)
+
+    pygame.quit()
+    quit()
 
 class Level:
     def __init__(self):
@@ -246,6 +322,11 @@ class Level:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
+
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                            paused = not paused
+                            paused = pausing()
 
             self.SCREEN.fill((255, 255 , 255))        
             userInput = pygame.key.get_pressed()
@@ -342,7 +423,6 @@ class Level:
             #씬 받기
             self.player.scene_num = self.scene_num
 
-    
 
 class Sound:
     def __init__(self):
