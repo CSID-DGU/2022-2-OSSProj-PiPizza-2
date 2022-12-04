@@ -16,7 +16,9 @@ fullscreen = False
 global isClear
 isClear = False
 start_ticks = pygame.time.get_ticks()  # 현재 tick 을 받아옴
-total_time = 10  # 총 시간
+
+total_time = 30  # 총 시간
+
 elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
 
 SCREEN_HEIGHT = 450
@@ -27,6 +29,7 @@ SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE
 #     global width, height, resized_screen
 #     print("resized_screen: (",resized_screen.get_width(),",",resized_screen.get_height(),")")
 #     return (name, w*resized_screen.get_width()//width, h*resized_screen.get_height()//height, color)
+
 
 RUNNING = [pygame.image.load("images/sprites/Bike1.png"),
            pygame.image.load("images/sprites/Bike2.png")]
@@ -192,7 +195,8 @@ class Dust(Obstacle):
         SCREEN.blit(self.image[self.index//5], self.rect)
         self.index += 1
 
-
+def timeReset():
+    elapsed_time = 0
 
 def main():
     global game_speed, x_pos_bg, y_pos_bg, points, obstacles
@@ -298,6 +302,7 @@ def fail(self):
 def stageTwo(death_count):
     global points
     run = True
+    isClear=False
     while run:
         fullscreen = False
         SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
@@ -309,11 +314,10 @@ def stageTwo(death_count):
         #시작
         if death_count == 0:
             text = font.render("Press any Key to Start", True, (0, 0, 0))
-            elapsed_time = 0
         #Fail
         elif death_count > 0:
-            text = font.render("Press any Key to Restart", True, (0, 0, 0))
-            total_time = 0
+            text = font.render("GAME OVER!", True, (0, 0, 0))
+            timeReset()
             #score = font.render("Your Score: " + str(points), Trpygame.image.load(os.path.joinue, (0, 0, 0))
             #scoreRect = score.get_rect()
             #scoreRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50)
