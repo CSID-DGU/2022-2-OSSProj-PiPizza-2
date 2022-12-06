@@ -3,6 +3,9 @@
 import pygame, sys
 import os
 import random
+import description
+import settings
+
 pygame.init()
 
 # Global Constants
@@ -30,17 +33,12 @@ SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE
 #     print("resized_screen: (",resized_screen.get_width(),",",resized_screen.get_height(),")")
 #     return (name, w*resized_screen.get_width()//width, h*resized_screen.get_height()//height, color)
 
-RUNNING = [pygame.image.load(os.path.join("Images/sprites", "Bike1.png")),
-           pygame.image.load(os.path.join("Images/sprites", "Bike2.png"))]
-JUMPING = pygame.image.load(os.path.join("Images/sprites", "Bike2.png"))
-DUCKING = [pygame.image.load(os.path.join("Images/sprites", "BikeDuck1.png")),
-           pygame.image.load(os.path.join("Images/sprites", "BikeDuck1.png"))]
-
 RUNNING = [pygame.image.load("images/sprites/Bike1.png"),
            pygame.image.load("images/sprites/Bike2.png")]
 JUMPING = pygame.image.load("images/sprites/Bike2.png")
 DUCKING = [pygame.image.load("images/sprites/BikeDuck1.png"),
            pygame.image.load("images/sprites/BikeDuck1.png")]
+
 
 Traffic_Light = [pygame.image.load("images/obstacles/Traffic1.png"),
                 pygame.image.load(
@@ -51,19 +49,12 @@ Traffic_Cone = [pygame.image.load("images/obstacles/RoadBlock.png"),
                     "images/obstacles/TrafficCone.png"),
                 pygame.image.load("images/obstacles/TrafficCone2.png")]
 
-Traffic_Light = [pygame.image.load(os.path.join("Images/obstacles", "Traffic1.png")),
-                pygame.image.load(os.path.join("Images/obstacles", "Traffic3.png")),
-                pygame.image.load(os.path.join("Images/obstacles", "Traffic4.png"))]
-Traffic_Cone = [pygame.image.load(os.path.join("Images/obstacles", "RoadBlock.png")),
-                pygame.image.load(os.path.join("Images/obstacles", "TrafficCone.png")),
-                pygame.image.load(os.path.join("Images/obstacles", "TrafficCone2.png"))]
+DUST = [pygame.image.load("images/obstacles/Dust1.png"),
+        pygame.image.load("images/obstacles/Dust2.png")]
 
-DUST = [pygame.image.load(os.path.join("Images/obstacles", "Dust1.png")),
-        pygame.image.load(os.path.join("Images/obstacles", "Dust2.png"))]
+CLOUD = pygame.image.load("images/obstacles/Cloud.png")
 
-CLOUD = pygame.image.load(os.path.join("Images/obstacles", "Cloud.png"))
-
-BG = pygame.image.load(os.path.join("Images/obstacles", "Track.png"))
+BG = pygame.image.load("images/obstacles/Track.png")
 
 
 
@@ -250,7 +241,11 @@ def main():
                 run = False
 
         #SCREEN.fill((247, 155 , 96))
-        SCREEN.fill((255, 255 , 255))        
+        #SCREEN.fill((255, 255 , 255)) 
+        stage2_backgrnd =  pygame.image.load('images/background/stage2_bg.png')
+        SCREEN.blit(stage2_backgrnd, (0,0))
+
+              
         userInput = pygame.key.get_pressed()
 
         player.draw(SCREEN)
@@ -310,6 +305,97 @@ def clear(self):  # True를 반환하면 다시 시작
 def fail(self):
     pass
 
+def pausing():
+    global gameOver
+    global gameQuit
+    global resized_screen
+    global paused
+    gameQuit = False
+#    pause_pic, pause_pic_rect = pygame.image.load("images/background/menu_background.png")
+
+    pygame.mixer.music.pause()  # 일시정지상태가 되면 배경음악도 일시정지
+
+    # BUTTON IMG LOAD
+    #retbutton_image, retbutton_rect = pygame.image.load("images/Button/home.png")
+    homebtn_img, homebtn_rect = pygame.image.load("images/Button/home.png")
+
+    #resume_image, resume_rect = pygame.image.load("images/Button/home.png")
+    backbtn_img, backbtn_rect = pygame.image.load("images/Button/back.png")    
+
+    #resized_retbutton_image, resized_retbutton_rect = load_image(*resize('main_button.png', 70, 62, -1))
+    #resized_resume_image, resized_resume_rect = load_image(*resize('continue_button.png', 70, 62, -1))
+
+    # BUTTONPOS
+    # retbutton_rect.centerx = width * 0.4
+    # retbutton_rect.top = height * 0.52
+    # resume_rect.centerx = width * 0.6
+    # resume_rect.top = height * 0.52
+
+    # resized_retbutton_rect.centerx = resized_screen.get_width() * 0.4
+    # resized_retbutton_rect.top = resized_screen.get_height() * 0.52
+    # resized_resume_rect.centerx = resized_screen.get_width() * 0.6
+    # resized_resume_rect.top = resized_screen.get_height() * 0.52
+
+    #homebtn_rect.centerx = width * 0.4
+    #homebtn_rect.top = height * 0.52
+    #backbtn_rect.centerx = width * 0.6
+    #backbtn_rect.top = height * 0.52
+
+    #resized_retbutton_rect.centerx = resized_screen.get_width() * 0.4
+    #resized_retbutton_rect.top = resized_screen.get_height() * 0.52
+    #resized_resume_rect.centerx = resized_screen.get_width() * 0.6
+    #resized_resume_rect.top = resized_screen.get_height() * 0.52
+    
+
+    while not gameQuit:
+        if pygame.display.get_surface() is None:
+            print("Couldn't load display surface")
+            gameQuit = True
+        else:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    gameQuit = True
+                    gameOver = True
+
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        paused = False
+                        pygame.mixer.music.unpause()  # pausing상태에서 다시 esc누르면 배경음악 일시정지 해제
+                        return False
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if pygame.mouse.get_pressed() == (1, 0, 0):
+                        x, y = event.pos
+                        if homebtn_rect.collidepoint(x, y):
+                            #ingame_m.stop() 
+                            gameOver = False
+                            gameQuit = True
+                            intro()
+                            
+
+                        if backbtn_rect.collidepoint(x, y):
+                            gameOver = False
+                            paused = False
+                            pygame.mixer.music.unpause()  # pausing상태에서 오른쪽의 아이콘 클릭하면 배경음악 일시정지 해제
+
+                            return False
+
+                if event.type == pygame.VIDEORESIZE:
+                    checkscrsize(event.w, event.h)
+
+            SCREEN.fill(255,255,255)
+            SCREEN.blit(homebtn_img, homebtn_rect)
+            SCREEN.blit(backbtn_img, backbtn_rect)
+            #resized_screen.blit(
+            #    pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
+            #    resized_screen_centerpos)
+            pygame.display.update()
+        #clock.tick(FPS)
+
+    pygame.quit()
+    quit()
+
+
 def stageTwo(death_count):
     global points
     run = True
@@ -317,7 +403,16 @@ def stageTwo(death_count):
     while run:
         fullscreen = False
         SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
-        SCREEN.fill((255, 255, 255))
+        #SCREEN.fill((255, 255, 255))
+        background_img =  pygame.image.load('images/background/stage2_bg_black.png')
+
+        #self.background_img_rect = self.background_img.get_rect()
+        #self.background_img_rect.x = self.X_POS
+        #self.background_img_rect.y = self.Y_POS
+
+        SCREEN.blit(background_img, (0,0))
+
+        
         font = pygame.font.Font('freesansbold.ttf', 30)
 
         monitor_size = [pygame.display.Info().current_w, pygame.display.Info().current_h]
@@ -365,6 +460,6 @@ def stageTwo(death_count):
 
 
 
-# pygame.time.delay(100)
-# stageTwo(death_count=0)
-# pygame.quit()
+#pygame.time.delay(100)
+#stageTwo(death_count=0)
+#pygame.quit()
