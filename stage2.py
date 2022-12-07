@@ -22,7 +22,7 @@ start_ticks = pygame.time.get_ticks()  # 현재 tick 을 받아옴
 
 total_time = 30  # 총 시간
 
-elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
+#elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
 
 SCREEN_HEIGHT = 450
 SCREEN_WIDTH = 900
@@ -32,6 +32,8 @@ SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE
 #     global width, height, resized_screen
 #     print("resized_screen: (",resized_screen.get_width(),",",resized_screen.get_height(),")")
 #     return (name, w*resized_screen.get_width()//width, h*resized_screen.get_height()//height, color)
+
+BG = pygame.image.load("images/obstacles/Track2.png")
 
 RUNNING = [pygame.image.load("images/sprites/Bike1.png"),
            pygame.image.load("images/sprites/Bike2.png")]
@@ -54,7 +56,6 @@ DUST = [pygame.image.load("images/obstacles/Dust1.png"),
 
 CLOUD = pygame.image.load("images/obstacles/Cloud.png")
 
-BG = pygame.image.load("images/obstacles/Track.png")
 
 
 
@@ -198,6 +199,7 @@ class Dust(Obstacle):
         self.index += 1
 
 def timeReset():
+    global elapsed_time
     elapsed_time = 0
 
 def main():
@@ -244,6 +246,7 @@ def main():
         #SCREEN.fill((255, 255 , 255)) 
         stage2_backgrnd =  pygame.image.load('images/background/stage2_bg.png')
         SCREEN.blit(stage2_backgrnd, (0,0))
+        background()
 
               
         userInput = pygame.key.get_pressed()
@@ -265,13 +268,15 @@ def main():
             obstacle.update()
             if player.bike_rect.colliderect(obstacle.rect):
                 pygame.time.delay(2000)
-                elapsed_time = 0
                 death_count += 1
                 stageTwo(death_count)
    
         
         #시간
+        #이 코드 있으면 시간이 배경 때도 흘러가고, 없애면 흘러가는 게 보여지지 않음,,,
         elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
+
+
         timer = font.render("TIMER: "+str(int(elapsed_time)),True,(0,0,0))
         SCREEN.blit(timer,(10,10))
 
@@ -287,12 +292,10 @@ def main():
             #run=False # 다이얼로그로 넘어가야 함
 
 
-        background()
 
         cloud.draw(SCREEN)
         cloud.update()
 
-       # score()
         clock.tick(30)
         pygame.display.update()
 
@@ -305,6 +308,8 @@ def clear(self):  # True를 반환하면 다시 시작
 def fail(self):
     pass
 
+
+#일시정지 함수
 def pausing():
     global gameOver
     global gameQuit
@@ -370,7 +375,7 @@ def pausing():
                             #ingame_m.stop() 
                             gameOver = False
                             gameQuit = True
-                            intro()
+                            #intro()
                             
 
                         if backbtn_rect.collidepoint(x, y):
@@ -381,7 +386,8 @@ def pausing():
                             return False
 
                 if event.type == pygame.VIDEORESIZE:
-                    checkscrsize(event.w, event.h)
+                    #checkscrsize(event.w, event.h) 리사이즈 코드?
+                    pass
 
             SCREEN.fill(255,255,255)
             SCREEN.blit(homebtn_img, homebtn_rect)
@@ -403,27 +409,34 @@ def stageTwo(death_count):
     while run:
         fullscreen = False
         SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
-        #SCREEN.fill((255, 255, 255))
+        #게임 시작 시 나오는 이미지
         background_img =  pygame.image.load('images/background/stage2_bg_black.png')
 
         #self.background_img_rect = self.background_img.get_rect()
         #self.background_img_rect.x = self.X_POS
         #self.background_img_rect.y = self.Y_POS
-
         SCREEN.blit(background_img, (0,0))
 
         
         font = pygame.font.Font('freesansbold.ttf', 30)
 
+        global elapsed_time
+
+        
+        elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
         monitor_size = [pygame.display.Info().current_w, pygame.display.Info().current_h]
+
+
 
         #시작
         if death_count == 0:
             text = font.render("Press any Key to Start", True, (0, 0, 0))
+            timeReset()
+
+            
         #Fail
         elif death_count > 0:
             text = font.render("GAME OVER!", True, (0, 0, 0))
-            timeReset()
             #score = font.render("Your Score: " + str(points), Trpygame.image.load(os.path.joinue, (0, 0, 0))
             #scoreRect = score.get_rect()
             #scoreRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50)
