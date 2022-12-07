@@ -102,25 +102,27 @@ MonsterElv_IMG_INFO = {'idleL': {'idx': 8, 'size': MONSTER_SIZE},
 
 
 #이미지 설정
-RUNNING = [pygame.image.load(os.path.join("images/sprites", "Bike1.png")),
-           pygame.image.load(os.path.join("images/sprites", "Bike2.png"))]
-JUMPING = pygame.image.load(os.path.join("images/sprites", "Bike2.png"))
-DUCKING = [pygame.image.load(os.path.join("images/sprites", "BikeDuck1.png")),
-           pygame.image.load(os.path.join("images/sprites", "BikeDuck1.png"))]
+BG = pygame.image.load("images/obstacles/Track2.png")
 
-Traffic_Light = [pygame.image.load(os.path.join("images/obstacles", "Traffic1.png")),
-                pygame.image.load(os.path.join("images/obstacles", "Traffic3.png")),
-                pygame.image.load(os.path.join("images/obstacles", "Traffic4.png"))]
-Traffic_Cone = [pygame.image.load(os.path.join("images/obstacles", "RoadBlock.png")),
-                pygame.image.load(os.path.join("images/obstacles", "TrafficCone.png")),
-                pygame.image.load(os.path.join("images/obstacles", "TrafficCone2.png"))]
+RUNNING = [pygame.image.load("images/sprites/Bike1.png"),
+           pygame.image.load("images/sprites/Bike2.png")]
+JUMPING = pygame.image.load("images/sprites/Bike2.png")
+DUCKING = [pygame.image.load("images/sprites/BikeDuck1.png"),
+           pygame.image.load("images/sprites/BikeDuck1.png")]
 
-DUST = [pygame.image.load(os.path.join("images/obstacles", "Dust1.png")),
-        pygame.image.load(os.path.join("images/obstacles", "Dust2.png"))]
 
-CLOUD = pygame.image.load(os.path.join("images/obstacles", "Cloud.png"))
+Traffic_Light = [pygame.image.load("images/obstacles/Traffic1.png"),
+                pygame.image.load(
+                    "images/obstacles/Traffic3.png"),
+                pygame.image.load("images/obstacles/Traffic4.png")]
+Traffic_Cone = [pygame.image.load("images/obstacles/RoadBlock.png"),
+                pygame.image.load(
+                    "images/obstacles/TrafficCone.png"),
+                pygame.image.load("images/obstacles/TrafficCone2.png")]
 
-BG = pygame.image.load(os.path.join("images/obstacles", "Track.png"))
+DUST = [pygame.image.load("images/obstacles/Dust1.png"),
+        pygame.image.load("images/obstacles/Dust2.png")]
 
+CLOUD = pygame.image.load("images/obstacles/Cloud.png")
 
 
