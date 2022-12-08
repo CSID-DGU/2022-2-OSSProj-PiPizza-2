@@ -35,9 +35,9 @@ class Game:
         self.is_clicked = False
 
         # # 버튼 위치(center)
-        # btn_menu_w = int(self.rWIDTH/6.8)
-        # btn_menu_h = int(self.rHEIGHT/8)
-        # btn_gameSetting_w = int(btn_menu_w/2)
+        btn_menu_w = int(self.rWIDTH/6.8)
+        btn_menu_h = int(self.rHEIGHT/8)
+        btn_gameSetting_w = int(btn_menu_w/2)
 
         self.btn_start_pos = (self.rWIDTH - int(2.2*btn_menu_w), int(2.5* btn_menu_h))
         self.btn_exit_pos = (self.rWIDTH - int(2.4*btn_menu_w), int(4* btn_menu_h))
@@ -112,6 +112,10 @@ class Game:
         while True:
             self.screen.blit(self.background_surf, self.background_rect)
 
+            self.screen.blit(self.btn_start_surf, self.btn_start)
+            self.screen.blit(self.btn_exit_surf, self.btn_exit)
+            self.screen.blit(self.btn_gameSetting_surf, self.btn_gameSetting)
+
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
@@ -121,23 +125,39 @@ class Game:
         
             # 마우스 위치
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            self.mouse_x_r = pygame.mouse.get_pos()[0] * (WIDTH/self.rWIDTH)
-            self.mouse_y_r = pygame.mouse.get_pos()[1] * (HEIGHT/self.rHEIGHT)
+            # self.mouse_x_r = pygame.mouse.get_pos()[0] * (WIDTH/self.rWIDTH)
+            # self.mouse_y_r = pygame.mouse.get_pos()[1] * (HEIGHT/self.rHEIGHT)
 
             # 버튼 클릭 시
             if self.is_clicked:
                 # 게임 시작
-                if self.btn_start.collidepoint(self.mouse_x_r, self.mouse_y_r):
+                if self.btn_start.collidepoint(mouse_x, mouse_y):
                     self.run()
                 # 게임 종료
-                elif self.btn_exit.collidepoint(self.mouse_x_r, self.mouse_y_r):
+                elif self.btn_exit.collidepoint(mouse_x, mouse_y):
                     pygame.quit()
                     sys.exit()
                 # 환경설정
-                elif self.btn_gameSetting.collidepoint(self.mouse_x_r, self.mouse_y_r):
+                elif self.btn_gameSetting.collidepoint(mouse_x, mouse_y):
                     self.gameSetting()
                 else:
                     pass
+
+            #     # 버튼 클릭 시
+            # if self.is_clicked:
+            #     # 게임 시작
+            #     if self.btn_start.collidepoint(self.mouse_x_r, self.mouse_y_r):
+            #         self.run()
+            #     # 게임 종료
+            #     elif self.btn_exit.collidepoint(self.mouse_x_r, self.mouse_y_r):
+            #         pygame.quit()
+            #         sys.exit()
+            #     # 환경설정
+            #     elif self.btn_gameSetting.collidepoint(self.mouse_x_r, self.mouse_y_r):
+            #         self.gameSetting()
+            #     else:
+            #         pass
+
 
             # 마우스 클릭 이벤트 체크
             self.check_click()
@@ -148,26 +168,28 @@ class Game:
             # self.screen.blit(self.btn_exit_surf, self.btn_exit)
             # self.screen.blit(self.btn_gameSetting_surf, self.btn_gameSetting)
             
+            
             self.ScreenResized.blit(
                 pygame.transform.scale(
-                    self.btn_start_surf, (self.btn_start[0],self.btn_start[0]) )
+                    self.screen, (self.ScreenResized.get_width(), self.ScreenResized.get_height()))
+                    , self.ScreenResized_centerpos
+                    )
+
+            self.ScreenResized.blit(
+                pygame.transform.scale(
+                    self.btn_start_surf, (self.btn_start_surf.get_width(),self.btn_start_surf.get_height()) )
                     , self.btn_start_pos
                     )
             
             self.ScreenResized.blit(
                 pygame.transform.scale(
-                    self.btn_exit_surf, (self.btn_exit[0], self.btn_exit[1]))
+                    self.btn_exit_surf, (self.btn_exit_surf.get_width(),self.btn_exit_surf.get_height()))
                     , self.btn_exit_pos
                     )
             self.ScreenResized.blit(
                 pygame.transform.scale(
-                    self.btn_gameSetting_surf, (self.btn_gameSetting[0], self.btn_gameSetting[1]))
+                    self.btn_gameSetting_surf, (self.btn_gameSetting_surf.get_width(),self.btn_gameSetting_surf.get_height()))
                     , self.btn_gameSetting_pos
-                    )
-            self.ScreenResized.blit(
-                pygame.transform.scale(
-                    self.screen, (self.ScreenResized.get_width(), self.ScreenResized.get_height()))
-                    , self.ScreenResized_centerpos
                     )
             
             pygame.display.update()
