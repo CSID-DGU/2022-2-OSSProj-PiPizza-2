@@ -10,7 +10,11 @@ pygame.init()
 #화면 크기 및 FPS
 SCREEN_SIZE = WIDTH, HEIGHT = (900, 450)
 FPS = 60
-BUTTON_SIZE = BWIDTH, BHEIGHT = (135, 80)
+
+# 버튼 크기 BUTTON_SIZE = BWIDTH, BHEIGHT = (135, 80)
+btn_menu_w = int(WIDTH/6.8)
+btn_menu_h = int(HEIGHT/8)
+btn_gameSetting_w = int(btn_menu_w/2)
 
 # 게임 단계
 GAME_STATES = [ 'stage1', 'stage2', 'stageFinal']
@@ -26,12 +30,16 @@ ScreenResized_centerpos = (0,0)
 rWIDTH = ScreenResized.get_width()
 rHEIGHT = ScreenResized.get_height()
 rSCREEN_SIZE = (rWIDTH, rHEIGHT)
+
+# 버튼 크기 BUTTON_SIZE = BWIDTH, BHEIGHT = (135, 80)
+btn_menu_wR = int(rWIDTH/6.8)
+btn_menu_hR = int(rHEIGHT/8)
+btn_gameSetting_wR = int(btn_menu_wR/2)
+
+
 # button_offset = 0.18 뭔지 모름
 
-# # 버튼 위치(center)
-btn_menu_w = int(WIDTH/6.8)
-btn_menu_h = int(HEIGHT/8)
-btn_gameSetting_w = int(btn_menu_w/2)
+
 
 def checkscrsize(wEvent, hEvent):
 
@@ -42,7 +50,7 @@ def checkscrsize(wEvent, hEvent):
         #         heightAdjusted = int(wEvent/(self.rWIDTH/self.rHEIGHT))
         #         self.screen = pygame.display.set_mode((wEvent,heightAdjusted), RESIZABLE)
 
-def imgAlpha(name, typeI, sizeX, sizeY):
+def imgAlpha(nameI, typeI, sizeX, sizeY):
         # self.btn_start_surf = pygame.image.load(f'{self.path_btn}btn_start_.png').convert_alpha()
         # self.btn_start = self.btn_start_surf.get_rect(center=self.btn_start_pos)
         # path_images = 'images/'
@@ -50,7 +58,9 @@ def imgAlpha(name, typeI, sizeX, sizeY):
         # path_bg = 'images/background/'
         # img = pygame.image.load()
         if typeI == 'btn':
-            img = pygame.image.load('images/Button/',name)
+                path_b = 'images/Button'
+                fullname = os.path.join('images/Button', nameI)
+                img = pygame.image.load(fullname)
         elif typeI == 'sprt':
             pass
         img = pygame.transform.scale(img, (sizeX, sizeY))
@@ -61,7 +71,7 @@ def imgAlpha(name, typeI, sizeX, sizeY):
 def resize(w, h):
         # global WIDTH, HEIGHT, self.ScreenResized
         print("ScreenResized: (",ScreenResized.get_width(),",",ScreenResized.get_height(),")")
-        return ( w*ScreenResized.get_width()//WIDTH, h*ScreenResized.get_height()//HEIGHT)
+        return (w*ScreenResized.get_width()//WIDTH, h*ScreenResized.get_height()//HEIGHT)
 
 # ScreenResized = pygame.display.set_mode((SCREEN_SIZE), RESIZABLE)
 # # screen 변수에 크기옵션 집어넣어 앞으로 그릴 내용 담음

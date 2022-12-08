@@ -28,13 +28,13 @@ class Game:
 
         
 
-        self.btn_start_pos = (int(4.5*btn_menu_w), int(2.5* btn_menu_h))
-        self.btn_exit_pos = (self.rWIDTH - int(2.4*btn_menu_w), int(4* btn_menu_h))
-        self.btn_gameSetting_pos = (self.rWIDTH - int(2.6*btn_menu_w), int(5.5* btn_menu_h))
+        self.btn_start_pos = (int(4.6*btn_menu_w), int(2.5* btn_menu_h))
+        self.btn_exit_pos = (int(4.4*btn_menu_w), int(4* btn_menu_h))
+        self.btn_gameSetting_pos = (int(4.2*btn_menu_w), int(5.5* btn_menu_h))
         
-        self.btn_soundOn_pos = (self.rWIDTH - int(8.3*btn_gameSetting_w), int(4* btn_menu_h))
-        self.btn_soundOff_pos = (self.rWIDTH - int(6.3*btn_gameSetting_w), int(4* btn_menu_h))
-        self.btn_backToMenu_pos = (self.rWIDTH - int(3.6*btn_menu_w), int(6* btn_menu_h))
+        # self.btn_soundOn_pos = (self.rWIDTH - int(8.3*btn_gameSetting_w), int(4* btn_menu_h))
+        # self.btn_soundOff_pos = (self.rWIDTH - int(6.3*btn_gameSetting_w), int(4* btn_menu_h))
+        # self.btn_backToMenu_pos = (self.rWIDTH - int(3.6*btn_menu_w), int(6* btn_menu_h))
 
         self.import_assets() # 이미지 로드
 
@@ -85,8 +85,8 @@ class Game:
         # 메뉴화면 배경
         self.background_surf = pygame.image.load(f'{self.path_bg}menu_background.png').convert_alpha()
         self.background_set_surf = pygame.image.load(f'{self.path_bg}menu_background_set_b.png').convert_alpha()
-        self.background_surf = pygame.transform.scale(self.background_surf, (self.rWIDTH, self.rHEIGHT))
-        self.background_set_surf = pygame.transform.scale(self.background_set_surf, (self.rWIDTH, self.rHEIGHT))
+        self.background_surf = pygame.transform.scale(self.background_surf, (WIDTH, HEIGHT))
+        self.background_set_surf = pygame.transform.scale(self.background_set_surf, (WIDTH, HEIGHT))
         self.background_rect = self.background_surf.get_rect(topleft=(0, 0))
         self.background_set_rect = self.background_set_surf.get_rect(topleft=(0, 0))
         
@@ -99,12 +99,12 @@ class Game:
         # self.btn_gameSetting = self.btn_gameSetting_surf.get_rect(center=self.btn_gameSetting_pos)
         self.btn_start_surf, self.btn_start = imgAlpha('btn_start_.png', 'btn', btn_menu_w, btn_menu_h)
         # 환경설정화면 버튼들
-        self.btn_soundOn_surf = pygame.image.load(f'{self.path_btn}btn_soundOn_.png').convert_alpha()
-        self.btn_soundOff_surf = pygame.image.load(f'{self.path_btn}btn_soundOff_.png').convert_alpha()
-        self.btn_backToMenu_surf = pygame.image.load(f'{self.path_btn}btn_backToMenu_.png').convert_alpha()
-        self.btn_soundOn = self.btn_soundOn_surf.get_rect(center=self.btn_soundOn_pos)
-        self.btn_soundOff = self.btn_soundOff_surf.get_rect(center=self.btn_soundOff_pos)
-        self.btn_backToMenu = self.btn_backToMenu_surf.get_rect(center=self.btn_backToMenu_pos)
+        # self.btn_soundOn_surf = pygame.image.load(f'{self.path_btn}btn_soundOn_.png').convert_alpha()
+        # self.btn_soundOff_surf = pygame.image.load(f'{self.path_btn}btn_soundOff_.png').convert_alpha()
+        # self.btn_backToMenu_surf = pygame.image.load(f'{self.path_btn}btn_backToMenu_.png').convert_alpha()
+        # self.btn_soundOn = self.btn_soundOn_surf.get_rect(center=self.btn_soundOn_pos)
+        # self.btn_soundOff = self.btn_soundOff_surf.get_rect(center=self.btn_soundOff_pos)
+        # self.btn_backToMenu = self.btn_backToMenu_surf.get_rect(center=self.btn_backToMenu_pos)
 
         # 다이얼로그
 
@@ -114,35 +114,44 @@ class Game:
     # 메인 메뉴화면
     def menu(self):
 
+        # self.btn_start_pos = (int(4.6*btn_menu_w), int(2.5* btn_menu_h))
+        # self.btn_exit_pos = (int(4.4*btn_menu_w), int(4* btn_menu_h))
+        # self.btn_gameSetting_pos = (int(4.2*btn_menu_w), int(5.5* btn_menu_h))
+        
         self.btn_start_surf, self.btn_start_rect = imgAlpha('btn_start_.png', 'btn', btn_menu_w, btn_menu_h)
-        self.btn_start = self.btn_start_rect.center()
+        
+        self.btn_exit_surf, self.btn_exit_rect = imgAlpha('btn_exit_.png', 'btn', btn_menu_w, btn_menu_h)
+        
+        self.btn_gameSetting_surf, self.btn_gameSetting_rect = imgAlpha('btn_gameSetting_.png', 'btn', btn_menu_w, btn_menu_h)
+        
 
         while True:
-            self.screen.blit(self.background_surf, self.background_rect)
+            screen.blit(self.background_surf, self.background_rect)
 
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.VIDEORESIZE:
-                    self.checkscrsize(event.w, event.h)
-        
+                    checkscrsize(event.w, event.h)
+                    self.btn_start_rect.center =(resize(4.6*btn_menu_w, 2.5* btn_menu_h))
+                    self.btn_exit_rect.center = (resize(int(4.4*btn_menu_w), int(4* btn_menu_h)))
+                    self.btn_gameSetting_rect.center = (resize(int(4.2*btn_menu_w), int(5.5* btn_menu_h)))
+
             # 마우스 위치
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            self.mouse_x_r = pygame.mouse.get_pos()[0] * (WIDTH/self.rWIDTH)
-            self.mouse_y_r = pygame.mouse.get_pos()[1] * (HEIGHT/self.rHEIGHT)
 
             # 버튼 클릭 시
             if self.is_clicked:
                 # 게임 시작
-                if self.btn_start.collidepoint(self.mouse_x_r, self.mouse_y_r):
+                if self.btn_start_rect.collidepoint(mouse_x, mouse_y):
                     self.run()
                 # 게임 종료
-                elif self.btn_exit.collidepoint(self.mouse_x_r, self.mouse_y_r):
+                elif self.btn_exit_rect.collidepoint(mouse_x, mouse_y):
                     pygame.quit()
                     sys.exit()
                 # 환경설정
-                elif self.btn_gameSetting.collidepoint(self.mouse_x_r, self.mouse_y_r):
+                elif self.btn_gameSetting_rect.collidepoint(mouse_x, mouse_y):
                     self.gameSetting()
                 else:
                     pass
@@ -152,17 +161,17 @@ class Game:
 
             # 화면 업데이트
             
-            self.screen.blit(self.btn_start_surf, self.btn_start)
-            self.screen.blit(self.btn_exit_surf, self.btn_exit)
-            self.screen.blit(self.btn_gameSetting_surf, self.btn_gameSetting)
-            self.ScreenResized.blit(
+            screen.blit(self.btn_start_surf, self.btn_start_rect)
+            screen.blit(self.btn_exit_surf, self.btn_exit_rect)
+            screen.blit(self.btn_gameSetting_surf, self.btn_gameSetting_rect)
+            ScreenResized.blit(
                 pygame.transform.scale(
-                    self.screen, (self.ScreenResized.get_width(), self.ScreenResized.get_height()))
-                    , self.ScreenResized_centerpos
+                    screen, (ScreenResized.get_width(), ScreenResized.get_height()))
+                    , ScreenResized_centerpos
                     )
             
             pygame.display.update()
-            print(self.btn_gameSetting_surf.get_width(), self.btn_gameSetting_surf.get_height())
+            # print(self.btn_gameSetting_surf.get_width(), self.btn_gameSetting_surf.get_height())
 
     def checkClear(self):
         if stageTwo().isClear == True:
@@ -257,9 +266,9 @@ class Game:
             self.check_click()
 
             # 화면 업데이트
-            self.screen.blit(self.btn_soundOn_surf, self.btn_soundOn)
-            self.screen.blit(self.btn_soundOff_surf, self.btn_soundOff)
-            self.screen.blit(self.btn_backToMenu_surf, self.btn_backToMenu)
+            screen.blit(self.btn_soundOn_surf, self.btn_soundOn)
+            screen.blit(self.btn_soundOff_surf, self.btn_soundOff)
+            screen.blit(self.btn_backToMenu_surf, self.btn_backToMenu)
             
             pygame.display.update()
 
