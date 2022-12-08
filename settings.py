@@ -45,6 +45,7 @@ GAME_STATES = [ 'stage1', 'stage2', 'stageFinal']
 # # 메뉴화면 버튼 크기
 # btn_menu_w = int(WIDTH/6.8)
 # btn_menu_h = int(HEIGHT/8)
+# btn_gameSetting_w = int(btn_menu_w/2)
 # for event in pygame.event.get():
 #     if event.type == pygame.VIDEORESIZE:
 #         checkscrsize(event.w, event.h)
@@ -52,7 +53,6 @@ GAME_STATES = [ 'stage1', 'stage2', 'stageFinal']
 #         btn_menu_h = int(g.ScreenResized.get_height()/8)
 
 
-# btn_gameSetting_w = int(btn_menu_w/2)
 
 # 색상
 WHITE   = (255, 255, 255)
