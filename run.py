@@ -16,17 +16,9 @@ class Game:
         
         pygame.init()
 
-        # 화면 크기 조정
-        self.ScreenResized = pygame.display.set_mode((WIDTH, HEIGHT), RESIZABLE)
-        # screen 변수에 크기옵션 집어넣어 앞으로 그릴 내용 담음
-        self.screen = self.ScreenResized.copy()
-        pygame.display.set_caption("배달의 달인")
 
-        self.ScreenResized_centerpos = (0,0)
-        self.rWIDTH = self.ScreenResized.get_width()
-        self.rHEIGHT = self.ScreenResized.get_height()
-        self.rSCREEN_SIZE = (self.rWIDTH, self.rHEIGHT)
-        # button_offset = 0.18 뭔지 모름
+        # 화면 크기 조정
+        
 
         self.clock = pygame.time.Clock()
         self.level = Level()
@@ -34,12 +26,9 @@ class Game:
         # 클릭 이벤트 (종료(quit))
         self.is_clicked = False
 
-        # # 버튼 위치(center)
-        # btn_menu_w = int(self.rWIDTH/6.8)
-        # btn_menu_h = int(self.rHEIGHT/8)
-        # btn_gameSetting_w = int(btn_menu_w/2)
+        
 
-        self.btn_start_pos = (self.rWIDTH - int(2.2*btn_menu_w), int(2.5* btn_menu_h))
+        self.btn_start_pos = (int(4.5*btn_menu_w), int(2.5* btn_menu_h))
         self.btn_exit_pos = (self.rWIDTH - int(2.4*btn_menu_w), int(4* btn_menu_h))
         self.btn_gameSetting_pos = (self.rWIDTH - int(2.6*btn_menu_w), int(5.5* btn_menu_h))
         
@@ -52,18 +41,33 @@ class Game:
         # 디스크립션(다이얼로그)
         self.dial = Description()
 
-    def checkscrsize(self, wEvent, hEvent):
-            if (wEvent < WIDTH and hEvent < HEIGHT) or wEvent < WIDTH or hEvent < HEIGHT: #최소해상도
-                self.screen = pygame.display.set_mode((WIDTH, HEIGHT), RESIZABLE)
-            # else:
-            #     if hEvent/wEvent != WIDTH/HEIGHT: #고정화면비
-            #         heightAdjusted = int(wEvent/(self.rWIDTH/self.rHEIGHT))
-            #         self.screen = pygame.display.set_mode((wEvent,heightAdjusted), RESIZABLE)
+    # def checkscrsize(self, wEvent, hEvent):
+    #         if (wEvent < WIDTH and hEvent < HEIGHT) or wEvent < WIDTH or hEvent < HEIGHT: #최소해상도
+    #             self.screen = pygame.display.set_mode((WIDTH, HEIGHT), RESIZABLE)
+    #         # else:
+    #         #     if hEvent/wEvent != WIDTH/HEIGHT: #고정화면비
+    #         #         heightAdjusted = int(wEvent/(self.rWIDTH/self.rHEIGHT))
+    #         #         self.screen = pygame.display.set_mode((wEvent,heightAdjusted), RESIZABLE)
+    # def imgAlpha(self, name, typeI, sizeX, sizeY):
+    #     # self.btn_start_surf = pygame.image.load(f'{self.path_btn}btn_start_.png').convert_alpha()
+    #     # self.btn_start = self.btn_start_surf.get_rect(center=self.btn_start_pos)
+    #     # path_images = 'images/'
+    #     # path_btn = 'images/Button/'
+    #     # path_bg = 'images/background/'
+    #     # img = pygame.image.load()
+    #     if typeI == 'btn':
+    #         img = pygame.image.load('images/Button/',name)
+    #     elif typeI == 'sprt':
+    #         pass
+    #     img = pygame.transform.scale(img, (sizeX, sizeY))
+    #     img.convert_alpha()
 
-    def resize(self, w, h):
-            # global WIDTH, HEIGHT, self.ScreenResized
-            print("ScreenResized: (",self.ScreenResized.get_width(),",",self.ScreenResized.get_height(),")")
-            return ( w*self.ScreenResized.get_width()//WIDTH, h*self.ScreenResized.get_height()//HEIGHT)
+    #     return (img, img.get_rect())
+        
+    # def resize(self, w, h):
+    #         # global WIDTH, HEIGHT, self.ScreenResized
+    #         print("ScreenResized: (",self.ScreenResized.get_width(),",",self.ScreenResized.get_height(),")")
+    #         return ( w*self.ScreenResized.get_width()//WIDTH, h*self.ScreenResized.get_height()//HEIGHT)
 
     def import_assets(self):
         
@@ -87,12 +91,13 @@ class Game:
         self.background_set_rect = self.background_set_surf.get_rect(topleft=(0, 0))
         
         # 메뉴화면 버튼들
-        self.btn_start_surf = pygame.image.load(f'{self.path_btn}btn_start_.png').convert_alpha()
-        self.btn_start = self.btn_start_surf.get_rect(center=self.btn_start_pos)
-        self.btn_exit_surf = pygame.image.load(f'{self.path_btn}btn_exit_.png').convert_alpha()
-        self.btn_exit = self.btn_exit_surf.get_rect(center=self.btn_exit_pos)
-        self.btn_gameSetting_surf = pygame.image.load(f'{self.path_btn}btn_gameSetting_.png').convert_alpha()
-        self.btn_gameSetting = self.btn_gameSetting_surf.get_rect(center=self.btn_gameSetting_pos)
+        # self.btn_start_surf = pygame.image.load(f'{self.path_btn}btn_start_.png').convert_alpha()
+        # self.btn_start = self.btn_start_surf.get_rect(center=self.btn_start_pos)
+        # self.btn_exit_surf = pygame.image.load(f'{self.path_btn}btn_exit_.png').convert_alpha()
+        # self.btn_exit = self.btn_exit_surf.get_rect(center=self.btn_exit_pos)
+        # self.btn_gameSetting_surf = pygame.image.load(f'{self.path_btn}btn_gameSetting_.png').convert_alpha()
+        # self.btn_gameSetting = self.btn_gameSetting_surf.get_rect(center=self.btn_gameSetting_pos)
+        self.btn_start_surf, self.btn_start = imgAlpha('btn_start_.png', 'btn', btn_menu_w, btn_menu_h)
         # 환경설정화면 버튼들
         self.btn_soundOn_surf = pygame.image.load(f'{self.path_btn}btn_soundOn_.png').convert_alpha()
         self.btn_soundOff_surf = pygame.image.load(f'{self.path_btn}btn_soundOff_.png').convert_alpha()
@@ -108,6 +113,9 @@ class Game:
     
     # 메인 메뉴화면
     def menu(self):
+
+        self.btn_start_surf, self.btn_start_rect = imgAlpha('btn_start_.png', 'btn', btn_menu_w, btn_menu_h)
+        self.btn_start = self.btn_start_rect.center()
 
         while True:
             self.screen.blit(self.background_surf, self.background_rect)
@@ -154,6 +162,7 @@ class Game:
                     )
             
             pygame.display.update()
+            print(self.btn_gameSetting_surf.get_width(), self.btn_gameSetting_surf.get_height())
 
     def checkClear(self):
         if stageTwo().isClear == True:
