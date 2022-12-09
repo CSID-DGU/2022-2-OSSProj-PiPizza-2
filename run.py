@@ -6,6 +6,7 @@ from settings import *
 from level import *
 from sound import *
 from description import *
+from stage1 import *
 from stage2 import *
 
 class Game:
@@ -110,7 +111,7 @@ class Game:
             pygame.display.update()
 
     def checkClear(self):
-        if stageTwo().isClear == True:
+        if stageOne().isClear == True:
             self.level.isOneClear = True
 
     # 메인 게임 시작
@@ -130,14 +131,8 @@ class Game:
                 if event.key == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         paused = not paused
-                        paused_value, return_home_value = pausing()
-                        if paused_value != None:
-                            paused = paused_value
-                        else:
-                            introFlag = return_home_value
-                            gameQuit = True
-                            return introFlag
-
+                        paused = pausing()
+                        
             stageTwo(death_count=0)
 
             # delta frame으로 수정
@@ -217,12 +212,7 @@ class Game:
             
             pygame.display.update()
 
-    # def quit(event):
-    #     if event.type == QUIT:
-    #         pygame.quit()
-    #         sys.exit()
 
-         
 # checking if we are in the run file?
 # 게임 실행 (실행 시 시작화면은 메인 메뉴)
 # 실행 안 되는 문제를 해결했는데, 원래 코드 '__run__'을 run 대신 main으로 바꿈
