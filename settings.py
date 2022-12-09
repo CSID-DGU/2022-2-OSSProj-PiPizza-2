@@ -24,7 +24,7 @@ GAME_STATES = [ 'stage1', 'stage2', 'stageFinal']
 # ScreenResized_centerpos = (0,0)
 # rWIDTH = ScreenResized.get_width()
 # rHEIGHT = ScreenResized.get_height()
-# # button_offset = 0.18 뭔지 모름
+# button_offset = 0.18 뭔지 모름
 
 # def checkscrsize(wEvent, hEvent):
 #     if (wEvent < WIDTH and hEvent < HEIGHT) or wEvent < WIDTH or hEvent < HEIGHT: #최소해상도
@@ -43,8 +43,10 @@ GAME_STATES = [ 'stage1', 'stage2', 'stageFinal']
 
 
 # # 메뉴화면 버튼 크기
-# btn_menu_w = int(WIDTH/6.8)
-# btn_menu_h = int(HEIGHT/8)
+btn_menu_w = int(WIDTH/6.8)
+btn_menu_h = int(HEIGHT/8)
+btn_gameSetting_w = int(btn_menu_w/2)
+
 # for event in pygame.event.get():
 #     if event.type == pygame.VIDEORESIZE:
 #         checkscrsize(event.w, event.h)
@@ -52,7 +54,7 @@ GAME_STATES = [ 'stage1', 'stage2', 'stageFinal']
 #         btn_menu_h = int(g.ScreenResized.get_height()/8)
 
 
-# btn_gameSetting_w = int(btn_menu_w/2)
+
 
 # 색상
 WHITE   = (255, 255, 255)

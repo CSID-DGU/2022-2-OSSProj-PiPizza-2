@@ -10,64 +10,32 @@ from stage2 import *
 
 class Game:
     def __init__(self):
-        # pygame.init()
-        # screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        # pygame.display.set_caption("배달의 달인")
-        
         pygame.init()
 
-
-        # 화면 크기 조정
         
-
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.display.set_caption("배달의 달인")
+        
         self.clock = pygame.time.Clock()
         self.level = Level()
 
         # 클릭 이벤트 (종료(quit))
         self.is_clicked = False
 
+        # 버튼 위치(center)
+        self.btn_start_pos = (WIDTH - int(2.2*btn_menu_w), int(2.5* btn_menu_h))
+        self.btn_exit_pos = (WIDTH - int(2.4*btn_menu_w), int(4* btn_menu_h))
+        self.btn_gameSetting_pos = (WIDTH - int(2.6*btn_menu_w), int(5.5* btn_menu_h))
         
-
-        self.btn_start_pos = (int(4.5*btn_menu_w), int(2.5* btn_menu_h))
-        self.btn_exit_pos = (self.rWIDTH - int(2.4*btn_menu_w), int(4* btn_menu_h))
-        self.btn_gameSetting_pos = (self.rWIDTH - int(2.6*btn_menu_w), int(5.5* btn_menu_h))
-        
-        self.btn_soundOn_pos = (self.rWIDTH - int(8.3*btn_gameSetting_w), int(4* btn_menu_h))
-        self.btn_soundOff_pos = (self.rWIDTH - int(6.3*btn_gameSetting_w), int(4* btn_menu_h))
-        self.btn_backToMenu_pos = (self.rWIDTH - int(3.6*btn_menu_w), int(6* btn_menu_h))
+        self.btn_soundOn_pos = (WIDTH - int(8.3*btn_gameSetting_w), int(4* btn_menu_h))
+        self.btn_soundOff_pos = (WIDTH - int(6.3*btn_gameSetting_w), int(4* btn_menu_h))
+        self.btn_backToMenu_pos = (WIDTH - int(3.6*btn_menu_w), int(6* btn_menu_h))
 
         self.import_assets() # 이미지 로드
 
         # 디스크립션(다이얼로그)
         self.dial = Description()
 
-    # def checkscrsize(self, wEvent, hEvent):
-    #         if (wEvent < WIDTH and hEvent < HEIGHT) or wEvent < WIDTH or hEvent < HEIGHT: #최소해상도
-    #             self.screen = pygame.display.set_mode((WIDTH, HEIGHT), RESIZABLE)
-    #         # else:
-    #         #     if hEvent/wEvent != WIDTH/HEIGHT: #고정화면비
-    #         #         heightAdjusted = int(wEvent/(self.rWIDTH/self.rHEIGHT))
-    #         #         self.screen = pygame.display.set_mode((wEvent,heightAdjusted), RESIZABLE)
-    # def imgAlpha(self, name, typeI, sizeX, sizeY):
-    #     # self.btn_start_surf = pygame.image.load(f'{self.path_btn}btn_start_.png').convert_alpha()
-    #     # self.btn_start = self.btn_start_surf.get_rect(center=self.btn_start_pos)
-    #     # path_images = 'images/'
-    #     # path_btn = 'images/Button/'
-    #     # path_bg = 'images/background/'
-    #     # img = pygame.image.load()
-    #     if typeI == 'btn':
-    #         img = pygame.image.load('images/Button/',name)
-    #     elif typeI == 'sprt':
-    #         pass
-    #     img = pygame.transform.scale(img, (sizeX, sizeY))
-    #     img.convert_alpha()
-
-    #     return (img, img.get_rect())
-        
-    # def resize(self, w, h):
-    #         # global WIDTH, HEIGHT, self.ScreenResized
-    #         print("ScreenResized: (",self.ScreenResized.get_width(),",",self.ScreenResized.get_height(),")")
-    #         return ( w*self.ScreenResized.get_width()//WIDTH, h*self.ScreenResized.get_height()//HEIGHT)
 
     def import_assets(self):
         
@@ -85,19 +53,18 @@ class Game:
         # 메뉴화면 배경
         self.background_surf = pygame.image.load(f'{self.path_bg}menu_background.png').convert_alpha()
         self.background_set_surf = pygame.image.load(f'{self.path_bg}menu_background_set_b.png').convert_alpha()
-        self.background_surf = pygame.transform.scale(self.background_surf, (self.rWIDTH, self.rHEIGHT))
-        self.background_set_surf = pygame.transform.scale(self.background_set_surf, (self.rWIDTH, self.rHEIGHT))
+        self.background_surf = pygame.transform.scale(self.background_surf, (WIDTH, HEIGHT))
+        self.background_set_surf = pygame.transform.scale(self.background_set_surf, (WIDTH, HEIGHT))
         self.background_rect = self.background_surf.get_rect(topleft=(0, 0))
         self.background_set_rect = self.background_set_surf.get_rect(topleft=(0, 0))
         
         # 메뉴화면 버튼들
-        # self.btn_start_surf = pygame.image.load(f'{self.path_btn}btn_start_.png').convert_alpha()
-        # self.btn_start = self.btn_start_surf.get_rect(center=self.btn_start_pos)
-        # self.btn_exit_surf = pygame.image.load(f'{self.path_btn}btn_exit_.png').convert_alpha()
-        # self.btn_exit = self.btn_exit_surf.get_rect(center=self.btn_exit_pos)
-        # self.btn_gameSetting_surf = pygame.image.load(f'{self.path_btn}btn_gameSetting_.png').convert_alpha()
-        # self.btn_gameSetting = self.btn_gameSetting_surf.get_rect(center=self.btn_gameSetting_pos)
-        self.btn_start_surf, self.btn_start = imgAlpha('btn_start_.png', 'btn', btn_menu_w, btn_menu_h)
+        self.btn_start_surf = pygame.image.load(f'{self.path_btn}btn_start_.png').convert_alpha()
+        self.btn_start = self.btn_start_surf.get_rect(center=self.btn_start_pos)
+        self.btn_exit_surf = pygame.image.load(f'{self.path_btn}btn_exit_.png').convert_alpha()
+        self.btn_exit = self.btn_exit_surf.get_rect(center=self.btn_exit_pos)
+        self.btn_gameSetting_surf = pygame.image.load(f'{self.path_btn}btn_gameSetting_.png').convert_alpha()
+        self.btn_gameSetting = self.btn_gameSetting_surf.get_rect(center=self.btn_gameSetting_pos)
         # 환경설정화면 버튼들
         self.btn_soundOn_surf = pygame.image.load(f'{self.path_btn}btn_soundOn_.png').convert_alpha()
         self.btn_soundOff_surf = pygame.image.load(f'{self.path_btn}btn_soundOff_.png').convert_alpha()
@@ -113,36 +80,23 @@ class Game:
     
     # 메인 메뉴화면
     def menu(self):
-
-        self.btn_start_surf, self.btn_start_rect = imgAlpha('btn_start_.png', 'btn', btn_menu_w, btn_menu_h)
-        self.btn_start = self.btn_start_rect.center()
-
         while True:
             self.screen.blit(self.background_surf, self.background_rect)
-
-            for event in pygame.event.get():
-                if event.type == QUIT:
-                    pygame.quit()
-                    sys.exit()
-                if event.type == pygame.VIDEORESIZE:
-                    self.checkscrsize(event.w, event.h)
         
             # 마우스 위치
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            self.mouse_x_r = pygame.mouse.get_pos()[0] * (WIDTH/self.rWIDTH)
-            self.mouse_y_r = pygame.mouse.get_pos()[1] * (HEIGHT/self.rHEIGHT)
 
             # 버튼 클릭 시
             if self.is_clicked:
                 # 게임 시작
-                if self.btn_start.collidepoint(self.mouse_x_r, self.mouse_y_r):
+                if self.btn_start.collidepoint(mouse_x, mouse_y):
                     self.run()
                 # 게임 종료
-                elif self.btn_exit.collidepoint(self.mouse_x_r, self.mouse_y_r):
+                elif self.btn_exit.collidepoint(mouse_x, mouse_y):
                     pygame.quit()
                     sys.exit()
                 # 환경설정
-                elif self.btn_gameSetting.collidepoint(self.mouse_x_r, self.mouse_y_r):
+                elif self.btn_gameSetting.collidepoint(mouse_x, mouse_y):
                     self.gameSetting()
                 else:
                     pass
@@ -151,18 +105,11 @@ class Game:
             self.check_click()
 
             # 화면 업데이트
-            
             self.screen.blit(self.btn_start_surf, self.btn_start)
             self.screen.blit(self.btn_exit_surf, self.btn_exit)
             self.screen.blit(self.btn_gameSetting_surf, self.btn_gameSetting)
-            self.ScreenResized.blit(
-                pygame.transform.scale(
-                    self.screen, (self.ScreenResized.get_width(), self.ScreenResized.get_height()))
-                    , self.ScreenResized_centerpos
-                    )
-            
+           
             pygame.display.update()
-            print(self.btn_gameSetting_surf.get_width(), self.btn_gameSetting_surf.get_height())
 
     def checkClear(self):
         if stageTwo().isClear == True:
@@ -181,13 +128,22 @@ class Game:
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
-                if event.type == pygame.VIDEORESIZE:
-                    self.checkscrsize(event.w, event.h)
+
+                if event.key == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        paused = not paused
+                        paused_value, return_home_value = pausing()
+                        if paused_value != None:
+                            paused = paused_value
+                        else:
+                            introFlag = return_home_value
+                            gameQuit = True
+                            return introFlag
 
             stageTwo(death_count=0)
 
             # delta frame으로 수정
-            df = self.clock.tick(self.FPS)
+            df = self.clock.tick(FPS)
             self.level.run(df)          
             pygame.display.update()
 
@@ -275,4 +231,3 @@ class Game:
 if __name__ == '__main__':
     game = Game()
     game.menu()
-

@@ -1,11 +1,16 @@
 import pygame, sys
 from pygame.locals import *
 from settings import *
-pygame.init()
+
+
 
 class Description:
     def __init__(self):
-        # self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.init()
+
+
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.display.set_caption("배달의 달인")
         self.path_dial = 'images/Dialog/'
 
         # 디스크립션 이미지
@@ -25,14 +30,6 @@ class Description:
     def dial1(self):
         self.num = 0
         while True:
-
-            for event in pygame.event.get():
-                if event.type == QUIT:
-                    pygame.quit()
-                    sys.exit()
-                if event.type == pygame.VIDEORESIZE:
-                    self.checkscrsize(event.w, event.h)
-
             if self.num == 0:
                 self.screen.blit(self.dial1_surf, self.dial1_rect)
                 pygame.display.update()
@@ -92,4 +89,4 @@ class Description:
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_RETURN:
                     return True
-        return False            
+        return False   
