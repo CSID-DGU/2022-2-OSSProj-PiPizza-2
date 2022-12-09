@@ -78,30 +78,14 @@ PLAYER_IMG_INFO = {'idle': {'idx': 11, 'size': PLAYER_SIZE}, 'idleL': {'idx': 11
 # MonsterElv 설정
 MonsterElv_POWER = 30
 MonsterElv_COOR_ini = (1000, 125) # 몬스터3(Devil) 초기 위치
-MonsterElv_IMG_INFO = {'idleL': {'idx': 8, 'size': MONSTER_SIZE}, 
-                        #'idleR': {'idx': 8, 'size': DEVIL_SIZE},
-                    # 'walkL': {'idx': 8, 'size': DEVIL_SIZE}, 'walkR': {'idx': 8, 'size': DEVIL_SIZE},
-                    # 'attack1L': {'idx': 8, 'size': DEVIL_SIZE}, 'attack1R': {'idx': 8, 'size': DEVIL_SIZE},
-                    # 'cast_explosionL':{'idx': 8, 'size': DEVIL_SIZE}, 'cast_explosionR':{'idx': 8, 'size': DEVIL_SIZE}, 
-                    # 'cast_dazzleL':{'idx': 8, 'size': DEVIL_SIZE}, 'cast_dazzleR':{'idx': 8, 'size': DEVIL_SIZE}, 
-                    # 'cast_thunderL':{'idx': 8, 'size': DEVIL_SIZE}, 'cast_thunderR':{'idx': 8, 'size': DEVIL_SIZE}, 
-                    # 'deathL': {'idx': 7, 'size': DEVIL_SIZE}, 'deathR': {'idx': 7, 'size': DEVIL_SIZE},
-                    # 'hurtL': {'idx': 3, 'size': DEVIL_SIZE}, 'hurtR': {'idx': 3, 'size': DEVIL_SIZE}
-                    }
+MonsterElv_IMG_INFO = {'idleL': {'idx': 8, 'size': MONSTER_SIZE} }
 
 
-# MonsterElv 스킬 설정
-# MonsterElv_ELECMARBLE_SIZE = (560, 372)
-# MonsterElv_ELECMARBLE_INFO = {'darkbolt': {'idx': 11, 'size': DEVIL_DARKBOLT_SIZE}}
-# MonsterElv_ELECRAIN_SIZE = (560, 372)
-# MonsterElv_ELECRAIN_INFO = {'firebomb': {'idx': 14, 'size': DEVIL_FIREBOMB_SIZE}}
-# MonsterElv_SHOCKWAVE_SIZE = 
-# MonsterElv_SHOCKWAVE_INFO = 
-# MonsterElv_TORNADO_SIZE = 
-# MonsterElv_TORNADO_INFO = 
 
 
 #이미지 설정
+BG = pygame.image.load(os.path.join("images/obstacles", "Track2.png"))
+
 RUNNING = [pygame.image.load(os.path.join("images/sprites", "Bike1.png")),
            pygame.image.load(os.path.join("images/sprites", "Bike2.png"))]
 JUMPING = pygame.image.load(os.path.join("images/sprites", "Bike2.png"))
@@ -120,31 +104,29 @@ DUST = [pygame.image.load(os.path.join("images/obstacles", "Dust1.png")),
 
 CLOUD = pygame.image.load(os.path.join("images/obstacles", "Cloud.png"))
 
-BG = pygame.image.load(os.path.join("images/obstacles", "Track.png"))
-
 
 def pausing():
+    global gameOver
+    global gameQuit
     global resized_screen
-    introFlag = False
+    global paused
     gameQuit = False
-    pause_pic, pause_pic_rect = load_image('paused.png', 360, 75, -1)
-    pause_pic_rect.centerx = width * 0.5
-    pause_pic_rect.centery = height * 0.2
-
-    pygame.mixer.music.pause()  # 일시정지상태가 되면 배경음악도 일시정지
+    pause_pic, pause_pic_rect = pygame.image.load(os.path.join("images/Dialog",'paused.png', 360, 75, -1))
+    pause_pic_rect.centerx = WIDTH * 0.5
+    pause_pic_rect.centery = HEIGHT * 0.2
 
     # BUTTON IMG LOAD
-    retbutton_image, retbutton_rect = load_image('main_button.png', 70, 62, -1)
-    resume_image, resume_rect = load_image('continue_button.png', 70, 62, -1)
+    retbutton_image, retbutton_rect = pygame.image.load(os.path.join("images/Button",'home.png', 70, 62, -1))
+    resume_image, resume_rect = pygame.image.load(os.path.join("images/Button",'back.png', 70, 62, -1))
 
-    resized_retbutton_image, resized_retbutton_rect = load_image(*resize('main_button.png', 70, 62, -1))
-    resized_resume_image, resized_resume_rect = load_image(*resize('continue_button.png', 70, 62, -1))
+    resized_retbutton_image, resized_retbutton_rect = pygame.image.load(os.path.join("images/Button",'home.png', 70, 62, -1))
+    resized_resume_image, resized_resume_rect = pygame.image.load(os.path.join("images/Button",'back.png', 70, 62, -1))
 
     # BUTTONPOS
-    retbutton_rect.centerx = width * 0.4;
-    retbutton_rect.top = height * 0.52
-    resume_rect.centerx = width * 0.6;
-    resume_rect.top = height * 0.52
+    retbutton_rect.centerx = WIDTH * 0.4
+    retbutton_rect.top = HEIGHT * 0.52
+    resume_rect.centerx = WIDTH * 0.6
+    resume_rect.top = HEIGHT * 0.52
 
     resized_retbutton_rect.centerx = resized_screen.get_width() * 0.4
     resized_retbutton_rect.top = resized_screen.get_height() * 0.52
@@ -185,11 +167,8 @@ def pausing():
             screen.blit(pause_pic, pause_pic_rect)
             screen.blit(retbutton_image, retbutton_rect)
             screen.blit(resume_image, resume_rect)
-            resized_screen.blit(
-                pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
-                resized_screen_centerpos)
             pygame.display.update()
-        clock.tick(FPS)
+
 
     pygame.quit()
     quit()
