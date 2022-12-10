@@ -1,11 +1,17 @@
 import pygame, sys
 from pygame.locals import *
 from settings import *
-pygame.init()
+
+
 
 class Description:
     def __init__(self):
-        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.init()
+
+        WIDTH = 900
+        HEIGHT = 450
+        self.screen = pygame.display.get_surface()
+        pygame.display.set_caption("배달의 달인")
         self.path_dial = 'images/Dialog/'
 
         # 디스크립션 이미지
@@ -84,4 +90,4 @@ class Description:
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_RETURN:
                     return True
-        return False            
+        return False   
