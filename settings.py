@@ -92,8 +92,13 @@ PLAYER_HP   = 100
 MONSTER_HP  = 100
 
 # 캐릭터 사이즈
-PLAYER_SIZE     = (120, 120)
+PLAYER_SIZE     = (HEIGHT/4, HEIGHT/4)
 MONSTER_SIZE    = (214, 182)
+
+# 공격 사이즈
+LIGHT_SIZE = PLAYER_SIZE
+MARBLE_SIZE = (WIDTH/23, WIDTH/23)
+RAIN_SIZE = (WIDTH/23, HEIGHT/9)
 
 # 플레이어(player) 설정
 PLAYER_SPELL1_MP = 10
@@ -103,11 +108,21 @@ PLAYER_SPELL2_CASTTIME = 5.0
 PLAYER_COOR_ini = (220, 350) # 플레이어 초기 위치
 PLAYER_VELOCITY = vec(0,0)
 PLAYER_ACCELERATION = vec(0,0)
-PLAYER_IMG_INFO = {'idle': {'idx': 11, 'size': PLAYER_SIZE}, 'idleL': {'idx': 11, 'size': PLAYER_SIZE},
-                     'hitted': {'idx': 4, 'size': PLAYER_SIZE}, 'hittedL': {'idx': 4, 'size': PLAYER_SIZE},
-                     'attack1': {'idx': 7, 'size': PLAYER_SIZE}, 'attack1L': {'idx': 7, 'size': PLAYER_SIZE},
-                     'cast2': {'idx': 11, 'size': PLAYER_SIZE}, 'cast2L': {'idx': 11, 'size': PLAYER_SIZE}
-                     }
+
+running_l1 = pygame.image.load(os.path.join("images/sprites", "Bike1_L.png"))
+running_l1 = pygame.transform.scale(running_l1, PLAYER_SIZE)
+running_l2 = pygame.image.load(os.path.join("images/sprites", "Bike2_L.png"))
+running_l2 = pygame.transform.scale(running_l2, PLAYER_SIZE)
+
+running_R1 = pygame.image.load(os.path.join("images/sprites", "Bike1.png"))
+running_R1 = pygame.transform.scale(running_R1, PLAYER_SIZE)
+running_R2 = pygame.image.load(os.path.join("images/sprites", "Bike2.png"))
+running_R2 = pygame.transform.scale(running_R2, PLAYER_SIZE)
+DUCKING_L = [pygame.image.load(os.path.join("images/sprites", "BikeDuck1_L.png"))]
+# RUNNING_L = pygame.transform.scale(RUNNING_L, PLAYER_SIZE)
+# DUCKING_L = pygame.transform.scale(DUCKING_L, PLAYER_SIZE)
+run_ani_L = [running_l2, running_l2]
+run_ani_R = [running_R1, running_R2]
 
 # 보스(MonsterElv) 설정
 MonsterElv_POWER = 20
