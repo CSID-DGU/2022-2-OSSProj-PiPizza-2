@@ -134,9 +134,9 @@ off_pushtime=0
 #효과음
 jump_sound = pygame.mixer.Sound('sound/jump.wav')
 die_sound = pygame.mixer.Sound('sound/die.wav')
-clear_sound = pygame.mixer.Sound('sound/reward.wav')
+clear_sound = pygame.mixer.Sound('sound/rewards.wav')
 
 #bgm
 background_m=pygame.mixer.Sound("sound/opening_bgm.mp3")
-ingame_m =pygame.mixer.Sound("sound/t-rex_bgm1")
+ingame_m =pygame.mixer.Sound("sound/t-rex_bgm1.mp3")
 
