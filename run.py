@@ -7,15 +7,14 @@ from level import *
 from sound import *
 from description import *
 from stage2 import *
+from settings import *
 
 class Game:
     def __init__(self):
-        # pygame.init()
-        # screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        # pygame.display.set_caption("배달의 달인")
-        global screen
-        self.screen = screen
-
+        pygame.init()
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.display.set_caption("배달의 달인")
+        
         self.clock = pygame.time.Clock()
         self.level = Level()
 
@@ -81,6 +80,9 @@ class Game:
     # 메인 메뉴화면
     def menu(self):
 
+        if bgm_on:
+            background_m.play(-1) # 배경음악 실행
+
         while True:
             self.screen.blit(self.background_surf, self.background_rect)
         
@@ -119,6 +121,10 @@ class Game:
     # 메인 게임 시작
     def run(self):
         
+        if bgm_on:
+            background_m.stop()
+            ingame_m.play(-1) 
+
         # dial1
         self.dial.dial1()
         #self.dial.clear1_dial2()
@@ -129,6 +135,17 @@ class Game:
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
+
+                if event.key == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        paused = not paused
+                        paused_value, return_home_value = pausing()
+                        if paused_value != None:
+                            paused = paused_value
+                        else:
+                            introFlag = return_home_value
+                            gameQuit = True
+                            return introFlag
 
             stageTwo(death_count=0)
 
@@ -221,4 +238,3 @@ class Game:
 if __name__ == '__main__':
     game = Game()
     game.menu()
-
