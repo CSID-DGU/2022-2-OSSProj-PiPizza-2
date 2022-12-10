@@ -4,7 +4,7 @@ import pygame, sys
 import os
 import random
 import description
-import settings
+from settings import *
 
 pygame.init()
 
@@ -22,7 +22,7 @@ start_ticks = pygame.time.get_ticks()  # 현재 tick 을 받아옴
 
 total_time = 30  # 총 시간
 
-#elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
+elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
 
 SCREEN_HEIGHT = 450
 SCREEN_WIDTH = 900
@@ -32,32 +32,6 @@ SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE
 #     global width, height, resized_screen
 #     print("resized_screen: (",resized_screen.get_width(),",",resized_screen.get_height(),")")
 #     return (name, w*resized_screen.get_width()//width, h*resized_screen.get_height()//height, color)
-
-BG = pygame.image.load("images/obstacles/Track2.png")
-
-RUNNING = [pygame.image.load("images/sprites/Bike1.png"),
-           pygame.image.load("images/sprites/Bike2.png")]
-JUMPING = pygame.image.load("images/sprites/Bike2.png")
-DUCKING = [pygame.image.load("images/sprites/BikeDuck1.png"),
-           pygame.image.load("images/sprites/BikeDuck1.png")]
-
-
-Traffic_Light = [pygame.image.load("images/obstacles/Traffic1.png"),
-                pygame.image.load(
-                    "images/obstacles/Traffic3.png"),
-                pygame.image.load("images/obstacles/Traffic4.png")]
-Traffic_Cone = [pygame.image.load("images/obstacles/RoadBlock.png"),
-                pygame.image.load(
-                    "images/obstacles/TrafficCone.png"),
-                pygame.image.load("images/obstacles/TrafficCone2.png")]
-
-DUST = [pygame.image.load("images/obstacles/Dust1.png"),
-        pygame.image.load("images/obstacles/Dust2.png")]
-
-CLOUD = pygame.image.load("images/obstacles/Cloud.png")
-
-
-
 
 
 
@@ -273,9 +247,10 @@ def main():
    
         
         #시간
+        
         #이 코드 있으면 시간이 배경 때도 흘러가고, 없애면 흘러가는 게 보여지지 않음,,,
+        
         elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
-
 
         timer = font.render("TIMER: "+str(int(elapsed_time)),True,(0,0,0))
         SCREEN.blit(timer,(10,10))
@@ -372,7 +347,7 @@ def pausing():
                     if pygame.mouse.get_pressed() == (1, 0, 0):
                         x, y = event.pos
                         if homebtn_rect.collidepoint(x, y):
-                            #ingame_m.stop() 
+                            ingame_m.stop() 
                             gameOver = False
                             gameQuit = True
                             #intro()
@@ -417,7 +392,6 @@ def stageTwo(death_count):
         #self.background_img_rect.y = self.Y_POS
         SCREEN.blit(background_img, (0,0))
 
-        
         font = pygame.font.Font('freesansbold.ttf', 30)
 
         global elapsed_time
@@ -431,9 +405,8 @@ def stageTwo(death_count):
         #시작
         if death_count == 0:
             text = font.render("Press any Key to Start", True, (0, 0, 0))
-            timeReset()
-
-            
+            #timeReset()
+      
         #Fail
         elif death_count > 0:
             text = font.render("GAME OVER!", True, (0, 0, 0))
