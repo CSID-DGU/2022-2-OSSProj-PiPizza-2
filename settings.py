@@ -83,8 +83,10 @@ MonsterElv_IMG_INFO = {'idleL': {'idx': 8, 'size': MONSTER_SIZE} }
 
 #이미지 설정
 BG = pygame.image.load("images/obstacles/Track2.png")
+
 stage1_bg =  pygame.image.load('images/background/stage1_bg.png')
 stage2_bg =  pygame.image.load('images/background/stage2_bg.png')
+
 
 RUNNING = [pygame.image.load("images/sprites/Bike1.png"),
            pygame.image.load("images/sprites/Bike2.png")]
@@ -106,6 +108,7 @@ DUST = [pygame.image.load("images/obstacles/Dust1.png"),
         pygame.image.load("images/obstacles/Dust2.png")]
 
 CLOUD = pygame.image.load("images/obstacles/Cloud.png")
+
 
 
 def pausing():
@@ -175,3 +178,19 @@ def pausing():
 
     pygame.quit()
     quit()
+
+#사운드 설정
+bgm_on=True
+on_pushtime=0
+off_pushtime=0
+
+#효과음
+jump_sound = pygame.mixer.Sound('sound/jump.wav')
+die_sound = pygame.mixer.Sound('sound/die.wav')
+clear_sound = pygame.mixer.Sound('sound/rewards.wav')
+
+#bgm
+background_m=pygame.mixer.Sound("sound/opening_bgm.mp3")
+ingame_m =pygame.mixer.Sound("sound/MP_Dancing_piano.mp3")
+
+
