@@ -7,6 +7,7 @@ from level import *
 from sound import *
 from description import *
 from stage2 import *
+from settings import *
 
 class Game:
     def __init__(self):
@@ -78,6 +79,11 @@ class Game:
     
     # 메인 메뉴화면
     def menu(self):
+
+        if bgm_on:
+            pass
+        background_m.play(-1) # 배경음악 실행
+
         while True:
             self.screen.blit(self.background_surf, self.background_rect)
         
@@ -116,6 +122,9 @@ class Game:
     # 메인 게임 시작
     def run(self):
         
+        background_m.stop()
+        ingame_m.play(-1) 
+
         # dial1
         self.dial.dial1()
         #self.dial.clear1_dial2()
