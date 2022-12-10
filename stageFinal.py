@@ -24,7 +24,7 @@ class StageFinal(MonsterElv):
         self.attackBox = pygame.Rect()
 
     def import_monster_assets(self):
-        self.spr = {'idleL':[], 'idleR':[],
+        self.spr = {'idleL':[], 
                     # 'walkL':[], 'walkR':[],
                     # 'attack1L':[], 'attack1R':[],
                     # 'cast_explosionL':[], 'cast_explosionR':[],

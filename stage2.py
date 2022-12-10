@@ -42,6 +42,7 @@ class Bike:
     JUMP_VEL = SCREEN_HEIGHT/52.5
 
     def __init__(self):
+        # 플레이어 움직임 (숙이기, 달리기, 점프하기)
         self.duck_img = DUCKING
         self.run_img = RUNNING
         self.jump_img = JUMPING
@@ -52,7 +53,7 @@ class Bike:
 
         self.step_index = 0
         self.jump_vel = self.JUMP_VEL
-        self.image = self.run_img[0]
+        self.image = self.run_img
         self.bike_rect = self.image.get_rect()
         self.bike_rect.x = self.X_POS
         self.bike_rect.y = self.Y_POS
