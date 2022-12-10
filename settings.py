@@ -138,5 +138,5 @@ clear_sound = pygame.mixer.Sound('sound/rewards.wav')
 
 #bgm
 background_m=pygame.mixer.Sound("sound/opening_bgm.mp3")
-ingame_m =pygame.mixer.Sound("sound/t-rex_bgm1.mp3")
+ingame_m =pygame.mixer.Sound("sound/MP_Dancing_piano.mp3")
 
