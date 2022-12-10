@@ -114,10 +114,10 @@ class Player(pygame.sprite.Sprite, Bike):
         self.pos += self.vel + 0.5 * self.acc  # Updates Position with new values
     
         # This causes character warping from one point of the screen to the other
-        if self.pos.x > WIDTH:
-                self.pos.x = 0
-        if self.pos.x < 0:
-                self.pos.x = WIDTH
+        if self.pos[0] > WIDTH:
+                self.pos[0] = 0
+        if self.pos[0] < 0:
+                self.pos[0] = WIDTH
         
         self.rect.midbottom = self.pos  # Update rect with new pos 
 
@@ -164,7 +164,7 @@ class Player(pygame.sprite.Sprite, Bike):
         # 바닥에 닿았고, 점프 중인 상태가 아니면, 점프하게 하기
         if hits and not self.bike_jump:
             self.bike_jump = True
-            self.vel.y = -12
+            self.vel.y = -15
 
     def duck(self):
         super.duck()
@@ -174,8 +174,8 @@ class Player(pygame.sprite.Sprite, Bike):
       if self.vel.y > 0:
           if hits:
               lowest = hits[0]
-              if self.pos.y < lowest.rect.bottom:
-                  self.pos.y = lowest.rect.top + 1
+              if self.pos[1] < lowest.rect.bottom:
+                  self.pos[1] = lowest.rect.top + 1
                   self.vel.y = 0
                   self.bike_jump = False
 
@@ -184,26 +184,51 @@ class Player(pygame.sprite.Sprite, Bike):
         hits = pygame.sprite.spritecollide(player, ground_group, False)
         if hits and not self.bike_jump:
             if self.direction == "RIGHT":
-                self.vel.x = 6
+                self.vel.x = 13
             if self.direction == "LEFT":
-                self.vel.x = -6
+                self.vel.x = -13
     
 
 class Enemy(pygame.sprite.Sprite):
-      def __init__(self):
+    def __init__(self):
         super().__init__()
         self.imgM = pygame.image.load("images/sprites/monsterElv.png")
-        self.rect = self.image.get_rect()
-        self.pos = MonsterElv_COOR_ini
+        self.imgM = pygame.transform.scale(self.imgM, MONSTER_SIZE)
+        self.rect = self.imgM.get_rect()
         self.vel = MonsterElv_VELOCITY
+        self.pos = MonsterElv_POSITION
 
-        self.direction = random.randint(0,1) # 0: 오른쪽 향함 1: 왼쪽 향함
+        self.direction = random.randint(0,1) # 0: 오른쪽 향함   1: 왼쪽 향함
         self.vel.x = random.randint(2,6) # 보스 속도 랜덤
+        
+        if self.direction == 0:
+            self.pos = MonsterElv_COOR_ini
+        if self.direction == 1:
+            self.pos = MonsterElv_COOR_ini_R
+
+    def move(self):
+        # Causes the enemy to change directions upon reaching the end of screen    
+        if self.pos.x >= (WIDTH-20):
+                self.direction = 1
+        elif self.pos[0] <= 0:
+                self.direction = 0
+        # 이동하기
+        if self.direction == 0: # 왼쪽 향할 때
+            self.pos[0] += self.vel.x
+        if self.direction == 1:
+            self.pos[0] -= self.vel.x
+        
+        self.rect.center = self.pos # Updates rect
+
+    def render(self):
+        # 그리기
+        displaysurface.blit(self.imgM, self.pos)
  
       
-    
+enemy = Enemy()
 player = Player()
 # player.direction = "RIGHT"
+
 background = Background()
 ground = Ground()
 ground_group = pygame.sprite.Group()
@@ -240,11 +265,14 @@ while True:
     # 불러오기(그리기) ------
     background.render() 
     ground.render()
+    displaysurface.blit(enemy.imgM, enemy.rect)
+    enemy.render()
     player.update()
     if player.attacking == True:
         player.attack() 
     player.move()
     displaysurface.blit(player.imgP, player.rect)
+    
  
     pygame.display.update() 
 

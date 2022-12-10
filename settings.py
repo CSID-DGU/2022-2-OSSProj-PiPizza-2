@@ -93,7 +93,7 @@ MONSTER_HP  = 100
 
 # 캐릭터 사이즈
 PLAYER_SIZE     = (HEIGHT/4, HEIGHT/4)
-MONSTER_SIZE    = (214, 182)
+MONSTER_SIZE    = (150,136)
 
 # 공격 사이즈
 LIGHT_SIZE = PLAYER_SIZE
@@ -128,7 +128,9 @@ run_ani_R = [running_R1, running_R2]
 
 # 보스(MonsterElv) 설정
 MonsterElv_POWER = 20
-MonsterElv_COOR_ini = (680, 319) # 보스 초기 위치
+MonsterElv_POSITION = vec(0,0)
+MonsterElv_COOR_ini = (680, 319) # 보스 초기 위치(왼쪽 향할 때)
+MonsterElv_COOR_ini_R = (WIDTH - 680, 319) # 보스 초기 위치(오른쪽 향할 때)
 MonsterElv_VELOCITY = vec(0,0)
 MonsterElv_IMG_INFO = {'idleL': {'idx': 8, 'size': MONSTER_SIZE}, 
                         #'idleR': {'idx': 8, 'size': DEVIL_SIZE},
