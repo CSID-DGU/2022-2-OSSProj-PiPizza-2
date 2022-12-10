@@ -128,12 +128,6 @@ class Game:
                     pygame.quit()
                     sys.exit()
 
-                if event.key == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:
-                        paused = not paused
-                        paused = pausing()
-                        
-            stageTwo(death_count=0)
 
             # delta frame으로 수정
             df = self.clock.tick(FPS)

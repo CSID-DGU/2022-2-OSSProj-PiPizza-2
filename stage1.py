@@ -31,7 +31,7 @@ def main():
     clock = pygame.time.Clock()
     player = Bike()
     cloud = Cloud()
-    game_speed = 22.5
+    game_speed = 12
     x_pos_bg = 0
     y_pos_bg = 380
     points = 0
@@ -54,11 +54,14 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
             
-            if event.key == pygame.K_ESCAPE:
-                paused = not paused
-                paused = pausing()
+            # if event.key == pygame.K_ESCAPE:
+            #     paused = not paused
+            #     paused = pausing()
 
-        SCREEN_SIZE.fill((255, 255 , 255))        
+        SCREEN_SIZE.blit(stage1_bg, (0,0))      
+        background()
+
+
         userInput = pygame.key.get_pressed()
 
         player.draw(SCREEN_SIZE)
@@ -100,8 +103,6 @@ def main():
             #run=False # 다이얼로그로 넘어가야 함
 
 
-        background()
-
         cloud.draw(SCREEN_SIZE)
         cloud.update()
 
@@ -120,12 +121,13 @@ def fail(self):
 
 def stageOne(death_count):
     global points
+    global elapsed_time
     run = True
     isClear=False
     while run:
         fullscreen = False
         SCREEN = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
-        SCREEN.fill((255, 255, 255))
+        SCREEN.blit(stage1_bg, (0,0))
         font = pygame.font.Font('freesansbold.ttf', 30)
 
         monitor_size = [pygame.display.Info().current_w, pygame.display.Info().current_h]
