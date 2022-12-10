@@ -126,3 +126,17 @@ DUST = [pygame.image.load("images/obstacles/Dust1.png"),
 CLOUD = pygame.image.load("images/obstacles/Cloud.png")
 
 
+#사운드 설정
+bgm_on=True
+on_pushtime=0
+off_pushtime=0
+
+#효과음
+jump_sound = pygame.mixer.Sound('sound/jump.wav')
+die_sound = pygame.mixer.Sound('sound/die.wav')
+clear_sound = pygame.mixer.Sound('sound/reward.wav')
+
+#bgm
+background_m=pygame.mixer.Sound("sound/opening_bgm.mp3")
+ingame_m =pygame.mixer.Sound("sound/t-rex_bgm1")
+
