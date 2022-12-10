@@ -8,8 +8,9 @@ class Description:
     def __init__(self):
         pygame.init()
 
-
-        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        WIDTH = 900
+        HEIGHT = 450
+        self.screen = pygame.display.get_surface()
         pygame.display.set_caption("배달의 달인")
         self.path_dial = 'images/Dialog/'
 

@@ -129,18 +129,21 @@ class Game:
                     pygame.quit()
                     sys.exit()
 
-                if event.key == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:
-                        paused = not paused
-                        paused_value, return_home_value = pausing()
-                        if paused_value != None:
-                            paused = paused_value
-                        else:
-                            introFlag = return_home_value
-                            gameQuit = True
-                            return introFlag
-
-            stageTwo(death_count=0)
+            #     if event.key == pygame.KEYDOWN:
+            #         if event.key == pygame.K_ESCAPE:
+            #             paused = not paused
+            #             paused_value, return_home_value = pausing()
+            #             if paused_value != None:
+            #                 paused = paused_value
+            #             else:
+            #                 introFlag = return_home_value
+            #                 gameQuit = True
+            #                 return introFlag
+            # 스테이지 2
+            # stageTwo(death_count=0)
+            
+            # 스테이지 3를 위한 신 클래스의 인스턴스 생성
+            self.scene = Scene(self.player, self.monster, 3, self.game_state, self.visible_sprites)
 
             # delta frame으로 수정
             df = self.clock.tick(FPS)
