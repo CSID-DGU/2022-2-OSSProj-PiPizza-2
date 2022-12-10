@@ -81,8 +81,7 @@ class Game:
     def menu(self):
 
         if bgm_on:
-            pass
-        background_m.play(-1) # 배경음악 실행
+            background_m.play(-1) # 배경음악 실행
 
         while True:
             self.screen.blit(self.background_surf, self.background_rect)
