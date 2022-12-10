@@ -10,28 +10,21 @@ from settings import *
 from level import *
 from stage2 import *
 
-pygame.init()  # Begin pygame
-
-# Declaring variables to be used through the program
+pygame.init()  # pygame 시작
 vec = pygame.math.Vector2
-
-ACC = 0.3
-FRIC = -0.10
-
 FPS_CLOCK = pygame.time.Clock()
 COUNT = 0
 
-# Create the display
+# 디스플레이 가져오기
 displaysurface = pygame.display.get_surface()
 pygame.display.set_caption("배달의 달인")
 
-
-# light shade of the button 
+# 색상
 color_light = (170,170,170)
 color_dark = (100,100,100)
 color_white = (255,255,255) 
   
-# defining a font
+# 글꼴
 headingfont = pygame.font.SysFont("Verdana", 40)
 regularfont = pygame.font.SysFont('Corbel',25)
 smallerfont = pygame.font.SysFont('Corbel',16) 
@@ -85,7 +78,38 @@ class Player(pygame.sprite.Sprite, Bike):
 
 
     def move(self):
-        pass
+        # Keep a constant acceleration of 0.5 in the downwards direction (gravity)
+        #self.acc = vec(0,0.5)
+    
+        # Will set running to False if the player has slowed down to a certain extent
+        if abs(self.vel.x) > 0.3:
+                self.running = True
+        else:
+                self.running = False
+    
+        # Returns the current key presses
+        pressed_keys = pygame.key.get_pressed()
+    
+        # Accelerates the player in the direction of the key press
+        if pressed_keys[K_LEFT]:
+                self.acc.x = -ACC
+        if pressed_keys[K_RIGHT]:
+                self.acc.x = ACC 
+    
+        # Formulas to calculate velocity while accounting for friction
+        self.acc.x += self.vel.x * FRIC
+        self.vel += self.acc
+        self.pos += self.vel + 0.5 * self.acc  # Updates Position with new values
+    
+        # This causes character warping from one point of the screen to the other
+        if self.pos.x > WIDTH:
+                self.pos.x = 0
+        if self.pos.x < 0:
+                self.pos.x = WIDTH
+        
+        self.imgPrect.midbottom = self.pos  # Update rect with new pos 
+
+     
     
     def update(self, userInput):
         super.update(userInput)
@@ -127,10 +151,12 @@ while True:
         if event.type == pygame.KEYDOWN:
               pass
 
-    # Render Functions ------
+    # 불러오기(그리기) ------
     background.render() 
     ground.render()
+    player.move()
     displaysurface.blit(player.imgP, player.imgPrect)
  
     pygame.display.update() 
+
     FPS_CLOCK.tick(FPS)

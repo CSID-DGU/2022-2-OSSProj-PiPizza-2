@@ -61,7 +61,7 @@ RED     = (255, 0, 0)
 GREEN   = (0, 255, 0)
 BLUE    = (0, 0, 255)
 
-#스테이지1,2 
+#스테이지1,2 (최종 스테이지 상속)
 #이미지 설정
 RUNNING = [pygame.image.load(os.path.join("images/sprites", "Bike1.png")),
            pygame.image.load(os.path.join("images/sprites", "Bike2.png"))]
@@ -84,6 +84,9 @@ CLOUD = pygame.image.load(os.path.join("images/obstacles", "Cloud.png"))
 BG = pygame.image.load(os.path.join("images/obstacles", "Track.png"))
 
 # 최종 스테이지 
+ACC = 0.3
+FRIC = -0.10
+
 # HP 정보
 PLAYER_HP   = 100
 MONSTER_HP  = 100
