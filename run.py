@@ -122,8 +122,9 @@ class Game:
     # 메인 게임 시작
     def run(self):
         
-        background_m.stop()
-        ingame_m.play(-1) 
+        if bgm_on:
+            background_m.stop()
+            ingame_m.play(-1) 
 
         # dial1
         self.dial.dial1()
