@@ -107,7 +107,8 @@ PLAYER_SPELL1_CASTTIME = 3.0
 PLAYER_SPELL2_CASTTIME = 5.0
 PLAYER_COOR_ini = (220, 350) # 플레이어 초기 위치
 PLAYER_VELOCITY = vec(0,0)
-PLAYER_ACCELERATION = vec(0,0)
+PLAYER_VELOCITY_DASH = vec(0,0) # 대시 기능
+PLAYER_ACCELERATION = vec(6,0)
 
 running_l1 = pygame.image.load(os.path.join("images/sprites", "Bike1_L.png"))
 running_l1 = pygame.transform.scale(running_l1, PLAYER_SIZE)
@@ -121,12 +122,14 @@ running_R2 = pygame.transform.scale(running_R2, PLAYER_SIZE)
 DUCKING_L = [pygame.image.load(os.path.join("images/sprites", "BikeDuck1_L.png"))]
 # RUNNING_L = pygame.transform.scale(RUNNING_L, PLAYER_SIZE)
 # DUCKING_L = pygame.transform.scale(DUCKING_L, PLAYER_SIZE)
+
 run_ani_L = [running_l2, running_l2]
 run_ani_R = [running_R1, running_R2]
 
 # 보스(MonsterElv) 설정
 MonsterElv_POWER = 20
 MonsterElv_COOR_ini = (680, 319) # 보스 초기 위치
+MonsterElv_VELOCITY = vec(0,0)
 MonsterElv_IMG_INFO = {'idleL': {'idx': 8, 'size': MONSTER_SIZE}, 
                         #'idleR': {'idx': 8, 'size': DEVIL_SIZE},
                     # 'attack1L': {'idx': 8, 'size': DEVIL_SIZE}, 'attack1R': {'idx': 8, 'size': DEVIL_SIZE},

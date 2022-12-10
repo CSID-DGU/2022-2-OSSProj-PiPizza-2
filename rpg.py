@@ -178,15 +178,32 @@ class Player(pygame.sprite.Sprite, Bike):
                   self.pos.y = lowest.rect.top + 1
                   self.vel.y = 0
                   self.bike_jump = False
+
+    # 대시 기능 - 쿨타임 구현 필요
+    def dash(self):
+        hits = pygame.sprite.spritecollide(player, ground_group, False)
+        if hits and not self.bike_jump:
+            if self.direction == "RIGHT":
+                self.vel.x = 6
+            if self.direction == "LEFT":
+                self.vel.x = -6
     
 
 class Enemy(pygame.sprite.Sprite):
       def __init__(self):
         super().__init__()
+        self.imgM = pygame.image.load("images/sprites/monsterElv.png")
+        self.rect = self.image.get_rect()
+        self.pos = MonsterElv_COOR_ini
+        self.vel = MonsterElv_VELOCITY
+
+        self.direction = random.randint(0,1) # 0: 오른쪽 향함 1: 왼쪽 향함
+        self.vel.x = random.randint(2,6) # 보스 속도 랜덤
  
       
     
 player = Player()
+# player.direction = "RIGHT"
 background = Background()
 ground = Ground()
 ground_group = pygame.sprite.Group()
@@ -204,6 +221,8 @@ while True:
                 if player.attacking == False:
                     player.attack()
                     player.attacking = True
+            if event.key == pygame.K_d:
+                    player.dash()
         # Will run when the close window button is clicked    
         if event.type == QUIT:
             pygame.quit()
