@@ -61,7 +61,7 @@ class Scene:
     def draw(self, player, gameState, monsterElv):
         if gameState == 'stageFinal':
             # self.display_surface.blit("")
-            self.imgGround = pygame.image.load("ground_3.png")
+            self.imgGround = pygame.image.load("images/background/ground_3.png")
             self.imgGround_rect = self.imgGround.get_rect(center = (500, 430))
 
             self.display_surface.blit("images/background/stage3_bg.png")
