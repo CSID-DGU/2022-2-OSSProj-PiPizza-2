@@ -63,25 +63,27 @@ BLUE    = (0, 0, 255)
 
 #스테이지1,2 (최종 스테이지 상속)
 #이미지 설정
-RUNNING = [pygame.image.load(os.path.join("images/sprites", "Bike1.png")),
-           pygame.image.load(os.path.join("images/sprites", "Bike2.png"))]
-JUMPING = pygame.image.load(os.path.join("images/sprites", "Bike2.png"))
-DUCKING = [pygame.image.load(os.path.join("images/sprites", "BikeDuck1.png")),
-           pygame.image.load(os.path.join("images/sprites", "BikeDuck1.png"))]
+BG = pygame.image.load("images/obstacles/Track2.png")
 
-Traffic_Light = [pygame.image.load(os.path.join("images/obstacles", "Traffic1.png")),
-                pygame.image.load(os.path.join("images/obstacles", "Traffic3.png")),
-                pygame.image.load(os.path.join("images/obstacles", "Traffic4.png"))]
-Traffic_Cone = [pygame.image.load(os.path.join("images/obstacles", "RoadBlock.png")),
-                pygame.image.load(os.path.join("images/obstacles", "TrafficCone.png")),
-                pygame.image.load(os.path.join("images/obstacles", "TrafficCone2.png"))]
+RUNNING = [pygame.image.load("images/sprites/Bike1.png"),
+           pygame.image.load("images/sprites/Bike2.png")]
+JUMPING = pygame.image.load("images/sprites/Bike2.png")
+DUCKING = [pygame.image.load("images/sprites/BikeDuck1.png"),
+           pygame.image.load("images/sprites/BikeDuck1.png")]
 
-DUST = [pygame.image.load(os.path.join("images/obstacles", "Dust1.png")),
-        pygame.image.load(os.path.join("images/obstacles", "Dust2.png"))]
 
-CLOUD = pygame.image.load(os.path.join("images/obstacles", "Cloud.png"))
+Traffic_Light = [pygame.image.load("images/obstacles/Traffic1.png"),
+                pygame.image.load(
+                    "images/obstacles/Traffic3.png"),
+                pygame.image.load("images/obstacles/Traffic4.png")]
+Traffic_Cone = [pygame.image.load("images/obstacles/RoadBlock.png"),
+                pygame.image.load(
+                    "images/obstacles/TrafficCone.png"),
+                pygame.image.load("images/obstacles/TrafficCone2.png")]
 
-BG = pygame.image.load(os.path.join("images/obstacles", "Track.png"))
+DUST = [pygame.image.load("images/obstacles/Dust1.png"),
+        pygame.image.load("images/obstacles/Dust2.png")]
+
 
 # 최종 스테이지 
 ACC = 0.3
@@ -90,6 +92,9 @@ FRIC = -0.10
 # HP 정보
 PLAYER_HP   = 100
 MONSTER_HP  = 100
+
+CLOUD = pygame.image.load("images/obstacles/Cloud.png")
+
 
 # 캐릭터 사이즈
 PLAYER_SIZE     = (HEIGHT/4, HEIGHT/4)
@@ -146,3 +151,19 @@ MonsterElv_ELECMARBLE_INFO = {'elecmarble': {'idx': 11, 'size': MonsterElv_ELECM
 MonsterElv_ELECRAIN_SIZE = (40, 50)
 MonsterElv_ELECRAIN_INFO = {'elecrain': {'idx': 14, 'size': MonsterElv_ELECRAIN_SIZE}}
 MonsterElv_DAZZLE_TIME = 3.0
+
+#사운드 설정
+bgm_on=True
+on_pushtime=0
+off_pushtime=0
+
+#효과음
+jump_sound = pygame.mixer.Sound('sound/jump.wav')
+die_sound = pygame.mixer.Sound('sound/die.wav')
+clear_sound = pygame.mixer.Sound('sound/rewards.wav')
+
+#bgm
+background_m=pygame.mixer.Sound("sound/opening_bgm.mp3")
+ingame_m =pygame.mixer.Sound("sound/MP_Dancing_piano.mp3")
+
+
