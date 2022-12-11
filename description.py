@@ -51,11 +51,11 @@ class Description:
         self.num = 0
         while True:
             if self.num == 0:
-                self.screen.blit(self.clear1_surf, self.clear1_rect)
-                pygame.display.update()
-            elif self.num == 1:
                 self.screen.blit(self.dial2_surf, self.dial2_rect)
                 pygame.display.update()
+            # elif self.num == 1:
+            #     self.screen.blit(self.dial2_surf, self.dial2_rect)
+            #     pygame.display.update()
             else:
                 return
 
