@@ -219,7 +219,7 @@ def main():
                 stageOne(death_count)
    
         elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
-        timer = font.render("TIMER: "+ str(int(elapsed_time)),True,(0,0,0))
+        timer = font.render("TIME: "+ str(int(elapsed_time)),True,(0,0,0))
         SCREEN.blit(timer,(10,10))
 
         if total_time - elapsed_time <= 0:
@@ -250,7 +250,6 @@ def fail(self):
 
 
 def stageOne(death_count):
-    start_ticks = pygame.time.get_ticks()
     elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
     run = True
     isClear=False
@@ -269,6 +268,10 @@ def stageOne(death_count):
         #Fail
         elif death_count > 0:
             text = font.render("Continue?", True, (0, 0, 0))
+            midtime = font.render("TIME: "+ str(int(elapsed_time)),True,(0,0,0))
+            midtimeRect = midtime.get_rect()
+            midtimeRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50)
+            SCREEN.blit(midtime, midtimeRect)
         
         #클리어
         elif death_count < 0:
