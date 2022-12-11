@@ -165,6 +165,7 @@ class Bird(Obstacle):
 
 def main():
     global game_speed, x_pos_bg, y_pos_bg, points, obstacles
+    paused = False
     run = True
     clock = pygame.time.Clock()
     player = Bike()
@@ -191,6 +192,10 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+            
+            if event.key == pygame.K_ESCAPE:
+                paused = not paused
+                paused = pausing()
 
         SCREEN.blit(stage1_bg, (0,0))
         background()
@@ -214,7 +219,7 @@ def main():
             obstacle.draw(SCREEN)
             obstacle.update()
             if player.bike_rect.colliderect(obstacle.rect):
-                pygame.time.delay(100)
+                pygame.time.delay(500)
                 death_count += 1
                 stageOne(death_count)
    

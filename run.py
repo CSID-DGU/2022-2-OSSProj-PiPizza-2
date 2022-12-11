@@ -65,6 +65,7 @@ class Game:
         self.btn_exit = self.btn_exit_surf.get_rect(center=self.btn_exit_pos)
         self.btn_gameSetting_surf = pygame.image.load(f'{self.path_btn}btn_gameSetting_.png').convert_alpha()
         self.btn_gameSetting = self.btn_gameSetting_surf.get_rect(center=self.btn_gameSetting_pos)
+        
         # 환경설정화면 버튼들
         self.btn_soundOn_surf = pygame.image.load(f'{self.path_btn}btn_soundOn_.png').convert_alpha()
         self.btn_soundOff_surf = pygame.image.load(f'{self.path_btn}btn_soundOff_.png').convert_alpha()
@@ -121,8 +122,6 @@ class Game:
 
     # 메인 게임 시작
     def run(self):
-
-        
         if bgm_on:
             background_m.stop()
             ingame_m.play(-1) 
@@ -230,10 +229,7 @@ class Game:
             
             pygame.display.update()
 
-    # def quit(event):
-    #     if event.type == QUIT:
-    #         pygame.quit()
-    #         sys.exit()
+
 
          
 # checking if we are in the run file?

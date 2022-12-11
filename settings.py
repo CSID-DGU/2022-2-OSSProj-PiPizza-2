@@ -6,6 +6,7 @@ pygame.init()
 
 #화면 크기 및 FPS
 SCREEN_SIZE = WIDTH, HEIGHT = (900, 450)
+SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 FPS = 60
 
 vec = pygame.math.Vector2
@@ -137,34 +138,32 @@ MONSTER_HP  = 100
 CLOUD = pygame.image.load("images/obstacles/Cloud.png")
 
 
-'''
 def pausing():
     global gameOver
     global gameQuit
-    global resized_screen
     global paused
+    gameOver = False
     gameQuit = False
-    pause_pic, pause_pic_rect = pygame.image.load(os.path.join("images/Dialog",'paused.png', 360, 75, -1))
-    pause_pic_rect.centerx = WIDTH * 0.5
-    pause_pic_rect.centery = HEIGHT * 0.2
+    paused = False
 
-    # BUTTON IMG LOAD
-    retbutton_image, retbutton_rect = pygame.image.load(os.path.join("images/Button",'home.png', 70, 62, -1))
-    resume_image, resume_rect = pygame.image.load(os.path.join("images/Button",'back.png', 70, 62, -1))
+    pygame.mixer.music.pause()
 
-    resized_retbutton_image, resized_retbutton_rect = pygame.image.load(os.path.join("images/Button",'home.png', 70, 62, -1))
-    resized_resume_image, resized_resume_rect = pygame.image.load(os.path.join("images/Button",'back.png', 70, 62, -1))
+    # self.btn_soundOn_pos = (WIDTH - int(8.3*btn_gameSetting_w), int(4* btn_menu_h))
+    # self.btn_soundOff_pos = (WIDTH - int(6.3*btn_gameSetting_w), int(4* btn_menu_h))
+    # self.btn_backToMenu_pos = (WIDTH - int(3.6*btn_menu_w), int(6* btn_menu_h))
 
-    # BUTTONPOS
-    retbutton_rect.centerx = WIDTH * 0.4
-    retbutton_rect.top = HEIGHT * 0.52
-    resume_rect.centerx = WIDTH * 0.6
-    resume_rect.top = HEIGHT * 0.52
+    pause_pic_surf = pygame.image.load("images/dialog/paused.png").convert_alpha()
+    pause_pic_pos = (WIDTH - int(3.5*btn_menu_w), int(btn_menu_h))
+    pause_btn = pause_pic_surf.get_rect(center=pause_pic_pos)
 
-    resized_retbutton_rect.centerx = resized_screen.get_width() * 0.4
-    resized_retbutton_rect.top = resized_screen.get_height() * 0.52
-    resized_resume_rect.centerx = resized_screen.get_width() * 0.6
-    resized_resume_rect.top = resized_screen.get_height() * 0.52
+    # BUTTON IMG LOAD & POS
+    home_img_surf = pygame.image.load("images/button/home.png").convert_alpha()
+    home_pos = (WIDTH - int(8.8*btn_gameSetting_w), int(5* btn_menu_h))
+    home_btn = home_img_surf.get_rect(center=home_pos)
+
+    resume_img_surf = pygame.image.load("images/button/back.png").convert_alpha()
+    resume_pos = (WIDTH - int(4.6*btn_gameSetting_w), int(5* btn_menu_h))
+    resume_btn = resume_img_surf.get_rect(center=resume_pos)
 
     while not gameQuit:
         if pygame.display.get_surface() is None:
@@ -174,38 +173,34 @@ def pausing():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     gameQuit = True
+                    gameOver = True
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         pygame.mixer.music.unpause()  # pausing상태에서 다시 esc누르면 배경음악 일시정지 해제
-                        #첫번째 return 값은 pause상태, 두번째는 introFlag
-                        return False, introFlag
+                        return False
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if pygame.mouse.get_pressed() == (1, 0, 0):
                         x, y = event.pos
-                        if resized_retbutton_rect.collidepoint(x, y):
-                            introFlag = True
+                        if home_btn.collidepoint(x, y):
+                            gameOver = False
                             gameQuit = True
-                            return None, introFlag
+                            #run()
 
-                        if resized_resume_rect.collidepoint(x, y):
+                        if resume_btn.collidepoint(x, y):
                             pygame.mixer.music.unpause()  # pausing상태에서 오른쪽의 아이콘 클릭하면 배경음악 일시정지 해제
-                            return False, introFlag
+                            return False
 
-                if event.type == pygame.VIDEORESIZE:
-                    checkscrsize(event.w, event.h)
-
-            screen.fill(255,255,255)
-            screen.blit(pause_pic, pause_pic_rect)
-            screen.blit(retbutton_image, retbutton_rect)
-            screen.blit(resume_image, resume_rect)
+            SCREEN.fill((255,255,255))
+            SCREEN.blit(pause_pic_surf, pause_btn)
+            SCREEN.blit(home_img_surf, home_btn)
+            SCREEN.blit(resume_img_surf, resume_btn)
             pygame.display.update()
-
 
     pygame.quit()
     quit()
-'''
+
 
 # 캐릭터 사이즈
 PLAYER_SIZE     = (HEIGHT/4, HEIGHT/4)
