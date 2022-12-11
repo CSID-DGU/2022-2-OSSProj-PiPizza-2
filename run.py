@@ -18,7 +18,7 @@ class Game:
         
         self.clock = pygame.time.Clock()
         self.level = Level()
-
+        
         # 클릭 이벤트 (종료(quit))
         self.is_clicked = False
 
