@@ -282,6 +282,7 @@ def stageOne(death_count):
         elif death_count < 0:
             text=font.render("Stage 1 Clear!", True, (0, 0, 0))
             isClear=True
+            stageTwo(death_count=0)
 
         textRect = text.get_rect()
         textRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
