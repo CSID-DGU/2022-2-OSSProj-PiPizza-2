@@ -1,12 +1,12 @@
-# 변수 명 바꿔야 함
 
 import pygame, sys
 import os
 import random
-import description
 from settings import *
+from description import *
 
 pygame.init()
+st2_description = Description()
 
 # Global Constants
 
@@ -16,11 +16,11 @@ pygame.display.set_caption("배달의 달인")
 
 fullscreen = False
 
-global isClear
-isClear = False
+global st1_isClear
+st1_isClear = False
 start_ticks = pygame.time.get_ticks()  # 현재 tick 을 받아옴
 
-total_time = 30  # 총 시간
+total_time = 60  # 총 시간
 
 elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
 
@@ -42,7 +42,6 @@ class Bike:
     JUMP_VEL = SCREEN_HEIGHT/52.5
 
     def __init__(self):
-        # 플레이어 움직임 (숙이기, 달리기, 점프하기)
         self.duck_img = DUCKING
         self.run_img = RUNNING
         self.jump_img = JUMPING
@@ -53,7 +52,7 @@ class Bike:
 
         self.step_index = 0
         self.jump_vel = self.JUMP_VEL
-        self.image = self.run_img
+        self.image = self.run_img[0]
         self.bike_rect = self.image.get_rect()
         self.bike_rect.x = self.X_POS
         self.bike_rect.y = self.Y_POS
@@ -129,6 +128,7 @@ class Cloud:
         SCREEN.blit(self.image, (self.x, self.y))
 
 
+
 class Obstacle:
     def __init__(self, image, type):
         self.image = image
@@ -143,6 +143,25 @@ class Obstacle:
 
     def draw(self, SCREEN):
         SCREEN.blit(self.image[self.type], self.rect)
+
+class Bird(Obstacle):
+    def __init__(self, image):
+        self.type = 0
+        super().__init__(image, self.type)
+        self.rect.y = SCREEN_HEIGHT*0.50
+        self.index = 0
+
+    def draw(self, SCREEN):
+        if self.index >= 9:
+            self.index = 0
+        SCREEN.blit(self.image[self.index//5], self.rect)
+        self.index += 1
+
+class Car(Obstacle):
+    def __init__(self, image):
+        self.type = random.randint(0, 1)
+        super().__init__(image, self.type)
+        self.rect.y = SCREEN_HEIGHT*0.78
 
 
 class TrafficLight(Obstacle):
@@ -183,9 +202,9 @@ def main():
     clock = pygame.time.Clock()
     player = Bike()
     cloud = Cloud()
-    game_speed = 22.5
+    game_speed = 25
     x_pos_bg = 0
-    y_pos_bg = 380
+    y_pos_bg = 400
     points = 0
     font = pygame.font.Font('freesansbold.ttf', 20)
     obstacles = []
@@ -219,8 +238,7 @@ def main():
 
         #SCREEN.fill((247, 155 , 96))
         #SCREEN.fill((255, 255 , 255)) 
-        stage2_backgrnd =  pygame.image.load('images/background/stage2_bg.png')
-        SCREEN.blit(stage2_backgrnd, (0,0))
+        SCREEN.blit(stage2_bg, (0,0))
         background()
 
               
@@ -230,12 +248,16 @@ def main():
         player.update(userInput)
 
         if len(obstacles) == 0:
-            if random.randint(0, 2) == 0:
+            if random.randint(0, 4) == 0:
                 obstacles.append(TrafficLight(Traffic_Light))
-            elif random.randint(0, 2) == 1:
+            elif random.randint(0, 4) == 1:
                 obstacles.append(TrafficCone(Traffic_Cone))
-            elif random.randint(0, 2) == 2:
+            elif random.randint(0, 4) == 2:
                 obstacles.append(Dust(DUST))
+            elif random.randint(0, 4) == 3:
+                obstacles.append(Car(CAR))
+            elif random.randint(0,4) == 4:
+                obstacles.append(Bird(BIRD))
 
 
         for obstacle in obstacles:
@@ -380,13 +402,14 @@ def pausing():
 
 def stageTwo(death_count):
     global points
+    global st1_isClear
     run = True
-    isClear=False
+    st1_isClear=False
     while run:
         fullscreen = False
         SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
         #게임 시작 시 나오는 이미지
-        background_img =  pygame.image.load('images/background/stage2_bg_black.png')
+        background_img =  pygame.image.load('images/background/stage2_bg.png')
 
         #self.background_img_rect = self.background_img.get_rect()
         #self.background_img_rect.x = self.X_POS
@@ -410,7 +433,7 @@ def stageTwo(death_count):
       
         #Fail
         elif death_count > 0:
-            text = font.render("GAME OVER!", True, (0, 0, 0))
+            text = font.render("Continue?", True, (0, 0, 0))
             #score = font.render("Your Score: " + str(points), Trpygame.image.load(os.path.joinue, (0, 0, 0))
             #scoreRect = score.get_rect()
             #scoreRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50)
@@ -418,7 +441,8 @@ def stageTwo(death_count):
         #클리어
         elif death_count < 0:
             text=font.render("Stage 2 Clear!", True, (0, 0, 0))
-            isClear=True
+            st1_isClear=True
+            st2_description.clear2_dial3()
             #stage 3로 넘어가는 코드
         textRect = text.get_rect()
         textRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
@@ -443,10 +467,3 @@ def stageTwo(death_count):
             if event.type == pygame.VIDEORESIZE:
                 if not fullscreen:
                     SCREEN = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
-
-
-
-
-#pygame.time.delay(100)
-#stageTwo(death_count=0)
-#pygame.quit()
