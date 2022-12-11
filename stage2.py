@@ -1,4 +1,3 @@
-# 변수 명 바꿔야 함
 
 import pygame, sys
 import os
@@ -42,7 +41,6 @@ class Bike:
     JUMP_VEL = SCREEN_HEIGHT/52.5
 
     def __init__(self):
-        # 플레이어 움직임 (숙이기, 달리기, 점프하기)
         self.duck_img = DUCKING
         self.run_img = RUNNING
         self.jump_img = JUMPING
@@ -53,7 +51,7 @@ class Bike:
 
         self.step_index = 0
         self.jump_vel = self.JUMP_VEL
-        self.image = self.run_img
+        self.image = self.run_img[0]
         self.bike_rect = self.image.get_rect()
         self.bike_rect.x = self.X_POS
         self.bike_rect.y = self.Y_POS
@@ -386,7 +384,7 @@ def stageTwo(death_count):
         fullscreen = False
         SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
         #게임 시작 시 나오는 이미지
-        background_img =  pygame.image.load('images/background/stage2_bg_black.png')
+        background_img =  pygame.image.load('images/background/stage2_bg.png')
 
         #self.background_img_rect = self.background_img.get_rect()
         #self.background_img_rect.x = self.X_POS
@@ -443,10 +441,3 @@ def stageTwo(death_count):
             if event.type == pygame.VIDEORESIZE:
                 if not fullscreen:
                     SCREEN = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
-
-
-
-
-#pygame.time.delay(100)
-#stageTwo(death_count=0)
-#pygame.quit()
