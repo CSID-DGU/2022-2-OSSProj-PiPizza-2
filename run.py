@@ -229,8 +229,6 @@ class Game:
             
             pygame.display.update()
 
-
-
          
 # checking if we are in the run file?
 # 게임 실행 (실행 시 시작화면은 메인 메뉴)

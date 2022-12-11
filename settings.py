@@ -148,10 +148,6 @@ def pausing():
 
     pygame.mixer.music.pause()
 
-    # self.btn_soundOn_pos = (WIDTH - int(8.3*btn_gameSetting_w), int(4* btn_menu_h))
-    # self.btn_soundOff_pos = (WIDTH - int(6.3*btn_gameSetting_w), int(4* btn_menu_h))
-    # self.btn_backToMenu_pos = (WIDTH - int(3.6*btn_menu_w), int(6* btn_menu_h))
-
     pause_pic_surf = pygame.image.load("images/dialog/paused.png").convert_alpha()
     pause_pic_pos = (WIDTH - int(3.5*btn_menu_w), int(btn_menu_h))
     pause_btn = pause_pic_surf.get_rect(center=pause_pic_pos)
@@ -186,7 +182,7 @@ def pausing():
                         if home_btn.collidepoint(x, y):
                             gameOver = False
                             gameQuit = True
-                            #run()
+                            
 
                         if resume_btn.collidepoint(x, y):
                             pygame.mixer.music.unpause()  # pausing상태에서 오른쪽의 아이콘 클릭하면 배경음악 일시정지 해제
