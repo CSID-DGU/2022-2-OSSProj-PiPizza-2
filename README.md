@@ -65,16 +65,16 @@ Stage 3는 라이트 공격과 대시 기능으로 패턴을 피하면서 보스
 <br>
 
 ## Contact us
-[장유림]: ufrl128@dgu.ac.kr <br>
-[김상화]: ellie710@naver.com <br>
-[최소영]: ottffss1005@naver.com <br>
+[장유림] : ufrl128@dgu.ac.kr <br>
+[김상화] : ellie710@naver.com <br>
+[최소영] : ottffss1005@naver.com <br>
 
 <br>
 
 ## Credits:
--**Sprites**: https://github.com/codewmax/chrome-dinosaur
--**Art Resource**: https://www.flaticon.com/kr/ , https://www.pixilart.com/draw?ref=home-page
--**Sounds**: https://www.mewpot.com/search/song?order=popular&page=2&tag_ids%5B%5D=11322&tag_ids%5B%5D=13377
+- **Sprites**: https://github.com/codewmax/chrome-dinosaur <br>
+- **Art Resource**: https://www.flaticon.com/kr/ , https://www.pixilart.com/draw?ref=home-page <br>
+- **Sounds**: https://www.mewpot.com/search/song?order=popular&page=2&tag_ids%5B%5D=11322&tag_ids%5B%5D=13377 <br>
 
 <br>
 
