@@ -10,6 +10,7 @@ FPS = 60
 
 # 게임 단계
 GAME_STATES = [ 'stage1', 'stage2', 'stageFinal']
+ingame = False
 
 pygame.init()
 # 화면 크기 조정
