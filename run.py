@@ -133,19 +133,14 @@ class Game:
 
         # dial1
         self.dial.dial1()
-        #self.dial.clear1_dial2()
-
-        ingame = True
         
+        ingame = True
         while True:
             
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
-
-
-
 
             #     if event.key == pygame.KEYDOWN:
             #         if event.key == pygame.K_ESCAPE:
@@ -159,20 +154,6 @@ class Game:
             #                 return introFlag
             # 스테이지 2
             # stageTwo(death_count=0)
-            
-            # 스테이지 3를 위한 신 클래스의 인스턴스 생성
-            self.scene = Scene(self.player, self.monster, 3, self.game_state, self.visible_sprites)
-
-            if event.key == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    paused = not paused
-                    paused_value, return_home_value = pausing()
-                    if paused_value != None:
-                        paused = paused_value
-                    else:
-                        introFlag = return_home_value
-                        gameQuit = True
-                        return introFlag
 
                 if event.key == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
@@ -195,27 +176,20 @@ class Game:
 
             
 
-            # 게임 클리어 플래그 (while문 탈출 및 시간 저장)
-            if self.level.isOneClear or self.level.isTwoClear or self.level.isFinalClear:
-                break 
-        
-        # 클리어 시간 저장
-        #
+        #     # 게임 클리어 플래그 (while문 탈출 및 시간 저장)
+        #     if self.level.isOneClear or self.level.isTwoClear or self.level.isFinalClear:
+        #         break 
+        # # 게임 클리어 시 (단계별 클리어 시 설명화면)
+        # if self.level.isOneClear:
+        #     self.dial.clear1_dial2()
+        # elif self.level.isTwoClear:
+        #     self.dial.clear2_dial3()
+        # elif self.level.isFinalClear:
+        #     self.dial.clear3()
+        #     #
+        # else:
+        #     pass
 
-
-        # 게임 클리어 시 (단계별 클리어 시 설명화면)
-        if self.level.isOneClear:
-            self.dial.clear1_dial2()
-        elif self.level.isTwoClear:
-            self.dial.clear2_dial3()
-        elif self.level.isFinalClear:
-            self.dial.clear3()
-            #
-        else:
-            pass
-
-            
-    
     # 마우스 클릭 체크
     def check_click(self):
         self.is_clicked = False
