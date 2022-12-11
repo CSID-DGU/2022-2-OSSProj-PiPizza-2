@@ -122,6 +122,7 @@ class Game:
 
     # 메인 게임 시작
     def run(self):
+
         if bgm_on:
             background_m.stop()
             ingame_m.play(-1) 
