@@ -80,6 +80,10 @@ class Game:
     
     # 메인 메뉴화면
     def menu(self):
+
+        if bgm_on:
+            background_m.play(-1) # 배경음악 실행
+
         while True:
             self.screen.blit(self.background_surf, self.background_rect)
         
@@ -117,10 +121,17 @@ class Game:
 
     # 메인 게임 시작
     def run(self):
+
         
+        if bgm_on:
+            background_m.stop()
+            ingame_m.play(-1) 
+
         # dial1
         self.dial.dial1()
         #self.dial.clear1_dial2()
+
+        ingame = True
         
         while True:
             
@@ -129,6 +140,18 @@ class Game:
                     pygame.quit()
                     sys.exit()
 
+                if event.key == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        paused = not paused
+                        paused_value, return_home_value = pausing()
+                        if paused_value != None:
+                            paused = paused_value
+                        else:
+                            introFlag = return_home_value
+                            gameQuit = True
+                            return introFlag
+
+            stageOne(death_count=0)
 
             # delta frame으로 수정
             df = self.clock.tick(FPS)
@@ -207,7 +230,12 @@ class Game:
             
             pygame.display.update()
 
+    # def quit(event):
+    #     if event.type == QUIT:
+    #         pygame.quit()
+    #         sys.exit()
 
+         
 # checking if we are in the run file?
 # 게임 실행 (실행 시 시작화면은 메인 메뉴)
 # 실행 안 되는 문제를 해결했는데, 원래 코드 '__run__'을 run 대신 main으로 바꿈

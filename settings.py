@@ -110,16 +110,20 @@ DUCKING = [pygame.image.load("images/sprites/BikeDuck1.png"),
 
 
 Traffic_Light = [pygame.image.load("images/obstacles/Traffic1.png"),
-                pygame.image.load(
-                    "images/obstacles/Traffic3.png"),
+                pygame.image.load("images/obstacles/Traffic3.png"),
                 pygame.image.load("images/obstacles/Traffic4.png")]
 Traffic_Cone = [pygame.image.load("images/obstacles/RoadBlock.png"),
-                pygame.image.load(
-                    "images/obstacles/TrafficCone.png"),
+                pygame.image.load("images/obstacles/TrafficCone.png"),
                 pygame.image.load("images/obstacles/TrafficCone2.png")]
 
 DUST = [pygame.image.load("images/obstacles/Dust1.png"),
         pygame.image.load("images/obstacles/Dust2.png")]
+
+BIRD = [pygame.image.load("images/obstacles/Bird1.png"),
+        pygame.image.load("images/obstacles/Bird2.png")]
+
+CAR = [pygame.image.load("images/obstacles/Car1.png"),
+        pygame.image.load("images/obstacles/Car2.png")]
 
 
 # 최종 스테이지 
