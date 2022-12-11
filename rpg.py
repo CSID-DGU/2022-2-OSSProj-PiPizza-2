@@ -166,8 +166,26 @@ class Player(pygame.sprite.Sprite, Bike):
             self.bike_jump = True
             self.vel.y = -15
 
-    def duck(self):
-        super.duck()
+    # def jumpAndRun(self):
+    #     self.rect.x += 1
+
+    #     # 바닥에 닿았는지 확인하기
+    #     hits = pygame.sprite.spritecollide(self, ground_group, False)
+
+    #     self.rect.x -= 1
+
+    #     # 바닥에 닿았고, 점프 중인 상태가 아니면, 점프하게 하기
+    #     if hits and not self.bike_jump:
+    #         self.bike_jump = True
+    #         self.vel.y = -15
+    #         if self.direction == "RIGHT":
+    #             self.vel.x = 20
+    #         else:
+    #             self.vel.x = -20
+
+    # # 최종 스테이지 숙이기 기능 없음
+    # def duck(self):
+    #     super.duck()
 
     def gravity_check(self):
       hits = pygame.sprite.spritecollide(player, ground_group, False)
@@ -182,7 +200,8 @@ class Player(pygame.sprite.Sprite, Bike):
     # 대시 기능 - 쿨타임 구현 필요
     def dash(self):
         hits = pygame.sprite.spritecollide(player, ground_group, False)
-        if hits and not self.bike_jump:
+        # if hits and not self.bike_jump:
+        if hits:
             if self.direction == "RIGHT":
                 self.vel.x = 13
             if self.direction == "LEFT":
@@ -208,15 +227,15 @@ class Enemy(pygame.sprite.Sprite):
 
     def move(self):
         # Causes the enemy to change directions upon reaching the end of screen    
-        if self.pos.x >= (WIDTH-20):
+        if self.pos.x >= (WIDTH-50):
                 self.direction = 1
-        elif self.pos[0] <= 0:
+        elif self.pos.x <= 0:
                 self.direction = 0
         # 이동하기
         if self.direction == 0: # 왼쪽 향할 때
-            self.pos[0] += self.vel.x
+            self.pos.x += self.vel.x
         if self.direction == 1:
-            self.pos[0] -= self.vel.x
+            self.pos.x -= self.vel.x
         
         self.rect.center = self.pos # Updates rect
 
@@ -242,6 +261,8 @@ while True:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
                   player.jump()
+            # if event.key == pygame.K_UP and (pygame.K_LEFT or pygame.K_RIGHT):
+            #     player.jumpAndRun()
             if event.key == pygame.K_a:     # a 키 누르면 공격
                 if player.attacking == False:
                     player.attack()
@@ -265,15 +286,17 @@ while True:
     # 불러오기(그리기) ------
     background.render() 
     ground.render()
-    displaysurface.blit(enemy.imgM, enemy.rect)
-    enemy.render()
+    
     player.update()
     if player.attacking == True:
         player.attack() 
     player.move()
     displaysurface.blit(player.imgP, player.rect)
+    enemy.render()
+    enemy.move()
     
  
     pygame.display.update() 
 
     FPS_CLOCK.tick(FPS)
+    print(enemy.vel.x)

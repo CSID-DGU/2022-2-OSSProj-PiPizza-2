@@ -2,7 +2,7 @@
 import pygame, sys
 from pygame.locals import *
 import os
-from run import *
+# from run import *
 
 pygame.init()
 vec = pygame.math.Vector2
@@ -64,34 +64,6 @@ BLUE    = (0, 0, 255)
 # 캐릭터 HP 정보
 PLAYER_HP   = 99
 MONSTER_HP    = 100
-
-
-# 캐릭터 사이즈
-PLAYER_SIZE     = (120, 120)
-MONSTER_SIZE    = (300, 300)
-
-# player settings
-PLAYER_SPELL1_MP = 10
-PLAYER_SPELL2_MP = 20
-PLAYER_SPELL1_CASTTIME = 3.0
-PLAYER_SPELL2_CASTTIME = 5.0
-PLAYER_COOR_ini = (100, 420) # 플레이어 초기 위치
-PLAYER_IMG_INFO = {'idle': {'idx': 11, 'size': PLAYER_SIZE}, 'idleL': {'idx': 11, 'size': PLAYER_SIZE},
-                     'run': {'idx': 8, 'size': PLAYER_SIZE}, 'runL': {'idx': 8, 'size': PLAYER_SIZE},
-                     'jump': {'idx': 3, 'size': PLAYER_SIZE}, 'jumpL': {'idx': 3, 'size': PLAYER_SIZE},
-                     'fall': {'idx': 3, 'size': PLAYER_SIZE}, 'fallL': {'idx': 3, 'size': PLAYER_SIZE},
-                     'death': {'idx': 11, 'size': PLAYER_SIZE}, 'deathL': {'idx': 11, 'size': PLAYER_SIZE},
-                     'hitted': {'idx': 4, 'size': PLAYER_SIZE}, 'hittedL': {'idx': 4, 'size': PLAYER_SIZE},
-                     'attack1': {'idx': 7, 'size': PLAYER_SIZE}, 'attack1L': {'idx': 7, 'size': PLAYER_SIZE},
-                     'attack2': {'idx': 7, 'size': PLAYER_SIZE}, 'attack2L': {'idx': 7, 'size': PLAYER_SIZE},
-                     'cast1': {'idx': 11, 'size': PLAYER_SIZE}, 'cast1L':{'idx':11, 'size': PLAYER_SIZE},
-                     'cast2': {'idx': 11, 'size': PLAYER_SIZE}, 'cast2L': {'idx': 11, 'size': PLAYER_SIZE}
-                     }
-
-# MonsterElv 설정
-MonsterElv_POWER = 30
-MonsterElv_COOR_ini = (1000, 125) # 몬스터3(Devil) 초기 위치
-MonsterElv_IMG_INFO = {'idleL': {'idx': 8, 'size': MONSTER_SIZE} }
 
 
 
@@ -206,7 +178,7 @@ def pausing():
 
 # 캐릭터 사이즈
 PLAYER_SIZE     = (HEIGHT/4, HEIGHT/4)
-MONSTER_SIZE    = (150,136)
+MONSTER_SIZE    = (140,136)
 
 # 공격 사이즈
 LIGHT_SIZE = PLAYER_SIZE
@@ -218,8 +190,8 @@ PLAYER_SPELL1_MP = 10
 PLAYER_SPELL2_MP = 20
 PLAYER_SPELL1_CASTTIME = 3.0
 PLAYER_SPELL2_CASTTIME = 5.0
-PLAYER_COOR_ini = (220, 350) # 플레이어 초기 위치
-PLAYER_VELOCITY = vec(0,0)
+PLAYER_COOR_ini = vec(220, 350) # 플레이어 초기 위치
+PLAYER_VELOCITY = vec(2,0)
 PLAYER_VELOCITY_DASH = vec(0,0) # 대시 기능
 PLAYER_ACCELERATION = vec(6,0)
 
@@ -242,8 +214,8 @@ run_ani_R = [running_R1, running_R2]
 # 보스(MonsterElv) 설정
 MonsterElv_POWER = 20
 MonsterElv_POSITION = vec(0,0)
-MonsterElv_COOR_ini = (680, 319) # 보스 초기 위치(왼쪽 향할 때)
-MonsterElv_COOR_ini_R = (WIDTH - 680, 319) # 보스 초기 위치(오른쪽 향할 때)
+MonsterElv_COOR_ini = vec(680, 270) # 보스 초기 위치(왼쪽 향할 때)
+MonsterElv_COOR_ini_R = vec(WIDTH - 680, 270) # 보스 초기 위치(오른쪽 향할 때)
 MonsterElv_VELOCITY = vec(0,0)
 MonsterElv_IMG_INFO = {'idleL': {'idx': 8, 'size': MONSTER_SIZE}, 
                         #'idleR': {'idx': 8, 'size': DEVIL_SIZE},
