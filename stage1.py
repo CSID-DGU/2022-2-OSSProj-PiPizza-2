@@ -177,7 +177,7 @@ def main():
     cloud = Cloud()
     game_speed = 20
     x_pos_bg = 0
-    y_pos_bg = 380
+    y_pos_bg = 400
     points = 0
     font = pygame.font.Font('freesansbold.ttf', 20)
     obstacles = []
