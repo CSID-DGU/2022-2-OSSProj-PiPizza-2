@@ -120,6 +120,7 @@ class Game:
 
     # 메인 게임 시작
     def run(self):
+
         
         if bgm_on:
             background_m.stop()
@@ -128,6 +129,8 @@ class Game:
         # dial1
         self.dial.dial1()
         #self.dial.clear1_dial2()
+
+        ingame = True
         
         while True:
             
