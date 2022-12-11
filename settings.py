@@ -1,15 +1,14 @@
-
 import pygame, sys
 from pygame.locals import *
 import os
-from run import *
 
 pygame.init()
-vec = pygame.math.Vector2
 
 #화면 크기 및 FPS
 SCREEN_SIZE = WIDTH, HEIGHT = (900, 450)
 FPS = 60
+
+vec = pygame.math.Vector2
 
 # 게임 단계
 GAME_STATES = [ 'stage1', 'stage2', 'stageFinal']
