@@ -6,8 +6,9 @@ from settings import *
 from level import *
 from sound import *
 from description import *
+from stage1 import *
 from stage2 import *
-from settings import *
+
 
 class Game:
     def __init__(self):
@@ -17,7 +18,7 @@ class Game:
         
         self.clock = pygame.time.Clock()
         self.level = Level()
-
+        
         # 클릭 이벤트 (종료(quit))
         self.is_clicked = False
 
@@ -64,6 +65,7 @@ class Game:
         self.btn_exit = self.btn_exit_surf.get_rect(center=self.btn_exit_pos)
         self.btn_gameSetting_surf = pygame.image.load(f'{self.path_btn}btn_gameSetting_.png').convert_alpha()
         self.btn_gameSetting = self.btn_gameSetting_surf.get_rect(center=self.btn_gameSetting_pos)
+        
         # 환경설정화면 버튼들
         self.btn_soundOn_surf = pygame.image.load(f'{self.path_btn}btn_soundOn_.png').convert_alpha()
         self.btn_soundOff_surf = pygame.image.load(f'{self.path_btn}btn_soundOff_.png').convert_alpha()
@@ -115,13 +117,12 @@ class Game:
             pygame.display.update()
 
     def checkClear(self):
-        if stageTwo().isClear == True:
+        if stageOne().isClear == True:
             self.level.isOneClear = True
 
     # 메인 게임 시작
     def run(self):
 
-        
         if bgm_on:
             background_m.stop()
             ingame_m.play(-1) 
@@ -150,7 +151,7 @@ class Game:
                             gameQuit = True
                             return introFlag
 
-            stageTwo(death_count=0)
+            stageOne(death_count=0)
 
             # delta frame으로 수정
             df = self.clock.tick(FPS)
@@ -228,11 +229,6 @@ class Game:
             self.screen.blit(self.btn_backToMenu_surf, self.btn_backToMenu)
             
             pygame.display.update()
-
-    # def quit(event):
-    #     if event.type == QUIT:
-    #         pygame.quit()
-    #         sys.exit()
 
          
 # checking if we are in the run file?

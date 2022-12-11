@@ -12,7 +12,7 @@ from stageFinal import *
 pygame.init()
 
 class Scene:
-    def __init__(self, player, monsterElv, sceneNum, gameState, visible_sprites):
+    def __init__(self, player, monsterElv):
         self.display_surface = pygame.display.get_surface()
         self.gameState = gameState
         self.sceneNum = sceneNum
@@ -60,10 +60,52 @@ class Scene:
 
     def draw(self, player, gameState, monsterElv):
         if gameState == 'stageFinal':
-            self.display_surface.blit("images/temp_menu_background.png")
             # self.display_surface.blit("")
+            self.imgGround = pygame.image.load("images/background/ground_3.png")
+            self.imgGround_rect = self.imgGround.get_rect(center = (500, 430))
+
+            self.display_surface.blit("images/background/stage3_bg.png")
+            self.display_surface.blit(self.imgGround, self.imgGround_rect)
 
             self.drawBar(player, monsterElv)
             self.setCircle()
 
             pygame.draw.rect(self.display_surface, (255,0,0))
+    
+    def hitbox_draw(self, player, monster):
+        # 플레이어 히트박스 그리기
+        pygame.draw.rect(self.display_surface, (255, 255, 255),
+                         sub_Coordinate(player.hitbox, (self.offset[0], self.offset[1], 0, 0)), 3)
+        # 몬스터 히트박스 그리기
+        pygame.draw.rect(self.display_surface, (255, 0, 0),
+                         sub_Coordinate(monster.getHitBox(), (self.offset[0] , self.offset[1], 0, 0)), 3)
+
+    def bar_draw(self, player, monster):
+        # 플레이어 체력, 마나 그리기
+        pygame.draw.rect(self.display_surface, (255, 0, 0),
+                         sub_Coordinate(player.healthbar, (self.offset[0], self.offset[1], 0, 0)), 0)
+        pygame.draw.rect(self.display_surface, (0, 0, 255),
+                         sub_Coordinate(player.manabar, (self.offset[0], self.offset[1], 0, 0)), 0)
+        # 몬스터 체력 그리기
+        pygame.draw.rect(self.display_surface, (255, 0, 0),
+                         sub_Coordinate(monster.healthbar, (self.offset[0], self.offset[1], 0, 0)), 0)
+
+    def icon_setting(self):
+        #아이콘 세팅
+        self.skill_thunder_icon = pygame.image.load('image/UI/thunder_icon.png')
+        self.skill_thunder_icon = pygame.transform.scale(self.skill_thunder_icon, (40, 40))
+
+        self.B_skill_thunder_icon = pygame.image.load('image/UI/B_thunder_icon.png')
+        self.B_skill_thunder_icon = pygame.transform.scale(self.B_skill_thunder_icon, (40, 40))
+
+        self.skill_missile_icon = pygame.image.load('image/UI/missile_icon.png')
+        self.skill_missile_icon = pygame.transform.scale(self.skill_missile_icon, (40, 40))
+
+        self.B_skill_missile_icon = pygame.image.load('image/UI/B_missile_icon.png')
+        self.B_skill_missile_icon = pygame.transform.scale(self.B_skill_missile_icon, (40, 40))
+
+        self.Health_Potion_icon = pygame.image.load('image/UI/Health_Potion.png')
+        self.Health_Potion_icon = pygame.transform.scale(self.Health_Potion_icon, (40, 40))
+
+        self.Mana_Potion_icon = pygame.image.load('image/UI/Mana_Potion.png')
+        self.Mana_Potion_icon = pygame.transform.scale(self.Mana_Potion_icon, (40, 40))

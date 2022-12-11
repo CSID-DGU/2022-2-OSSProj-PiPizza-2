@@ -19,7 +19,7 @@ class Level:
         self.isFinalClear = False
         
         self.sceneNum = 2
-        self.gameState = GAME_STATES[self.sceneNum]
+        # self.gameState = GAME_STATES[self.sceneNum]
         self.stateChanging = False
         self.canChangeState = True
 

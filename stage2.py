@@ -1,3 +1,4 @@
+
 import pygame, sys
 import os
 import random
@@ -408,7 +409,7 @@ def stageTwo(death_count):
         fullscreen = False
         SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
         #게임 시작 시 나오는 이미지
-        background_img =  pygame.image.load('images/background/stage2_bg_black.png')
+        background_img =  pygame.image.load('images/background/stage2_bg.png')
 
         #self.background_img_rect = self.background_img.get_rect()
         #self.background_img_rect.x = self.X_POS
@@ -466,10 +467,3 @@ def stageTwo(death_count):
             if event.type == pygame.VIDEORESIZE:
                 if not fullscreen:
                     SCREEN = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
-
-
-
-
-#pygame.time.delay(100)
-#stageTwo(death_count=0)
-#pygame.quit()
