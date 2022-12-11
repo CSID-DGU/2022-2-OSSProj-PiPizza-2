@@ -178,7 +178,7 @@ def pausing():
 
 # 캐릭터 사이즈
 PLAYER_SIZE     = (HEIGHT/4, HEIGHT/4)
-MONSTER_SIZE    = (140,136)
+MONSTER_SIZE    = (132,126)
 
 # 공격 사이즈
 LIGHT_SIZE = PLAYER_SIZE
@@ -194,6 +194,10 @@ PLAYER_COOR_ini = vec(220, 350) # 플레이어 초기 위치
 PLAYER_VELOCITY = vec(2,0)
 PLAYER_VELOCITY_DASH = vec(0,0) # 대시 기능
 PLAYER_ACCELERATION = vec(6,0)
+
+HEALTH_ANI = [ pygame.image.load("images/sprites/life1.png"), pygame.image.load("images/sprites/life2.png")
+            ,pygame.image.load("images/sprites/life3.png"), pygame.image.load("images/sprites/life4.png"),
+            pygame.image.load("images/sprites/life5.png"), pygame.image.load("images/sprites/life6.png")]
 
 running_l1 = pygame.image.load(os.path.join("images/sprites", "Bike1_L.png"))
 running_l1 = pygame.transform.scale(running_l1, PLAYER_SIZE)

@@ -51,18 +51,49 @@ class Ground(pygame.sprite.Sprite):
     def render(self):
         displaysurface.blit(self.imgGround, (self.rect.x, self.rect.y))     
           
+class LightAttack(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        player = Player()
+        self.direction = player.direction
+        if self.direction == "RIGHT":
+            self.image = pygame.image.load("images/sprites/LightAttack.png")
+        else:
+            self.image = pygame.image.load("images/sprites/LightAttack_L.png")           
+        self.rect = self.image.get_rect(center = player.pos)
+        self.rect.x = player.pos.x
+        self.rect.y = player.pos.y - 40
+    
+    def light(self):
+        player = Player()
+        player.magic_cooldown = 0
+        # Runs while the fireball is still within the screen w/ extra margin
+        if -10 < self.rect.x < 900:
+            if self.direction == "RIGHT":
+                  self.image = pygame.image.load("images/sprites/LightAttack.png")
+                  displaysurface.blit(self.image, self.rect)
+            else:
+                  self.image = pygame.image.load("images/sprites/LightAttack_L.png")
+                  displaysurface.blit(self.image, self.rect)
+                   
+            if self.direction == "RIGHT":
+                  self.rect.move_ip(12, 0)
+            else:
+                  self.rect.move_ip(-12, 0)   
+        else:
+            self.kill()
+            player.magic_cooldown = 1
+            player.attacking = False
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__() 
 
         # 플레이어 움직임
-        self.duck_img = DUCKING
         self.run_img = RUNNING
         self.jump_img = JUMPING
         self.move_frame = 0
 
-        self.bike_duck = False
         self.bike_run = True
         self.bike_jump = False
         
@@ -76,6 +107,11 @@ class Player(pygame.sprite.Sprite):
         # self.imgPA = pygame.transform.scale(self.imgPA, )
         self.attacking = False
         self.cooldown = False
+        self.magic_cooldown = 1
+        self.experiance = 0
+        self.mana = 0
+        # 목숨 일단 6개
+        self.health = 6
 
         self.vx = 0
         self.pos = PLAYER_COOR_ini
@@ -83,8 +119,7 @@ class Player(pygame.sprite.Sprite):
         self.acc = PLAYER_ACCELERATION
         self.direction = "RIGHT"
 
-        # 라이트 공격
-        self.attacking = False
+        # 라이트 공격 아님
         self.attack_frame = pygame.image.load("images/sprites/LightEffect.png")
         self.attack_frame = pygame.transform.scale(self.attack_frame, LIGHT_SIZE)
         self.attack_frame_L = pygame.image.load("images/sprites/LightEffect_L.png")
@@ -141,7 +176,7 @@ class Player(pygame.sprite.Sprite):
                     self.direction = "LEFT"
             self.move_frame += 1
 
-        # Returns to base frame if standing still and incorrect frame is showing
+        # 가만히 있을 때 기본 프레임으로 설정
         if abs(self.vel.x) < 0.2 and self.move_frame != 0:
             self.move_frame = 0
             if self.direction == "RIGHT":
@@ -149,24 +184,24 @@ class Player(pygame.sprite.Sprite):
             elif self.direction == "LEFT":
                     self.imgP = run_ani_L[self.move_frame]
                 
-    # def attack(self):
-    #     if self.direction == "RIGHT":
-    #         self.imgP = self.attack_frame
-    #     elif self.direction == "LEFT":
-    #         self.imgP = self.attack_frame_L
+    def attack(self):
+        if self.direction == "RIGHT":
+            self.imgP = self.attack_frame
+        elif self.direction == "LEFT":
+            self.imgP = self.attack_frame_L
 
     def jump(self):
-        self.rect.x += 1
-
+        self.rect.x += 5
+        ground = Ground()
         # 바닥에 닿았는지 확인하기
         hits = pygame.sprite.spritecollide(self, ground_group, False)
 
-        self.rect.x -= 1
+        self.rect.x -= 5
 
         # 바닥에 닿았고, 점프 중인 상태가 아니면, 점프하게 하기
         if hits and not self.bike_jump:
             self.bike_jump = True
-            self.vel.y = -15
+            self.vel.y = -17.5
 
     # def jumpAndRun(self):
     #     self.rect.x += 1
@@ -199,7 +234,7 @@ class Player(pygame.sprite.Sprite):
                   self.vel.y = 0
                   self.bike_jump = False
 
-    # 대시 기능 - 쿨타임 구현 필요
+    # 대시 기능 - 쿨타임 미적용
     def dash(self):
         hits = pygame.sprite.spritecollide(player, ground_group, False)
         # if hits and not self.bike_jump:
@@ -214,9 +249,22 @@ class Player(pygame.sprite.Sprite):
             self.cooldown = True #cooldown 가능하게 함
             pygame.time.set_timer(hit_cooldown, 1000)
 
+            self.health = self.health - 1
+
+            HEALTH_ANI = [pygame.image.load("images/sprites/life0.png"), pygame.image.load("images/sprites/life1.png"), pygame.image.load("images/sprites/life2.png")
+                        ,pygame.image.load("images/sprites/life3.png"), pygame.image.load("images/sprites/life4.png"),
+                        pygame.image.load("images/sprites/life5.png"), pygame.image.load("images/sprites/life6.png")]
+            health.image = HEALTH_ANI[self.health]
+
+            if self.health <= 0:
+                self.kill()
+                pygame.display.update()
+
             print("피격")
             pygame.display.update()
     
+
+
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self):
@@ -228,19 +276,28 @@ class Enemy(pygame.sprite.Sprite):
         self.pos = MonsterElv_POSITION
 
         self.direction = random.randint(0,1) # 0: 오른쪽 향함   1: 왼쪽 향함
-        self.vel.x = random.randint(2,6) # 보스 속도 랜덤
-        
+        self.vel.x = 4.5 # 보스 속도 고정
+        self.mana = 6 # 플레이어가 공격하면 마나를 준다 -무효
+
         if self.direction == 0:
-            self.pos = MonsterElv_COOR_ini
-        if self.direction == 1:
             self.pos = MonsterElv_COOR_ini_R
+            self.imgM = pygame.image.load("images/sprites/monsterElv_R.png")
+            self.imgM = pygame.transform.scale(self.imgM, MONSTER_SIZE)
+        if self.direction == 1:
+            self.pos = MonsterElv_COOR_ini
+            self.imgM = pygame.image.load("images/sprites/monsterElv.png")
+            self.imgM = pygame.transform.scale(self.imgM, MONSTER_SIZE)
 
     def move(self):
         # Causes the enemy to change directions upon reaching the end of screen    
         if self.pos.x >= (WIDTH-125):
                 self.direction = 1
+                self.imgM = pygame.image.load("images/sprites/monsterElv.png")
+                self.imgM = pygame.transform.scale(self.imgM, MONSTER_SIZE)
         elif self.pos.x <= 0:
                 self.direction = 0
+                self.imgM = pygame.image.load("images/sprites/monsterElv_R.png")
+                self.imgM = pygame.transform.scale(self.imgM, MONSTER_SIZE)
         # 이동하기
         if self.direction == 0: # 왼쪽 향할 때
             self.pos.x += self.vel.x
@@ -249,58 +306,37 @@ class Enemy(pygame.sprite.Sprite):
         
         self.rect.center = self.pos # Updates rect
 
+    def update(self):
+         # 플레이어와의 충돌
+        hits = pygame.sprite.spritecollide(self, Playergroup, False)
+
+         # 플레이어의 라이트공격과의 충돌
+        l_hits = pygame.sprite.spritecollide(self, LightAttacks, False)
+ 
+         # 공격 불리언 태그
+        if hits and player.attacking == True or l_hits:
+            self.kill()
+            if player.mana < 100: player.mana += self.mana # 무효
+            player.experiance += 1  # 무효
+            #print("Enemy killed")
+        elif hits and player.attacking == False:
+            player.player_hit()
+ 
+        # If collision has occured and player not attacking, call "hit" function            
+        elif hits and player.attacking == False:
+            player.player_hit()
+
     def render(self):
         # 그리기
         displaysurface.blit(self.imgM, self.pos)
 
-    def update(self):
-         # Checks for collision with the Player
-         hits = pygame.sprite.spritecollide(self, Playergroup, False)
- 
-         # Activates upon either of the two expressions being true
-         if hits and player.attacking == True:
-            self.kill()
-            #print("Enemy killed")
- 
-         # If collision has occured and player not attacking, call "hit" function            
-         elif hits and player.attacking == False:
-            player.player_hit()
- 
-class PlayerAttack(pygame.sprite.Sprite):
+class HealthBar(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.direction = player.direction
-        if self.direction == "RIGHT":
-            self.image = pygame.image.load("LightAttack")
-        else:
-            self.image = pygame.image.load("LightAttack_L")
-        self.image = pygame.transform.scale(self.image, LIGHT_SIZE)
-        self.rect = self.image.get_rect(center = player.pos)
-        self.rect.x = player.pos.x
-        self.rect.y = player.pos.y - 40
+        self.image = pygame.image.load("images/sprites/life6.png")
 
-    def light(self):
-        player.magic_cooldown = 0
-      # Runs while the fireball is still within the screen w/ extra margin
-        if -10 < self.rect.x < 710:
-            if self.direction == "RIGHT":
-                  self.image = pygame.image.load("fireball1_R.png")
-                  displaysurface.blit(self.image, self.rect)
-            else:
-                  self.image = pygame.image.load("fireball1_L.png")
-                  displaysurface.blit(self.image, self.rect)
-                   
-            if self.direction == "RIGHT":
-                  self.rect.move_ip(12, 0)
-            else:
-                  self.rect.move_ip(-12, 0)   
-        else:
-            self.attack()
-            # 게임 루프 내에서 시간 지난 후에 사용 가능하도록 수를 써야 함
-            player.magic_cooldown = 1
-            player.attacking = False
-
-# def stage3():
+    def render(self):
+        displaysurface.blit(self.image, (10,10))
 
 enemy = Enemy()
 player = Player()
@@ -312,56 +348,100 @@ background = Background()
 ground = Ground()
 ground_group = pygame.sprite.Group()
 ground_group.add(ground)
+health = HealthBar()
 
-# 게임 실행
-while True:
-    player.gravity_check()   
-    hit_cooldown = pygame.USEREVENT + 1
-    for event in pygame.event.get():
-        if event.type == hit_cooldown:
-            player.cooldown = False
-            pygame.time.set_timer(hit_cooldown, 0)
-        # Event handling for a range of different key presses    
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
-                player.jump()
-            # if event.key == pygame.K_UP and (pygame.K_LEFT or pygame.K_RIGHT):
-            #     player.jumpAndRun()
-            if event.key == pygame.K_a:     # a 키 누르면 공격
-                if player.attacking == False:
-                    player.attack()
-                    player.attacking = True
-            if event.key == pygame.K_d:
-                    player.dash()
-        # Will run when the close window button is clicked    
-        if event.type == QUIT:
-            pygame.quit()
-            sys.exit() 
+LightAttacks = pygame.sprite.Group()
+hit_cooldown = pygame.USEREVENT + 1
+
+
+class Stage3:
+    def __init__(self):
+        # self.enemy = Enemy()
+        # self.player = Player()
+        # # player.direction = "RIGHT"
+        # self.Playergroup = pygame.sprite.Group()
+        # self.Playergroup.add(self.player)
+
+        # self.background = Background()
+        # self.ground = Ground()
+        # self.ground_group = pygame.sprite.Group()
+        # self.ground_group.add(self.ground)
+        # self.health = HealthBar()
+
+        # self.LightAttacks = pygame.sprite.Group()
+        # self.hit_cooldown = pygame.USEREVENT + 1
+        pass
+
+    def run3(self):
+        # 게임 실행
+        while True:
+            player.gravity_check()   
             
-        # For events that occur upon clicking the mouse (left click) 
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            pass
+            for event in pygame.event.get():
+                if event.type == hit_cooldown:
+                    player.cooldown = False
+                    pygame.time.set_timer(hit_cooldown, 0)
+                # Event handling for a range of different key presses    
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_UP:
+                        player.jump()
+                    # if event.key == pygame.K_UP and (pygame.K_LEFT or pygame.K_RIGHT):
+                    #     player.jumpAndRun()
+                    if event.key == pygame.K_p:
+                        if player.attacking == False:
+                            player.attack()
+                    if event.key == pygame.K_a and player.magic_cooldown == 1:     # a 키 누르면 공격
+                    # if event.key == pygame.K_a:     # a 키 누르면 공격
+                        if player.mana >= 6:
+                            player.mana -= 6
+                            player.attacking = True
+                            lightAttack = LightAttack()
+                            LightAttacks.add(lightAttack)
+
+                    if event.key == pygame.K_d:
+                            player.dash()
+                # Will run when the close window button is clicked    
+                if event.type == QUIT:
+                    pygame.quit()
+                    sys.exit() 
+                    
+                # For events that occur upon clicking the mouse (left click) 
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pass
 
 
-        # Event handling for a range of different key presses    
-        if event.type == pygame.KEYDOWN:
-            pass
+                # Event handling for a range of different key presses    
+                if event.type == pygame.KEYDOWN:
+                    pass
 
-    # 불러오기(그리기) ------
-    background.render() 
-    ground.render()
-    
-    player.update()
-    if player.attacking == True:
-        player.attack() 
-    player.move()
-    displaysurface.blit(player.imgP, player.rect)
-    enemy.render()
-    enemy.move()
-    enemy.update()
-    
+            # 불러오기(그리기) ------
+            background.render() 
+            ground.render()
+            
+            player.update()
+            if player.attacking == True:
+                player.attack() 
+            player.move()
 
-    pygame.display.update() 
+            if player.health > 0:
+                displaysurface.blit(player.imgP, player.rect)
+            health.render()
 
-    FPS_CLOCK.tick(FPS)
-    # print(enemy.vel.x)
+            for attack in LightAttacks:
+                attack.light()
+
+            enemy.render()
+            enemy.move()
+            enemy.update()
+
+            pygame.display.update() 
+
+            FPS_CLOCK.tick(FPS)
+            # print(enemy.vel.x)
+
+
+
+
+if __name__ == '__main__':
+    stage3 = Stage3()
+    stage3.run3()
