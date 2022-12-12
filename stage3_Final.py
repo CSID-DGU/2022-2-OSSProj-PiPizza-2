@@ -9,6 +9,7 @@ from tkinter import *
 from settings import *
 from level import *
 from stage2 import *
+from description import *
 
 pygame.init()  # pygame 시작
 vec = pygame.math.Vector2
@@ -261,6 +262,7 @@ class Player(pygame.sprite.Sprite):
                 pygame.display.update()
 
             print("피격")
+            print(self.health)
             pygame.display.update()
     
 
@@ -370,13 +372,16 @@ class Stage3:
 
         # self.LightAttacks = pygame.sprite.Group()
         # self.hit_cooldown = pygame.USEREVENT + 1
-        pass
+        self.hp = player.health
 
     def run3(self):
         # 게임 실행
+        
         while True:
             player.gravity_check()   
-            
+
+            if player.health == 0:
+                stage3.run3()
             for event in pygame.event.get():
                 if event.type == hit_cooldown:
                     player.cooldown = False
@@ -439,9 +444,68 @@ class Stage3:
             FPS_CLOCK.tick(FPS)
             # print(enemy.vel.x)
 
+    def stageThree(Self):
+        run = True
+        while run:
+        # SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
+        # #게임 시작 시 나오는 이미지
+        # background_img =  pygame.image.load('images/background/stage2_bg.png')
+
+        # #self.background_img_rect = self.background_img.get_rect()
+        # #self.background_img_rect.x = self.X_POS
+        # #self.background_img_rect.y = self.Y_POS
+        # SCREEN.blit(background_img, (0,0))
+            bgimage = pygame.image.load("images/background/stage3_bg.png")
+            bgimage_rect = bgimage.get_rect(topleft=(0, 0))
+            displaysurface.blit(bgimage, (bgimage_rect.x, bgimage_rect.y))
+                
+            font = pygame.font.Font('freesansbold.ttf', 30)
+
+            #시작
+            if player.health > 0:
+                text = font.render("Press any Key to Start", True, (0, 0, 0))
+                #timeReset()
+        
+            #Fail
+            if player.health == 0:
+                # text = font.render("Continue?", True, (0, 0, 0))
+                #score = font.render("Your Score: " + str(points), Trpygame.image.load(os.path.joinue, (0, 0, 0))
+                #scoreRect = score.get_rect()
+                #scoreRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50)
+                #SCREEN.blit(score, scoreRect)
+                stage3.run3()
+            #클리어
+            elif player.health < 0:
+                # text=font.render("Stage 2 Clear!", True, (0, 0, 0))
+                dial = Description()
+                dial.clear3()
+
+            textRect = text.get_rect()
+            textRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+            displaysurface.blit(text, textRect)
+            displaysurface.blit(RUNNING[0], (SCREEN_WIDTH // 2 - 20, SCREEN_HEIGHT // 2 - 140))
+            pygame.display.update()
+            
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
+                    # sys.exit()
+                if event.type == pygame.KEYDOWN:
+                    stage3.run3()
+                    # if event.key == pygame.K_f:
+                    #     fullscreen = not fullscreen
+                    #     if fullscreen:
+                    #         SCREEN = pygame.display.set_mode((monitor_size), pygame.FULLSCREEN)
+                    #     else:
+                    #         SCREEN = pygame.display.set_mode((SCREEN.get_width(), SCREEN.get_height()), pygame.FULLSCREEN)
+
+                # # 스크린 리사이즈
+                # if event.type == pygame.VIDEORESIZE:
+                #     if not fullscreen:
+                #         SCREEN = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)              
 
 
 
 if __name__ == '__main__':
     stage3 = Stage3()
-    stage3.run3()
+    stage3.stageThree()

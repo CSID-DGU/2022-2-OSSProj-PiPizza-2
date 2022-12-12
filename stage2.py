@@ -4,6 +4,7 @@ import os
 import random
 from settings import *
 from description import *
+from stage3_Final import *
 
 pygame.init()
 st2_description = Description()
@@ -443,6 +444,8 @@ def stageTwo(death_count):
             text=font.render("Stage 2 Clear!", True, (0, 0, 0))
             st1_isClear=True
             st2_description.clear2_dial3()
+            stage3 = Stage3()
+            stage3.stageThree()
             #stage 3로 넘어가는 코드
         textRect = text.get_rect()
         textRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
