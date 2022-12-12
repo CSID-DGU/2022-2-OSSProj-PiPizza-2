@@ -2,9 +2,6 @@ import pygame, sys
 import os
 from pygame.locals import *
 from settings import *
-
-
-
 from level import *
 from sound import *
 from description import *
@@ -50,9 +47,7 @@ class Game:
         # self.path_dial = 'images/Dialog/'
         # self.path_obstcls = 'images/obstacles/'
         # self.path_sprts = 'images/sprites/'
-        
-        # 메뉴 레이아웃? 어디서 쓰이는지 모르겠음
-        # self.leading = 50
+       
 
         # 메뉴화면 배경
         self.background_surf = pygame.image.load(f'{self.path_bg}menu_background.png').convert_alpha()
@@ -203,9 +198,6 @@ class Game:
 
     # 환경설정
     def gameSetting(self):
-        
-        # 사운드 슬라이더로 배경음악&효과음 볼륨 조절 가능하도록 구현
-        # 이 아니라 소리 끄고 켜기로 수정함
         
         while True:
             self.screen.blit(self.background_set_surf, self.background_set_rect)
