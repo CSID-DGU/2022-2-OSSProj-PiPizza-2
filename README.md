@@ -21,8 +21,8 @@ Stage를 3단계로 분리시킴으로써 Solo Play의 난이도를 높여 도�
 
 ## Changes
 * 아트리소스 수정
+* 메인화면 변경
 * Boss Stage 추가
-* 공격 기능 수정
 * 목숨 count 변경
 * Scoring 방식 변경
 
@@ -51,11 +51,10 @@ Stage를 3단계로 분리시킴으로써 Solo Play의 난이도를 높여 도�
 <br>
 
 ## How to Play
-![keyboard_background12](https://user-images.githubusercontent.com/96487453/206892845-24328245-d08e-4e76-ad23-f351e8963241.png) <br>
+![keyboard_background12](https://user-images.githubusercontent.com/96487453/206966813-1a1b7135-e7a5-4ea3-959f-82c4b7d1cef3.png) <br>
 Stage 1 & 2는 점프와 숙이기로 장애물을 피하세요!<br>
-![keyboard_background3](https://user-images.githubusercontent.com/96487453/206892851-da943fab-b02d-454d-a1fc-18b40e3cc918.png) <br>
-Stage 3는 라이트 공격과 대시 기능으로 패턴을 피하면서 보스를 무찔러 보세요 💀<br>
-공격 기능은 쿨타임이 존재하니 신중하게 써야해요!<br>
+![keyboard_background3](https://user-images.githubusercontent.com/96487453/206966845-03ff614a-d616-4307-a459-57371a3d1130.png) <br>
+Stage 3는 대시 기능과 이동키를 이용해서 제한시간 동안 최대한 보스 패턴을 피해보세요! 💀<br>
 
 <br>
 
