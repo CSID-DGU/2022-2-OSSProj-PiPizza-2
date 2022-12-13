@@ -114,8 +114,8 @@ class Player(pygame.sprite.Sprite):
         self.attacking = False
         self.cooldown = False
         self.magic_cooldown = 1
-        self.experiance = 0
-        self.mana = 10000
+        self.experiance = PLAYER_EXP
+        self.mana = PLAYER_MANA
         # 목숨 6개
         self.health = 6
 
@@ -230,6 +230,7 @@ class Player(pygame.sprite.Sprite):
     # def duck(self):
     #     super.duck()
 
+    # 중력 적용
     def gravity_check(self):
       hits = pygame.sprite.spritecollide(player, ground_group, False)
       if self.vel.y > 0:
@@ -407,7 +408,7 @@ def main():
     run = True
     while run:
         # 시간
-        start_ticks = pygame.time.get_ticks()
+        # start_ticks = pygame.time.get_ticks()
         
 
         player.gravity_check()
@@ -447,12 +448,9 @@ def main():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit() 
-                
             # For events that occur upon clicking the mouse (left click) 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pass
-
-
             # Event handling for a range of different key presses    
             if event.type == pygame.KEYDOWN:
                 pass
@@ -514,10 +512,12 @@ def main():
         textRect.center = (WIDTH // 2, HEIGHT // 2)
         displaysurface.blit(text, textRect)
         # displaysurface.blit(RUNNING[0], (WIDTH // 2 - 20, HEIGHT // 2 - 140))
-        
+        clock.tick(30)
+
         pygame.display.update() 
 
-        FPS_CLOCK.tick(FPS)
+
+        # FPS_CLOCK.tick(FPS)
         # print(enemy.vel.x)
 
 # 시간 포함 최종 스테이지               
@@ -572,7 +572,7 @@ def stageThree(p_health):
         textRect = text.get_rect()
         textRect.center = (WIDTH // 2, HEIGHT // 2)
         displaysurface.blit(text, textRect)
-        displaysurface.blit(RUNNING[0], (WIDTH // 2 - 20, HEIGHT // 2 - 140))
+        displaysurface.blit(RUNNING[0], (WIDTH // 2 - 50, HEIGHT // 2 - 140))
         pygame.display.update()
         
         for event in pygame.event.get():

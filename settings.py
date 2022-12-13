@@ -10,7 +10,7 @@ pygame.init()
 #화면 크기 및 FPS
 SCREEN_SIZE = WIDTH, HEIGHT = (900, 450)
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
-FPS = 60
+FPS = 30
 
 vec = pygame.math.Vector2
 
