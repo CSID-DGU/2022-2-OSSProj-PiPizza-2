@@ -6,7 +6,7 @@ import time
 
 
 from settings import *
-from level import *
+#from level import *
 from description import *
 
 pygame.init()  # pygame 시작
@@ -473,8 +473,6 @@ def stageThree(p_health):
 
 
 
-
-
         #시작
         if p_health > 0:
             text = font.render("Press any Key to Start", True, (0, 0, 0))
@@ -489,7 +487,6 @@ def stageThree(p_health):
             
         elif p_health < 0:
             text=font.render("Stage 3 Clear!", True, (0, 0, 0))
-            
             dial.clear3()
 
         else:
