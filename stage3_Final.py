@@ -8,7 +8,6 @@ from tkinter import *
 
 from settings import *
 from level import *
-# from stage2 import *
 from description import *
 
 pygame.init()  # pygame 시작
@@ -104,9 +103,7 @@ class Player(pygame.sprite.Sprite):
         self.bike_jump = False
         
         self.imgP = run_ani_R[0]
-        # self.imgP = pygame.image.load("images/sprites/Bike1.png")
         self.imgP = pygame.transform.scale(self.imgP, PLAYER_SIZE)
-        #"images/sprites", "Bike1.png"
         self.rect = self.imgP.get_rect()
 
         # 공격할 때
@@ -208,27 +205,6 @@ class Player(pygame.sprite.Sprite):
         if hits and not self.bike_jump:
             self.bike_jump = True
             self.vel.y = -17.5
-
-    # def jumpAndRun(self):
-    #     self.rect.x += 1
-
-    #     # 바닥에 닿았는지 확인하기
-    #     hits = pygame.sprite.spritecollide(self, ground_group, False)
-
-    #     self.rect.x -= 1
-
-    #     # 바닥에 닿았고, 점프 중인 상태가 아니면, 점프하게 하기
-    #     if hits and not self.bike_jump:
-    #         self.bike_jump = True
-    #         self.vel.y = -15
-    #         if self.direction == "RIGHT":
-    #             self.vel.x = 20
-    #         else:
-    #             self.vel.x = -20
-
-    # # 최종 스테이지 숙이기 기능 없음
-    # def duck(self):
-    #     super.duck()
 
     # 중력 적용
     def gravity_check(self):
@@ -342,30 +318,11 @@ class HealthBar(pygame.sprite.Sprite):
     def render(self):
         displaysurface.blit(self.image, (10,10))
 
-# def __init__(self):
-    # self.enemy = Enemy()
-    # self.player = Player()
-    # # player.direction = "RIGHT"
-    # self.Playergroup = pygame.sprite.Group()
-    # self.Playergroup.add(self.player)
-
-    # self.background = Background()
-    # self.ground = Ground()
-    # self.ground_group = pygame.sprite.Group()
-    # self.ground_group.add(self.ground)
-    # self.health = HealthBar()
-
-    # self.LightAttacks = pygame.sprite.Group()
-    # self.hit_cooldown = pygame.USEREVENT + 1
-    # self.hp = player.health
-
-
 # 실행 관련
 def timeReset():
     global elapsed_time
     elapsed_time = 0
-    
-    # elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
+
 
 # 생성자
 enemy = Enemy()
@@ -389,23 +346,10 @@ start_ticks = pygame.time.get_ticks()
 
 # 게임 실행
 def main():
-    # enemy = Enemy()
-    # player = Player()
-    # # player.direction = "RIGHT"
-    # Playergroup = pygame.sprite.Group()
-    # Playergroup.add(player)
-
-    # background = Background()
-    # ground = Ground()
-    # ground_group = pygame.sprite.Group()
-    # ground_group.add(ground)
-    # health = HealthBar()
-
-    # LightAttacks = pygame.sprite.Group()
-    # hit_cooldown = pygame.USEREVENT + 1
-    # font = pygame.font.Font('freesansbold.ttf', 20)
+   
     p_health = player.health
     run = True
+
     while run:
         # 시간
         # start_ticks = pygame.time.get_ticks()
@@ -444,16 +388,10 @@ def main():
 
                 if event.key == pygame.K_d:
                         player.dash()
-            # Will run when the close window button is clicked    
+            # 창 엑스 버튼 클릭 시 꺼짐  
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit() 
-            # For events that occur upon clicking the mouse (left click) 
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                pass
-            # Event handling for a range of different key presses    
-            if event.type == pygame.KEYDOWN:
-                pass
 
         userInput = pygame.key.get_pressed()
 
@@ -472,7 +410,7 @@ def main():
             run = False
             stageThree(p_health)
 
-        #Fail
+        # Fail
         if player.health == 0:
             global text
             text = font.render("Continue?", True, (0, 0, 0))
@@ -508,14 +446,7 @@ def main():
         enemy.move()
         enemy.update()
 
-        # textRect = text.get_rect()
-        # textRect.center = (WIDTH // 2, HEIGHT // 2)
-        # displaysurface.blit(text, textRect)
-        # displaysurface.blit(RUNNING[0], (WIDTH // 2 - 20, HEIGHT // 2 - 140))
-        # clock.tick(30)
-
         pygame.display.update() 
-
 
         FPS_CLOCK.tick(FPS)
         # print(enemy.vel.x)
@@ -543,6 +474,8 @@ def stageThree(p_health):
 
 
 
+
+
         #시작
         if p_health > 0:
             text = font.render("Press any Key to Start", True, (0, 0, 0))
@@ -553,13 +486,8 @@ def stageThree(p_health):
         elif p_health == 0:
             text = font.render("Continue?", True, (0, 0, 0))
             dial.tryAgain()
-            
-        #     main() 
-            # scoreRect = score.get_rect()
-            # scoreRect.center = (WIDTH // 2, HEIGHT // 2 + 50)
-            # displaysurface.blit(score, scoreRect)
-
             # stage3.run3()
+            
         elif p_health < 0:
             text=font.render("Stage 3 Clear!", True, (0, 0, 0))
             

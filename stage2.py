@@ -22,7 +22,7 @@ global st1_isClear
 st1_isClear = False
 start_ticks = pygame.time.get_ticks()  # 현재 tick 을 받아옴
 
-total_time = 20  # 총 시간
+total_time = 60  # 총 시간
 
 elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
 
