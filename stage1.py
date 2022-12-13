@@ -21,7 +21,7 @@ fullscreen = False
 st1_isClear = False
 start_ticks = pygame.time.get_ticks()  # 현재 tick 을 받아옴
 
-total_time = 30  # 총 시간
+total_time = 10  # 총 시간
 
 elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
 
@@ -213,9 +213,9 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
 
-            if event.key == pygame.K_ESCAPE:
-                paused = not paused
-                paused = pausing()
+            # if event.key == pygame.K_ESCAPE:
+            #     paused = not paused
+            #     paused = pausing()
 
 
         #SCREEN.fill((247, 155 , 96))

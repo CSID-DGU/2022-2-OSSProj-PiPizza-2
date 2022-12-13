@@ -15,7 +15,7 @@ FPS = 60
 vec = pygame.math.Vector2
 
 # 게임 단계
-GAME_STATES = [ 'stage1', 'stage2', 'stageFinal']
+# GAME_STATES = [ 'stage1', 'stage2', 'stageFinal']
 ingame = False
 
 # pygame.init()
@@ -69,8 +69,6 @@ BLUE    = (0, 0, 255)
 PLAYER_HP   = 99
 MONSTER_HP    = 100
 
-
-
 #스테이지1,2 (최종 스테이지 상속)
 #이미지 설정
 BG = pygame.image.load("images/obstacles/Track2.png")
@@ -102,6 +100,8 @@ BIRD = [pygame.image.load("images/obstacles/Bird1.png"),
 CAR = [pygame.image.load("images/obstacles/Car1.png"),
         pygame.image.load("images/obstacles/Car2.png")]
 
+CLOUD = pygame.image.load("images/obstacles/Cloud.png")
+
 
 # 최종 스테이지 
 ACC = 0.3
@@ -110,8 +110,6 @@ FRIC = -0.10
 # HP 정보
 PLAYER_HP   = 100
 MONSTER_HP  = 100
-
-CLOUD = pygame.image.load("images/obstacles/Cloud.png")
 
 
 def pausing():
@@ -159,7 +157,6 @@ def pausing():
                             gameOver = False
                             gameQuit = True
                             
-
                         if resume_btn.collidepoint(x, y):
                             pygame.mixer.music.unpause()  # pausing상태에서 오른쪽의 아이콘 클릭하면 배경음악 일시정지 해제
                             return False
@@ -219,13 +216,7 @@ MonsterElv_POSITION = vec(0,0)
 MonsterElv_COOR_ini = vec(680, 270) # 보스 초기 위치(왼쪽 향할 때)
 MonsterElv_COOR_ini_R = vec(WIDTH - 680, 270) # 보스 초기 위치(오른쪽 향할 때)
 MonsterElv_VELOCITY = vec(0,0)
-MonsterElv_IMG_INFO = {'idleL': {'idx': 8, 'size': MONSTER_SIZE}, 
-                        #'idleR': {'idx': 8, 'size': DEVIL_SIZE},
-                    # 'attack1L': {'idx': 8, 'size': DEVIL_SIZE}, 'attack1R': {'idx': 8, 'size': DEVIL_SIZE},
-                    # 'cast_thunderL':{'idx': 8, 'size': DEVIL_SIZE}, 'cast_thunderR':{'idx': 8, 'size': DEVIL_SIZE}, 
-                    # 'deathL': {'idx': 7, 'size': DEVIL_SIZE}, 'deathR': {'idx': 7, 'size': DEVIL_SIZE},
-                    # 'hurtL': {'idx': 3, 'size': DEVIL_SIZE}, 'hurtR': {'idx': 3, 'size': DEVIL_SIZE}
-                    }
+
 
 # 보스 스킬 설정
 MonsterElv_ELECMARBLE_SIZE = (40,40)

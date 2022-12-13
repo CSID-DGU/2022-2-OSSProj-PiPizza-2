@@ -32,11 +32,11 @@ smallerfont = pygame.font.SysFont('Corbel',16)
 text = regularfont.render('LOAD' , True , color_light)
  
 # 플레이 시간
-total_time = 30
+total_time = 100
 start_ticks = pygame.time.get_ticks()
 elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
 
-
+# 배경
 class Background(pygame.sprite.Sprite):
       def __init__(self):
             super().__init__()
@@ -45,7 +45,7 @@ class Background(pygame.sprite.Sprite):
       def render(self):
             displaysurface.blit(self.bgimage, (self.bgimage_rect.x, self.bgimage_rect.y))
             
-
+# 땅
 class Ground(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -54,7 +54,8 @@ class Ground(pygame.sprite.Sprite):
 
     def render(self):
         displaysurface.blit(self.imgGround, (self.rect.x, self.rect.y))     
-          
+
+# 빛 공격      
 class LightAttack(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -113,8 +114,8 @@ class Player(pygame.sprite.Sprite):
         self.cooldown = False
         self.magic_cooldown = 1
         self.experiance = 0
-        self.mana = 0
-        # 목숨 일단 6개
+        self.mana = 10000
+        # 목숨 6개
         self.health = 6
 
         self.vx = 0
@@ -321,8 +322,6 @@ class Enemy(pygame.sprite.Sprite):
          # 공격 불리언 태그
         if hits and player.attacking == True or l_hits:
             self.kill()
-            if player.mana < 100: player.mana += self.mana # 무효
-            player.experiance += 1  # 무효
             #print("Enemy killed")
         elif hits and player.attacking == False:
             player.player_hit()
@@ -385,6 +384,9 @@ hit_cooldown = pygame.USEREVENT + 1
 font = pygame.font.Font('freesansbold.ttf', 20)
 start_ticks = pygame.time.get_ticks()
 
+
+
+
 def main():
     # enemy = Enemy()
     # player = Player()
@@ -406,6 +408,7 @@ def main():
     while run:
         # 시간
         start_ticks = pygame.time.get_ticks()
+        
 
         player.gravity_check()
         for event in pygame.event.get():
@@ -474,8 +477,13 @@ def main():
         #Fail
         if player.health == 0:
             global text
-            # text = font.render("Continue?", True, (0, 0, 0))
+            text = font.render("Continue?", True, (0, 0, 0))
             stageThree(p_health=6)
+            # for event in pygame.event.get():
+            #     if event.type == pygame.KEYDOWN:
+            #         if event.key == pygame.K_RETURN:
+            #             stageThree(p_health=6)
+
             # scoreRect = score.get_rect()
             # scoreRect.center = (WIDTH // 2, HEIGHT // 2 + 50)
             # displaysurface.blit(score, scoreRect)
@@ -532,24 +540,35 @@ def stageThree(p_health):
         elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
         monitor_size = [pygame.display.Info().current_w, pygame.display.Info().current_h]
 
+        dial = Description()
+
+
+
+
         #시작
         if p_health > 0:
             text = font.render("Press any Key to Start", True, (0, 0, 0))
             #timeReset()
+            p_health = player.health
     
         #Fail
-        if player.health == 0:
+        elif p_health == 0:
             text = font.render("Continue?", True, (0, 0, 0))
+            dial.tryAgain()
+            
+        #     main() 
             # scoreRect = score.get_rect()
             # scoreRect.center = (WIDTH // 2, HEIGHT // 2 + 50)
             # displaysurface.blit(score, scoreRect)
 
             # stage3.run3()
-
-        if p_health < 0:
+        elif p_health < 0:
             text=font.render("Stage 3 Clear!", True, (0, 0, 0))
-            dial = Description()
+            
             dial.clear3()
+
+        else:
+            pass
         
 
         textRect = text.get_rect()
@@ -594,4 +613,4 @@ def stageThree(p_health):
 
 
 if __name__ == '__main__':
-    stageThree(p_health=100)
+    stageThree(p_health=6)
