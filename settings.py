@@ -189,6 +189,8 @@ PLAYER_COOR_ini = vec(220, 350) # 플레이어 초기 위치
 PLAYER_VELOCITY = vec(2,0)
 PLAYER_VELOCITY_DASH = vec(0,0) # 대시 기능
 PLAYER_ACCELERATION = vec(6,0)
+PLAYER_MANA = 10000
+PLAYER_EXP = 10000
 
 HEALTH_ANI = [ pygame.image.load("images/sprites/life1.png"), pygame.image.load("images/sprites/life2.png")
             ,pygame.image.load("images/sprites/life3.png"), pygame.image.load("images/sprites/life4.png"),

@@ -29,7 +29,7 @@ color_white = (255,255,255)
 headingfont = pygame.font.SysFont("Verdana", 40)
 regularfont = pygame.font.SysFont('Corbel',25)
 smallerfont = pygame.font.SysFont('Corbel',16) 
-text = regularfont.render('LOAD' , True , color_light)
+# text = regularfont.render('LOAD' , True , color_light)
  
 # 플레이 시간
 total_time = 100
@@ -90,6 +90,7 @@ class LightAttack(pygame.sprite.Sprite):
             player.magic_cooldown = 1
             player.attacking = False
 
+# 플레이어
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__() 
@@ -248,7 +249,7 @@ class Player(pygame.sprite.Sprite):
                 self.vel.x = 13
             if self.direction == "LEFT":
                 self.vel.x = -13
-
+    # 플레이어 목숨
     def player_hit(self):
         if self.cooldown == False:
             self.cooldown = True #cooldown 가능하게 함
@@ -269,9 +270,7 @@ class Player(pygame.sprite.Sprite):
             print(self.health)
             pygame.display.update()
     
-
-
-
+# 보스
 class Enemy(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -359,14 +358,15 @@ class HealthBar(pygame.sprite.Sprite):
     # self.hit_cooldown = pygame.USEREVENT + 1
     # self.hp = player.health
 
-# 실행 관련
 
+# 실행 관련
 def timeReset():
     global elapsed_time
     elapsed_time = 0
     
     # elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
 
+# 생성자
 enemy = Enemy()
 player = Player()
 # player.direction = "RIGHT"
@@ -386,7 +386,7 @@ start_ticks = pygame.time.get_ticks()
 
 
 
-
+# 게임 실행
 def main():
     # enemy = Enemy()
     # player = Player()
@@ -520,15 +520,13 @@ def main():
         FPS_CLOCK.tick(FPS)
         # print(enemy.vel.x)
 
-                
+# 시간 포함 최종 스테이지               
 def stageThree(p_health):
     
     # 게임 실행
     run = True
     while run:
-        
-        
-
+    
         bgimage = pygame.image.load("images/background/stage3_bg.png")
         bgimage_rect = bgimage.get_rect(topleft=(0, 0))
         displaysurface.blit(bgimage, (bgimage_rect.x, bgimage_rect.y))
@@ -554,7 +552,7 @@ def stageThree(p_health):
         #Fail
         elif p_health == 0:
             text = font.render("Continue?", True, (0, 0, 0))
-            dial.tryAgain()
+            # dial.tryAgain()
             
         #     main() 
             # scoreRect = score.get_rect()
@@ -583,6 +581,7 @@ def stageThree(p_health):
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 main()
+                player.health = 6
                 if event.key == pygame.K_f:
                     fullscreen = not fullscreen
                     if fullscreen:
@@ -595,22 +594,6 @@ def stageThree(p_health):
                 if not fullscreen:
                     SCREEN = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)              
 
-
-        
-
-        
-
-
-    # SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
-    # #게임 시작 시 나오는 이미지
-    # background_img =  pygame.image.load('images/background/stage2_bg.png')
-
-    # #self.background_img_rect = self.background_img.get_rect()
-    # #self.background_img_rect.x = self.X_POS
-    # #self.background_img_rect.y = self.Y_POS
-    # SCREEN.blit(background_img, (0,0))
-        
-
-
+# 파일 별 실행 가능하도록 실행 함수
 if __name__ == '__main__':
     stageThree(p_health=6)
