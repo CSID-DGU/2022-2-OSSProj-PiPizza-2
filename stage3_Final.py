@@ -555,7 +555,7 @@ def stageThree(p_health):
         textRect = text.get_rect()
         textRect.center = (WIDTH // 2, HEIGHT // 2)
         displaysurface.blit(text, textRect)
-        displaysurface.blit(RUNNING[0], (WIDTH // 2 - 20, HEIGHT // 2 - 140))
+        displaysurface.blit(RUNNING[0], (WIDTH // 2 - 60, HEIGHT // 2 - 140))
         pygame.display.update()
         
         for event in pygame.event.get():
