@@ -211,7 +211,9 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
 
+
             # PAUSED
+
             # if event.key == pygame.K_ESCAPE:
             #     paused = not paused
             #     paused = pausing()

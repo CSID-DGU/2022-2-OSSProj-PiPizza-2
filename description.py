@@ -1,7 +1,7 @@
 import pygame, sys
 from pygame.locals import *
 from settings import *
-
+from stage3_Final import *
 
 
 class Description:
@@ -31,6 +31,8 @@ class Description:
         self.key2_rect = self.key2_surf.get_rect(topleft=(0, 0))
         self.clear3_surf = pygame.image.load(f'{self.path_dial}description3.png').convert_alpha()
         self.clear3_rect = self.clear3_surf.get_rect(topleft=(0, 0))
+        self.tryAgain_surf = pygame.image.load(f'{self.path_dial}tryAgain.png').convert_alpha()
+        self.tryAgain_rect = self.tryAgain_surf.get_rect(topleft=(0, 0))
 
     def dial1(self):
         self.num = 0
@@ -91,6 +93,15 @@ class Description:
 
             if self.is_returnKey_pressed():
                 self.num += 1
+
+    def tryAgain(self):
+        self.num = 0
+        while True:
+            if self.num == 0:
+                self.screen.blit(self.tryAgain_surf, self.tryAgain_rect)
+                pygame.display.update()
+            else:
+                stageThree(p_health=6)
 
     def is_returnKey_pressed(self):
         for event in pygame.event.get():

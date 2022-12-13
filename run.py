@@ -131,20 +131,6 @@ class Game:
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
-
-            #     if event.key == pygame.KEYDOWN:
-            #         if event.key == pygame.K_ESCAPE:
-            #             paused = not paused
-            #             paused_value, return_home_value = pausing()
-            #             if paused_value != None:
-            #                 paused = paused_value
-            #             else:
-            #                 introFlag = return_home_value
-            #                 gameQuit = True
-            #                 return introFlag
-            # 스테이지 2
-            # stageTwo(death_count=0)
-
                 if event.key == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         paused = not paused
@@ -163,22 +149,6 @@ class Game:
             df = self.clock.tick(FPS)
             self.level.run(df)          
             pygame.display.update()
-
-            
-
-        #     # 게임 클리어 플래그 (while문 탈출 및 시간 저장)
-        #     if self.level.isOneClear or self.level.isTwoClear or self.level.isFinalClear:
-        #         break 
-        # # 게임 클리어 시 (단계별 클리어 시 설명화면)
-        # if self.level.isOneClear:
-        #     self.dial.clear1_dial2()
-        # elif self.level.isTwoClear:
-        #     self.dial.clear2_dial3()
-        # elif self.level.isFinalClear:
-        #     self.dial.clear3()
-        #     #
-        # else:
-        #     pass
 
     # 마우스 클릭 체크
     def check_click(self):
