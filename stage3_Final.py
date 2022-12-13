@@ -3,8 +3,7 @@ from pygame.locals import *
 import sys
 import random
 import time
-from tkinter import filedialog
-from tkinter import *
+
 
 from settings import *
 from level import *
