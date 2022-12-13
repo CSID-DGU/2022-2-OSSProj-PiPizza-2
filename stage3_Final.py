@@ -8,7 +8,7 @@ from tkinter import *
 
 from settings import *
 from level import *
-from stage2 import *
+# from stage2 import *
 from description import *
 
 pygame.init()  # pygame 시작
@@ -354,7 +354,7 @@ health = HealthBar()
 
 LightAttacks = pygame.sprite.Group()
 hit_cooldown = pygame.USEREVENT + 1
-
+font = pygame.font.Font('freesansbold.ttf', 20)
 
 class Stage3:
     def __init__(self):
@@ -373,12 +373,41 @@ class Stage3:
         # self.LightAttacks = pygame.sprite.Group()
         # self.hit_cooldown = pygame.USEREVENT + 1
         self.hp = player.health
+        
+
+    def timeReset():
+        global elapsed_time
+        elapsed_time = 0
+        
+
+        # elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
 
     def run3(self):
         # 게임 실행
         
         while True:
+            start_ticks = pygame.time.get_ticks()
             player.gravity_check()   
+            # press any key
+            userInput = pygame.key.get_pressed()
+
+            # 시간
+            total_time = 60  # 총 시간
+            elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
+
+            timer = font.render("TIMER: "+str(int(elapsed_time)), True, (0,0,0))
+            displaysurface.blit(timer, (10,10))
+
+            if total_time - elapsed_time <= 0:
+                print("Game Clear")
+                timer = font.render(str(int(total_time - elapsed_time)), True, (0,0,0))
+                timerRect = timer.get_rect()
+                timerRect.center = (WIDTH//2, HEIGHT//2+50)
+                displaysurface.blit(timer, timerRect)
+                player.health = -1
+                run = False
+                dial = Description()
+                dial.clear3()
 
             if player.health == 0:
                 stage3.run3()
@@ -445,6 +474,7 @@ class Stage3:
             # print(enemy.vel.x)
 
     def stageThree(Self):
+        stage3 = Stage3()
         run = True
         while run:
         # SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
@@ -468,22 +498,23 @@ class Stage3:
         
             #Fail
             if player.health == 0:
-                # text = font.render("Continue?", True, (0, 0, 0))
-                #score = font.render("Your Score: " + str(points), Trpygame.image.load(os.path.joinue, (0, 0, 0))
-                #scoreRect = score.get_rect()
-                #scoreRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50)
-                #SCREEN.blit(score, scoreRect)
-                stage3.run3()
+                text = font.render("Continue?", True, (0, 0, 0))
+                # scoreRect = score.get_rect()
+                # scoreRect.center = (WIDTH // 2, HEIGHT // 2 + 50)
+                # displaysurface.blit(score, scoreRect)
+
+                # stage3.run3()
+
             #클리어
             elif player.health < 0:
-                # text=font.render("Stage 2 Clear!", True, (0, 0, 0))
+                text=font.render("Stage 3 Clear!", True, (0, 0, 0))
                 dial = Description()
                 dial.clear3()
 
             textRect = text.get_rect()
-            textRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+            textRect.center = (WIDTH // 2, HEIGHT // 2)
             displaysurface.blit(text, textRect)
-            displaysurface.blit(RUNNING[0], (SCREEN_WIDTH // 2 - 20, SCREEN_HEIGHT // 2 - 140))
+            displaysurface.blit(RUNNING[0], (WIDTH // 2 - 20, HEIGHT // 2 - 140))
             pygame.display.update()
             
             for event in pygame.event.get():
@@ -491,7 +522,7 @@ class Stage3:
                     run = False
                     # sys.exit()
                 if event.type == pygame.KEYDOWN:
-                    stage3.run3()
+                    stage3.stageThree()
                     # if event.key == pygame.K_f:
                     #     fullscreen = not fullscreen
                     #     if fullscreen:
