@@ -12,7 +12,6 @@ from stage2 import *
 class Game:
     def __init__(self):
 
-
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("배달의 달인")
@@ -77,8 +76,8 @@ class Game:
     # 메인 메뉴화면
     def menu(self):
 
-        # if bgm_on:
-        #     background_m.play(-1) # 배경음악 실행
+        if bgm_on:
+            background_m.play(-1) # 배경음악 실행
 
         while True:
             self.screen.blit(self.background_surf, self.background_rect)
