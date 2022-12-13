@@ -18,6 +18,7 @@ pygame.display.set_caption("배달의 달인")
 fullscreen = False
 
 global st1_isClear
+
 st1_isClear = False
 start_ticks = pygame.time.get_ticks()  # 현재 tick 을 받아옴
 
@@ -445,7 +446,7 @@ def stageTwo(death_count):
             st1_isClear=True
             st2_description.clear2_dial3()
             #stage 3로 넘어가는 코드
-            stageThree()
+            stageThree(p_health=6)
         textRect = text.get_rect()
         textRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
         SCREEN.blit(text, textRect)

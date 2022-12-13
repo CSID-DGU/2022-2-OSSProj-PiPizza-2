@@ -31,7 +31,10 @@ regularfont = pygame.font.SysFont('Corbel',25)
 smallerfont = pygame.font.SysFont('Corbel',16) 
 text = regularfont.render('LOAD' , True , color_light)
  
-
+# 플레이 시간
+total_time = 30
+start_ticks = pygame.time.get_ticks()
+elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
 
 
 class Background(pygame.sprite.Sprite):
@@ -357,6 +360,8 @@ class HealthBar(pygame.sprite.Sprite):
     # self.hit_cooldown = pygame.USEREVENT + 1
     # self.hp = player.health
 
+# 실행 관련
+
 def timeReset():
     global elapsed_time
     elapsed_time = 0
@@ -378,6 +383,7 @@ health = HealthBar()
 LightAttacks = pygame.sprite.Group()
 hit_cooldown = pygame.USEREVENT + 1
 font = pygame.font.Font('freesansbold.ttf', 20)
+start_ticks = pygame.time.get_ticks()
 
 def main():
     # enemy = Enemy()
@@ -409,46 +415,44 @@ def main():
                 if event.key == pygame.K_ESCAPE:
                     paused = not paused
                     paused = pausing()
-            
-        
-        if event.type == hit_cooldown:
-            player.cooldown = False
-            pygame.time.set_timer(hit_cooldown, 0)
-        # Event handling for a range of different key presses    
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
-                player.jump()
-            # if event.key == pygame.K_UP and (pygame.K_LEFT or pygame.K_RIGHT):
-            #     player.jumpAndRun()
-            if event.key == pygame.K_p:
-                if player.attacking == False:
-                    player.attack()
-            if event.key == pygame.K_a and player.magic_cooldown == 1:     # a 키 누르면 공격
-            # if event.key == pygame.K_a:     # a 키 누르면 공격
-                # if player.mana >= 6:
-                #     player.mana -= 6
-                #     player.attacking = True
-                #     lightAttack = LightAttack()
-                #     LightAttacks.add(lightAttack)
-                player.attacking = True
-                lightAttack = LightAttack()
-                LightAttacks.add(lightAttack)
+            if event.type == hit_cooldown:
+                player.cooldown = False
+                pygame.time.set_timer(hit_cooldown, 0)
+            # Event handling for a range of different key presses    
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    player.jump()
+                # if event.key == pygame.K_UP and (pygame.K_LEFT or pygame.K_RIGHT):
+                #     player.jumpAndRun()
+                if event.key == pygame.K_p:
+                    if player.attacking == False:
+                        player.attack()
+                if event.key == pygame.K_a and player.magic_cooldown == 1:     # a 키 누르면 공격
+                # if event.key == pygame.K_a:     # a 키 누르면 공격
+                    # if player.mana >= 6:
+                    #     player.mana -= 6
+                    #     player.attacking = True
+                    #     lightAttack = LightAttack()
+                    #     LightAttacks.add(lightAttack)
+                    player.attacking = True
+                    lightAttack = LightAttack()
+                    LightAttacks.add(lightAttack)
 
-            if event.key == pygame.K_d:
-                    player.dash()
-        # Will run when the close window button is clicked    
-        if event.type == QUIT:
-            pygame.quit()
-            sys.exit() 
-            
-        # For events that occur upon clicking the mouse (left click) 
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            pass
+                if event.key == pygame.K_d:
+                        player.dash()
+            # Will run when the close window button is clicked    
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit() 
+                
+            # For events that occur upon clicking the mouse (left click) 
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pass
 
 
-        # Event handling for a range of different key presses    
-        if event.type == pygame.KEYDOWN:
-            pass
+            # Event handling for a range of different key presses    
+            if event.type == pygame.KEYDOWN:
+                pass
 
         userInput = pygame.key.get_pressed()
 
@@ -466,6 +470,17 @@ def main():
             p_health = -1
             run = False
             stageThree(p_health)
+
+        #Fail
+        if player.health == 0:
+            global text
+            # text = font.render("Continue?", True, (0, 0, 0))
+            stageThree(p_health=6)
+            # scoreRect = score.get_rect()
+            # scoreRect.center = (WIDTH // 2, HEIGHT // 2 + 50)
+            # displaysurface.blit(score, scoreRect)
+
+            # stage3.run3()
        
        # 불러오기(그리기) ------
         background.render() 
@@ -487,6 +502,11 @@ def main():
         enemy.move()
         enemy.update()
 
+        textRect = text.get_rect()
+        textRect.center = (WIDTH // 2, HEIGHT // 2)
+        displaysurface.blit(text, textRect)
+        # displaysurface.blit(RUNNING[0], (WIDTH // 2 - 20, HEIGHT // 2 - 140))
+        
         pygame.display.update() 
 
         FPS_CLOCK.tick(FPS)
@@ -499,12 +519,15 @@ def stageThree(p_health):
     run = True
     while run:
         
+        
 
         bgimage = pygame.image.load("images/background/stage3_bg.png")
         bgimage_rect = bgimage.get_rect(topleft=(0, 0))
         displaysurface.blit(bgimage, (bgimage_rect.x, bgimage_rect.y))
             
         font = pygame.font.Font('freesansbold.ttf', 30)
+
+        global elapsed_time
 
         elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
         monitor_size = [pygame.display.Info().current_w, pygame.display.Info().current_h]
@@ -515,7 +538,7 @@ def stageThree(p_health):
             #timeReset()
     
         #Fail
-        if p_health == 0:
+        if player.health == 0:
             text = font.render("Continue?", True, (0, 0, 0))
             # scoreRect = score.get_rect()
             # scoreRect.center = (WIDTH // 2, HEIGHT // 2 + 50)
@@ -523,11 +546,11 @@ def stageThree(p_health):
 
             # stage3.run3()
 
-        #클리어
-        elif p_health < 0:
+        if p_health < 0:
             text=font.render("Stage 3 Clear!", True, (0, 0, 0))
             dial = Description()
             dial.clear3()
+        
 
         textRect = text.get_rect()
         textRect.center = (WIDTH // 2, HEIGHT // 2)
@@ -538,7 +561,7 @@ def stageThree(p_health):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-                # sys.exit()
+                sys.exit()
             if event.type == pygame.KEYDOWN:
                 main()
                 if event.key == pygame.K_f:
@@ -570,5 +593,5 @@ def stageThree(p_health):
         
 
 
-# if __name__ == '__main__':
-#     main()
+if __name__ == '__main__':
+    stageThree(p_health=100)
