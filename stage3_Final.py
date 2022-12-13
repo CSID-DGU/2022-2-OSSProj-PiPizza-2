@@ -508,16 +508,16 @@ def main():
         enemy.move()
         enemy.update()
 
-        textRect = text.get_rect()
-        textRect.center = (WIDTH // 2, HEIGHT // 2)
-        displaysurface.blit(text, textRect)
+        # textRect = text.get_rect()
+        # textRect.center = (WIDTH // 2, HEIGHT // 2)
+        # displaysurface.blit(text, textRect)
         # displaysurface.blit(RUNNING[0], (WIDTH // 2 - 20, HEIGHT // 2 - 140))
-        clock.tick(30)
+        # clock.tick(30)
 
         pygame.display.update() 
 
 
-        # FPS_CLOCK.tick(FPS)
+        FPS_CLOCK.tick(FPS)
         # print(enemy.vel.x)
 
 # 시간 포함 최종 스테이지               
@@ -552,7 +552,7 @@ def stageThree(p_health):
         #Fail
         elif p_health == 0:
             text = font.render("Continue?", True, (0, 0, 0))
-            # dial.tryAgain()
+            dial.tryAgain()
             
         #     main() 
             # scoreRect = score.get_rect()
