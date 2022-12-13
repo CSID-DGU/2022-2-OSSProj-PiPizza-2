@@ -98,6 +98,7 @@ class Description:
                     pygame.quit()
                     sys.exit()
             if event.type == pygame.KEYUP:
+                return True
                 if event.key == pygame.K_RETURN:
                     return True
         return False   
