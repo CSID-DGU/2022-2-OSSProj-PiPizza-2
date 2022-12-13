@@ -2,7 +2,6 @@ import pygame, sys
 import os
 from pygame.locals import *
 from settings import *
-
 from level import *
 from sound import *
 from description import *
@@ -12,6 +11,8 @@ from stage2 import *
 
 class Game:
     def __init__(self):
+
+
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("배달의 달인")
@@ -46,9 +47,7 @@ class Game:
         # self.path_dial = 'images/Dialog/'
         # self.path_obstcls = 'images/obstacles/'
         # self.path_sprts = 'images/sprites/'
-        
-        # 메뉴 레이아웃? 어디서 쓰이는지 모르겠음
-        # self.leading = 50
+       
 
         # 메뉴화면 배경
         self.background_surf = pygame.image.load(f'{self.path_bg}menu_background.png').convert_alpha()
@@ -74,16 +73,12 @@ class Game:
         self.btn_soundOff = self.btn_soundOff_surf.get_rect(center=self.btn_soundOff_pos)
         self.btn_backToMenu = self.btn_backToMenu_surf.get_rect(center=self.btn_backToMenu_pos)
 
-        # 다이얼로그
 
-        
-    
-    
     # 메인 메뉴화면
     def menu(self):
 
-        if bgm_on:
-            background_m.play(-1) # 배경음악 실행
+        # if bgm_on:
+        #     background_m.play(-1) # 배경음악 실행
 
         while True:
             self.screen.blit(self.background_surf, self.background_rect)
@@ -122,22 +117,34 @@ class Game:
 
     # 메인 게임 시작
     def run(self):
+
         if bgm_on:
             background_m.stop()
             ingame_m.play(-1) 
 
         # dial1
         self.dial.dial1()
-        #self.dial.clear1_dial2()
-
-        ingame = True
         
+        ingame = True
         while True:
             
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
+
+            #     if event.key == pygame.KEYDOWN:
+            #         if event.key == pygame.K_ESCAPE:
+            #             paused = not paused
+            #             paused_value, return_home_value = pausing()
+            #             if paused_value != None:
+            #                 paused = paused_value
+            #             else:
+            #                 introFlag = return_home_value
+            #                 gameQuit = True
+            #                 return introFlag
+            # 스테이지 2
+            # stageTwo(death_count=0)
 
                 if event.key == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
@@ -150,6 +157,7 @@ class Game:
                             gameQuit = True
                             return introFlag
 
+
             stageOne(death_count=0)
 
             # delta frame으로 수정
@@ -159,27 +167,20 @@ class Game:
 
             
 
-            # 게임 클리어 플래그 (while문 탈출 및 시간 저장)
-            if self.level.isOneClear or self.level.isTwoClear or self.level.isFinalClear:
-                break 
-        
-        # 클리어 시간 저장
-        #
+        #     # 게임 클리어 플래그 (while문 탈출 및 시간 저장)
+        #     if self.level.isOneClear or self.level.isTwoClear or self.level.isFinalClear:
+        #         break 
+        # # 게임 클리어 시 (단계별 클리어 시 설명화면)
+        # if self.level.isOneClear:
+        #     self.dial.clear1_dial2()
+        # elif self.level.isTwoClear:
+        #     self.dial.clear2_dial3()
+        # elif self.level.isFinalClear:
+        #     self.dial.clear3()
+        #     #
+        # else:
+        #     pass
 
-
-        # 게임 클리어 시 (단계별 클리어 시 설명화면)
-        if self.level.isOneClear:
-            self.dial.clear1_dial2()
-        elif self.level.isTwoClear:
-            self.dial.clear2_dial3()
-        elif self.level.isFinalClear:
-            self.dial.clear3()
-            #
-        else:
-            pass
-
-            
-    
     # 마우스 클릭 체크
     def check_click(self):
         self.is_clicked = False
@@ -193,9 +194,6 @@ class Game:
 
     # 환경설정
     def gameSetting(self):
-        
-        # 사운드 슬라이더로 배경음악&효과음 볼륨 조절 가능하도록 구현
-        # 이 아니라 소리 끄고 켜기로 수정함
         
         while True:
             self.screen.blit(self.background_set_surf, self.background_set_rect)
@@ -229,10 +227,6 @@ class Game:
             
             pygame.display.update()
 
-         
-# checking if we are in the run file?
-# 게임 실행 (실행 시 시작화면은 메인 메뉴)
-# 실행 안 되는 문제를 해결했는데, 원래 코드 '__run__'을 run 대신 main으로 바꿈
 if __name__ == '__main__':
     game = Game()
     game.menu()

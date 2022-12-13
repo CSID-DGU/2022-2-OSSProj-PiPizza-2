@@ -11,11 +11,24 @@ class Sound:
         print("소리 켜기 버튼 눌림")
 
         global bgm_on
-        bgm_on = True
+        
+        if not bgm_on:
+            bgm_on = True
+            background_m.play(-1)
+
+        if ingame:
+            background_m.stop()
+            ingame_m.play(-1)
+            
 
     # 메뉴화면 환경설정 함수
     def set_soundOff(self):
         print("소리 끄기 버튼 눌림")
 
         global bgm_on
-        bgm_on = False
+
+        if bgm_on:
+            bgm_on = False
+            background_m.stop()
+            ingame_m.stop()
+            

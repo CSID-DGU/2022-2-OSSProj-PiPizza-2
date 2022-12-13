@@ -1,8 +1,6 @@
 import pygame
 from pygame.locals import *
 from settings import *
-from player import *
-from monsterElv import *
 from run import *
 # test
 class Level:
