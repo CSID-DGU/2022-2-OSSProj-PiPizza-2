@@ -8,35 +8,35 @@ from description import *
 from stage2 import *
 
 pygame.init()
-st1_description = Description()
 
-# Global Constants
+#stage1 진입 다이어로그
+st1_description = Description()
 
 # 화면 타이틀 설정
 pygame.display.set_caption("배달의 달인")
 
-
+# 전역 변수들
 fullscreen = False
-
 st1_isClear = False
-start_ticks = pygame.time.get_ticks()  # 현재 tick 을 받아옴
 
-total_time = 30  # 총 시간
-
-elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
-
+# 화면 크기
 SCREEN_HEIGHT = 450
 SCREEN_WIDTH = 900
 SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
 
+# 플레이타임
+start_ticks = pygame.time.get_ticks()  # 현재 tick 을 받아옴
+total_time = 20  # 총 시간
+elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
 
+# 리사이즈
 # def resize(name, w, h, color):
 #     global width, height, resized_screen
 #     print("resized_screen: (",resized_screen.get_width(),",",resized_screen.get_height(),")")
 #     return (name, w*resized_screen.get_width()//width, h*resized_screen.get_height()//height, color)
 
 
-
+# 플레이어
 class Bike:
     X_POS = SCREEN_WIDTH/5 #90
     Y_POS = SCREEN_HEIGHT*0.66 #310
@@ -112,6 +112,7 @@ class Bike:
     def draw(self, SCREEN):
         SCREEN.blit(self.image, (self.bike_rect.x, self.bike_rect.y))
 
+# 장애물
 class Cloud:
     def __init__(self):
         self.x = SCREEN_WIDTH + random.randint(800, 1000)
@@ -159,7 +160,7 @@ class Bird(Obstacle):
     def __init__(self, image):
         self.type = 0
         super().__init__(image, self.type)
-        self.rect.y = SCREEN_HEIGHT*0.50
+        self.rect.y = SCREEN_HEIGHT*0.60
         self.index = 0
 
     def draw(self, SCREEN):
@@ -168,36 +169,32 @@ class Bird(Obstacle):
         SCREEN.blit(self.image[self.index//5], self.rect)
         self.index += 1
 
-def timeReset():
-    global elapsed_time
-    elapsed_time = 0
-
+# stage1 설정
 def main():
     global game_speed, x_pos_bg, y_pos_bg, points, obstacles
     run = True
     paused=False
     clock = pygame.time.Clock()
+
+    # 플레이어와 장애물 가져오기
     player = Bike()
     cloud = Cloud()
-    game_speed = 20
+    obstacles = []
+
+    # Player 속도 조절
+    game_speed = 22     
+
+    # 배경 x, y축
     x_pos_bg = 0
     y_pos_bg = 400
-    points = 0
+
+    # 폰트
     font = pygame.font.Font('freesansbold.ttf', 20)
-    obstacles = []
+    
+    # 플레이어 목숨
     death_count = 0
 
-    # def score():
-    #     global points, game_speed
-    #     points += 1
-    #     if points % 100 == 0:
-    #         game_speed += 1
-
-    #     text = font.render("Points: " + str(points), True, (0, 0, 0))
-    #     textRect = text.get_rect()
-    #     textRect.center = (1000, 40)
-    #     SCREEN.blit(text, textRect)
-
+    # 배경화면 설정
     def background():
         global x_pos_bg, y_pos_bg
         image_width = BG.get_width()
@@ -208,22 +205,20 @@ def main():
             x_pos_bg = 0
         x_pos_bg -= game_speed
 
+    # 실행
     while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
 
-            if event.key == pygame.K_ESCAPE:
-                paused = not paused
-                paused = pausing()
+            # PAUSED
+            # if event.key == pygame.K_ESCAPE:
+            #     paused = not paused
+            #     paused = pausing()
 
-
-        #SCREEN.fill((247, 155 , 96))
-        #SCREEN.fill((255, 255 , 255)) 
         SCREEN.blit(stage1_bg, (0,0))
         background()
 
-              
         userInput = pygame.key.get_pressed()
 
         player.draw(SCREEN)
@@ -242,17 +237,12 @@ def main():
             obstacle.draw(SCREEN)
             obstacle.update()
             if player.bike_rect.colliderect(obstacle.rect):
-                pygame.time.delay(2000)
+                pygame.time.delay(500)
                 death_count += 1
                 stageOne(death_count)
    
-        
-        #시간
-        
-        #이 코드 있으면 시간이 배경 때도 흘러가고, 없애면 흘러가는 게 보여지지 않음,,,
-        
+        # 시간 측정
         elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
-
         timer = font.render("TIMER: "+str(int(elapsed_time)),True,(0,0,0))
         SCREEN.blit(timer,(10,10))
 
@@ -265,9 +255,6 @@ def main():
             death_count = -1
             run=False
             stageOne(death_count)
-            #run=False # 다이얼로그로 넘어가야 함
-
-
 
         cloud.draw(SCREEN)
         cloud.update()
@@ -276,65 +263,57 @@ def main():
         pygame.display.update()
 
 
-
-
 def clear(self):  # True를 반환하면 다시 시작
     pass
 
 def fail(self):
     pass
 
-
+#플레이어 목숨
 def stageOne(death_count):
-    global points
     global st2_isClear
     run = True
-    st2_isClear=False
+    st2_isClear = False
+    elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
     while run:
         fullscreen = False
         SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
         SCREEN.blit(stage1_bg, (0,0))
 
         font = pygame.font.Font('freesansbold.ttf', 30)
-
-        global elapsed_time
-
-        
-        elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
         monitor_size = [pygame.display.Info().current_w, pygame.display.Info().current_h]
-
-
 
         #시작
         if death_count == 0:
             text = font.render("Press any Key to Start", True, (0, 0, 0))
-            #timeReset()
       
         #Fail
         elif death_count > 0:
             text = font.render("Continue?", True, (0, 0, 0))
-            #score = font.render("Your Score: " + str(points), Trpygame.image.load(os.path.joinue, (0, 0, 0))
-            #scoreRect = score.get_rect()
-            #scoreRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50)
-            #SCREEN.blit(score, scoreRect)
+            midtime = font.render("TIME: "+ str(int(elapsed_time)),True,(0,0,0))
+            midtimeRect = midtime.get_rect()
+            midtimeRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50)
+            SCREEN.blit(midtime, midtimeRect)
+
         #클리어
         elif death_count < 0:
             text=font.render("Stage 1 Clear!", True, (0, 0, 0))
             st1_isClear=True
             st1_description.clear1_dial2()
-            stageTwo(death_count=0) #여기
+            stageTwo(death_count=0)
             
-            #stage 3로 넘어가는 코드
+
         textRect = text.get_rect()
         textRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
         SCREEN.blit(text, textRect)
-        SCREEN.blit(RUNNING[0], (SCREEN_WIDTH // 2 - 20, SCREEN_HEIGHT // 2 - 140))
+        SCREEN.blit(RUNNING[0], (SCREEN_WIDTH // 2 - 60, SCREEN_HEIGHT // 2 - 140))
         pygame.display.update()
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-                # sys.exit()
+                sys.exit()
+
             if event.type == pygame.KEYDOWN:
                 main()
                 if event.key == pygame.K_f:
@@ -348,7 +327,3 @@ def stageOne(death_count):
             if event.type == pygame.VIDEORESIZE:
                 if not fullscreen:
                     SCREEN = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
-
-#pygame.time.delay(100)
-#stageOne(death_count=0)
-#pygame.quit()
