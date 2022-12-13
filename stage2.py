@@ -7,36 +7,36 @@ from description import *
 from stage3_Final import *
 
 pygame.init()
-st2_description = Description()
 
-# Global Constants
+#stage2 진입 다이어로그
+st2_description = Description()
 
 # 화면 타이틀 설정
 pygame.display.set_caption("배달의 달인")
 
-
+# 전역 변수들
 fullscreen = False
-
 global st1_isClear
-
 st1_isClear = False
-start_ticks = pygame.time.get_ticks()  # 현재 tick 을 받아옴
 
-total_time = 60  # 총 시간
-
-elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
-
+# 화면 크기
 SCREEN_HEIGHT = 450
 SCREEN_WIDTH = 900
 SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
 
+# 플레이타임
+start_ticks = pygame.time.get_ticks()  # 현재 tick 을 받아옴
+total_time = 40  # 총 시간
+elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
+
+# 리사이즈
 # def resize(name, w, h, color):
 #     global width, height, resized_screen
 #     print("resized_screen: (",resized_screen.get_width(),",",resized_screen.get_height(),")")
 #     return (name, w*resized_screen.get_width()//width, h*resized_screen.get_height()//height, color)
 
 
-
+# 플레이어
 class Bike:
     X_POS = SCREEN_WIDTH/5 #90
     Y_POS = SCREEN_HEIGHT*0.66 #310
@@ -112,7 +112,7 @@ class Bike:
     def draw(self, SCREEN):
         SCREEN.blit(self.image, (self.bike_rect.x, self.bike_rect.y))
 
-
+# 장애물
 class Cloud:
     def __init__(self):
         self.x = SCREEN_WIDTH + random.randint(800, 1000)
@@ -128,8 +128,6 @@ class Cloud:
 
     def draw(self, SCREEN):
         SCREEN.blit(self.image, (self.x, self.y))
-
-
 
 class Obstacle:
     def __init__(self, image, type):
@@ -150,7 +148,7 @@ class Bird(Obstacle):
     def __init__(self, image):
         self.type = 0
         super().__init__(image, self.type)
-        self.rect.y = SCREEN_HEIGHT*0.50
+        self.rect.y = SCREEN_HEIGHT*0.60
         self.index = 0
 
     def draw(self, SCREEN):
@@ -165,13 +163,11 @@ class Car(Obstacle):
         super().__init__(image, self.type)
         self.rect.y = SCREEN_HEIGHT*0.78
 
-
 class TrafficLight(Obstacle):
     def __init__(self, image):
         self.type = random.randint(0, 2)
         super().__init__(image, self.type)
         self.rect.y = SCREEN_HEIGHT*2/3
-
 
 class TrafficCone(Obstacle):
     def __init__(self, image):
@@ -179,8 +175,6 @@ class TrafficCone(Obstacle):
         super().__init__(image, self.type)
         self.rect.y = SCREEN_HEIGHT*0.78
 
-
- 
 class Dust(Obstacle):
     def __init__(self, image):
         self.type = 0
@@ -194,35 +188,31 @@ class Dust(Obstacle):
         SCREEN.blit(self.image[self.index//5], self.rect)
         self.index += 1
 
-def timeReset():
-    global elapsed_time
-    elapsed_time = 0
-
+# stage2 설정
 def main():
     global game_speed, x_pos_bg, y_pos_bg, points, obstacles
     run = True
     clock = pygame.time.Clock()
+
+    # 플레이어와 장애물 가져오기
     player = Bike()
     cloud = Cloud()
+    obstacles = []
+
+    # Player 속도 조절
     game_speed = 25
+
+    # 배경 x, y축
     x_pos_bg = 0
     y_pos_bg = 400
-    points = 0
+
+    # 폰트
     font = pygame.font.Font('freesansbold.ttf', 20)
-    obstacles = []
+    
+    # 플레이어 목숨
     death_count = 0
 
-    # def score():
-    #     global points, game_speed
-    #     points += 1
-    #     if points % 100 == 0:
-    #         game_speed += 1
-
-    #     text = font.render("Points: " + str(points), True, (0, 0, 0))
-    #     textRect = text.get_rect()
-    #     textRect.center = (1000, 40)
-    #     SCREEN.blit(text, textRect)
-
+    # 배경화면 설정
     def background():
         global x_pos_bg, y_pos_bg
         image_width = BG.get_width()
@@ -233,13 +223,17 @@ def main():
             x_pos_bg = 0
         x_pos_bg -= game_speed
 
+    # 실행
     while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
 
-        #SCREEN.fill((247, 155 , 96))
-        #SCREEN.fill((255, 255 , 255)) 
+            # PAUSED
+            # if event.key == pygame.K_ESCAPE:
+            #     paused = not paused
+            #     paused = pausing()
+
         SCREEN.blit(stage2_bg, (0,0))
         background()
 
@@ -266,17 +260,12 @@ def main():
             obstacle.draw(SCREEN)
             obstacle.update()
             if player.bike_rect.colliderect(obstacle.rect):
-                pygame.time.delay(2000)
+                pygame.time.delay(500)
                 death_count += 1
                 stageTwo(death_count)
    
-        
-        #시간
-        
-        #이 코드 있으면 시간이 배경 때도 흘러가고, 없애면 흘러가는 게 보여지지 않음,,,
-        
+        # 시간 측정
         elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
-
         timer = font.render("TIMER: "+str(int(elapsed_time)),True,(0,0,0))
         SCREEN.blit(timer,(10,10))
 
@@ -289,9 +278,6 @@ def main():
             death_count = -1
             run=False
             stageTwo(death_count)
-            #run=False # 다이얼로그로 넘어가야 함
-
-
 
         cloud.draw(SCREEN)
         cloud.update()
@@ -300,146 +286,38 @@ def main():
         pygame.display.update()
 
 
-
-
 def clear(self):  # True를 반환하면 다시 시작
     pass
 
 def fail(self):
     pass
 
-
-#일시정지 함수
-def pausing():
-    global gameOver
-    global gameQuit
-    global resized_screen
-    global paused
-    gameQuit = False
-#    pause_pic, pause_pic_rect = pygame.image.load("images/background/menu_background.png")
-
-    pygame.mixer.music.pause()  # 일시정지상태가 되면 배경음악도 일시정지
-
-    # BUTTON IMG LOAD
-    #retbutton_image, retbutton_rect = pygame.image.load("images/Button/home.png")
-    homebtn_img, homebtn_rect = pygame.image.load("images/Button/home.png")
-
-    #resume_image, resume_rect = pygame.image.load("images/Button/home.png")
-    backbtn_img, backbtn_rect = pygame.image.load("images/Button/back.png")    
-
-    #resized_retbutton_image, resized_retbutton_rect = load_image(*resize('main_button.png', 70, 62, -1))
-    #resized_resume_image, resized_resume_rect = load_image(*resize('continue_button.png', 70, 62, -1))
-
-    # BUTTONPOS
-    # retbutton_rect.centerx = width * 0.4
-    # retbutton_rect.top = height * 0.52
-    # resume_rect.centerx = width * 0.6
-    # resume_rect.top = height * 0.52
-
-    # resized_retbutton_rect.centerx = resized_screen.get_width() * 0.4
-    # resized_retbutton_rect.top = resized_screen.get_height() * 0.52
-    # resized_resume_rect.centerx = resized_screen.get_width() * 0.6
-    # resized_resume_rect.top = resized_screen.get_height() * 0.52
-
-    #homebtn_rect.centerx = width * 0.4
-    #homebtn_rect.top = height * 0.52
-    #backbtn_rect.centerx = width * 0.6
-    #backbtn_rect.top = height * 0.52
-
-    #resized_retbutton_rect.centerx = resized_screen.get_width() * 0.4
-    #resized_retbutton_rect.top = resized_screen.get_height() * 0.52
-    #resized_resume_rect.centerx = resized_screen.get_width() * 0.6
-    #resized_resume_rect.top = resized_screen.get_height() * 0.52
-    
-
-    while not gameQuit:
-        if pygame.display.get_surface() is None:
-            print("Couldn't load display surface")
-            gameQuit = True
-        else:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    gameQuit = True
-                    gameOver = True
-
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:
-                        paused = False
-                        pygame.mixer.music.unpause()  # pausing상태에서 다시 esc누르면 배경음악 일시정지 해제
-                        return False
-
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    if pygame.mouse.get_pressed() == (1, 0, 0):
-                        x, y = event.pos
-                        if homebtn_rect.collidepoint(x, y):
-                            ingame_m.stop() 
-                            gameOver = False
-                            gameQuit = True
-                            #intro()
-                            
-
-                        if backbtn_rect.collidepoint(x, y):
-                            gameOver = False
-                            paused = False
-                            pygame.mixer.music.unpause()  # pausing상태에서 오른쪽의 아이콘 클릭하면 배경음악 일시정지 해제
-
-                            return False
-
-                if event.type == pygame.VIDEORESIZE:
-                    #checkscrsize(event.w, event.h) 리사이즈 코드?
-                    pass
-
-            SCREEN.fill(255,255,255)
-            SCREEN.blit(homebtn_img, homebtn_rect)
-            SCREEN.blit(backbtn_img, backbtn_rect)
-            #resized_screen.blit(
-            #    pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
-            #    resized_screen_centerpos)
-            pygame.display.update()
-        #clock.tick(FPS)
-
-    pygame.quit()
-    quit()
-
-
+#플레이어 목숨
 def stageTwo(death_count):
-    global points
     global st1_isClear
     run = True
-    st1_isClear=False
+    st1_isClear = False
+    elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
     while run:
         fullscreen = False
         SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
-        #게임 시작 시 나오는 이미지
-        background_img =  pygame.image.load('images/background/stage2_bg.png')
-
-        #self.background_img_rect = self.background_img.get_rect()
-        #self.background_img_rect.x = self.X_POS
-        #self.background_img_rect.y = self.Y_POS
-        SCREEN.blit(background_img, (0,0))
+        SCREEN.blit(stage2_bg, (0,0))
 
         font = pygame.font.Font('freesansbold.ttf', 30)
-
-        global elapsed_time
-
-        
-        elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
         monitor_size = [pygame.display.Info().current_w, pygame.display.Info().current_h]
-
-
 
         #시작
         if death_count == 0:
             text = font.render("Press any Key to Start", True, (0, 0, 0))
-            #timeReset()
       
         #Fail
         elif death_count > 0:
             text = font.render("Continue?", True, (0, 0, 0))
-            #score = font.render("Your Score: " + str(points), Trpygame.image.load(os.path.joinue, (0, 0, 0))
-            #scoreRect = score.get_rect()
-            #scoreRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50)
-            #SCREEN.blit(score, scoreRect)
+            midtime = font.render("TIME: "+ str(int(elapsed_time)),True,(0,0,0))
+            midtimeRect = midtime.get_rect()
+            midtimeRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50)
+            SCREEN.blit(midtime, midtimeRect)
+            
         #클리어
         elif death_count < 0:
             text=font.render("Stage 2 Clear!", True, (0, 0, 0))
@@ -447,16 +325,18 @@ def stageTwo(death_count):
             st2_description.clear2_dial3()
             #stage 3로 넘어가는 코드
             stageThree(p_health=6)
+
         textRect = text.get_rect()
         textRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
         SCREEN.blit(text, textRect)
-        SCREEN.blit(RUNNING[0], (SCREEN_WIDTH // 2 - 20, SCREEN_HEIGHT // 2 - 140))
+        SCREEN.blit(RUNNING[0], (SCREEN_WIDTH // 2 - 60, SCREEN_HEIGHT // 2 - 140))
         pygame.display.update()
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-                # sys.exit()
+                sys.exit()
+
             if event.type == pygame.KEYDOWN:
                 main()
                 if event.key == pygame.K_f:
