@@ -14,8 +14,8 @@
 
 신입 오토바이 배달원은 무사히 파인애플 피자를 배달하는 데 성공해 배달의 달인이 될 수 있을까요? <br>
 플레이를 통해 확인해보세요!<br>
-Stage를 3단계로 분리시킴으로써 Solo Play의 난이도를 높여 도전하는 욕구와 재미를 추구하는 게임을 제작하였습니다.<br>
-직접 플레이하여 배달 서비스에 대한 존중을 배우고 클리어하는 성취감을 느껴보세요!🤪
+Stage를 3단계로 분리하여 Solo Play의 난이도를 높이고 도전하는 욕구와 재미를 추구하는 게임을 제작하였습니다.<br>
+직접 플레이하여 클리어하는 성취감을 느껴보세요!🤪
 
 <br>
 
@@ -24,7 +24,7 @@ Stage를 3단계로 분리시킴으로써 Solo Play의 난이도를 높여 도�
 * 메인화면 변경
 * Boss Stage 추가
 * 목숨 count 변경
-* Scoring 방식 변경
+* 시간 측정
 
 <br>
 
@@ -45,7 +45,7 @@ Stage를 3단계로 분리시킴으로써 Solo Play의 난이도를 높여 도�
 2. 'pip install pygame'
     * Make sure you have Python installed alongwith pygame (http://www.pygame.org/) library
 
-3. 'python run.py'
+3. 'python3 run.py'
 ```
 
 <br>
@@ -54,12 +54,12 @@ Stage를 3단계로 분리시킴으로써 Solo Play의 난이도를 높여 도�
 ![keyboard_background12](https://user-images.githubusercontent.com/96487453/206966813-1a1b7135-e7a5-4ea3-959f-82c4b7d1cef3.png) <br>
 Stage 1 & 2는 점프와 숙이기로 장애물을 피하세요!<br>
 ![keyboard_background3](https://user-images.githubusercontent.com/96487453/206966845-03ff614a-d616-4307-a459-57371a3d1130.png) <br>
-Stage 3는 대시 기능과 이동키를 이용해서 제한시간 동안 최대한 보스 패턴을 피해보세요! 💀<br>
+Stage 3는 대시 기능과 이동키를 이용해서 제한시간 동안 최대한 보스를 피해보세요! 💀<br>
 
 <br>
 
 ## 플레이 영상
-데모영상 링크
+https://youtu.be/BhGKfcbGu0M
 
 <br>
 
@@ -72,7 +72,7 @@ Stage 3는 대시 기능과 이동키를 이용해서 제한시간 동안 최대
 
 ## Credits:
 - **Sprites**: https://github.com/codewmax/chrome-dinosaur <br>
-- **Art Resource**: https://www.flaticon.com/kr/ , https://www.pixilart.com/draw?ref=home-page <br>
+- **Art Resource**: https://www.flaticon.com/kr/ , https://www.pixilart.com/draw?ref=home-page, https://creativecommons.org/publicdomain/zero/1.0/ <br>
 - **Sounds**: https://www.mewpot.com/search/song?order=popular&page=2&tag_ids%5B%5D=11322&tag_ids%5B%5D=13377 <br>
 
 <br>
