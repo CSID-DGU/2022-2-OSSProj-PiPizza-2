@@ -73,11 +73,7 @@ class Game:
         self.btn_soundOff = self.btn_soundOff_surf.get_rect(center=self.btn_soundOff_pos)
         self.btn_backToMenu = self.btn_backToMenu_surf.get_rect(center=self.btn_backToMenu_pos)
 
-        # 다이얼로그
 
-        
-    
-    
     # 메인 메뉴화면
     def menu(self):
 
@@ -231,10 +227,7 @@ class Game:
             
             pygame.display.update()
 
-         
-# checking if we are in the run file?
-# 게임 실행 (실행 시 시작화면은 메인 메뉴)
-# 실행 안 되는 문제를 해결했는데, 원래 코드 '__run__'을 run 대신 main으로 바꿈
+
 if __name__ == '__main__':
     game = Game()
     game.menu()

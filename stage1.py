@@ -213,9 +213,9 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
 
-            # if event.key == pygame.K_ESCAPE:
-                # paused = not paused
-                # paused = pausing()
+            if event.key == pygame.K_ESCAPE:
+                paused = not paused
+                paused = pausing()
 
 
         #SCREEN.fill((247, 155 , 96))
