@@ -444,9 +444,8 @@ def stageTwo(death_count):
             text=font.render("Stage 2 Clear!", True, (0, 0, 0))
             st1_isClear=True
             st2_description.clear2_dial3()
-            stage3 = Stage3()
-            stage3.stageThree()
             #stage 3로 넘어가는 코드
+            stageThree()
         textRect = text.get_rect()
         textRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
         SCREEN.blit(text, textRect)

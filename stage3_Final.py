@@ -340,6 +340,29 @@ class HealthBar(pygame.sprite.Sprite):
     def render(self):
         displaysurface.blit(self.image, (10,10))
 
+# def __init__(self):
+    # self.enemy = Enemy()
+    # self.player = Player()
+    # # player.direction = "RIGHT"
+    # self.Playergroup = pygame.sprite.Group()
+    # self.Playergroup.add(self.player)
+
+    # self.background = Background()
+    # self.ground = Ground()
+    # self.ground_group = pygame.sprite.Group()
+    # self.ground_group.add(self.ground)
+    # self.health = HealthBar()
+
+    # self.LightAttacks = pygame.sprite.Group()
+    # self.hit_cooldown = pygame.USEREVENT + 1
+    # self.hp = player.health
+
+def timeReset():
+    global elapsed_time
+    elapsed_time = 0
+    
+    # elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
+
 enemy = Enemy()
 player = Player()
 # player.direction = "RIGHT"
@@ -356,187 +379,196 @@ LightAttacks = pygame.sprite.Group()
 hit_cooldown = pygame.USEREVENT + 1
 font = pygame.font.Font('freesansbold.ttf', 20)
 
-class Stage3:
-    def __init__(self):
-        # self.enemy = Enemy()
-        # self.player = Player()
-        # # player.direction = "RIGHT"
-        # self.Playergroup = pygame.sprite.Group()
-        # self.Playergroup.add(self.player)
+def main():
+    # enemy = Enemy()
+    # player = Player()
+    # # player.direction = "RIGHT"
+    # Playergroup = pygame.sprite.Group()
+    # Playergroup.add(player)
 
-        # self.background = Background()
-        # self.ground = Ground()
-        # self.ground_group = pygame.sprite.Group()
-        # self.ground_group.add(self.ground)
-        # self.health = HealthBar()
+    # background = Background()
+    # ground = Ground()
+    # ground_group = pygame.sprite.Group()
+    # ground_group.add(ground)
+    # health = HealthBar()
 
-        # self.LightAttacks = pygame.sprite.Group()
-        # self.hit_cooldown = pygame.USEREVENT + 1
-        self.hp = player.health
-        
+    # LightAttacks = pygame.sprite.Group()
+    # hit_cooldown = pygame.USEREVENT + 1
+    # font = pygame.font.Font('freesansbold.ttf', 20)
+    p_health = player.health
+    run = True
+    while run:
+        # 시간
+        start_ticks = pygame.time.get_ticks()
 
-    def timeReset():
-        global elapsed_time
-        elapsed_time = 0
-        
-
-        # elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
-
-    def run3(self):
-        # 게임 실행
-        
-        while True:
-            start_ticks = pygame.time.get_ticks()
-            player.gravity_check()   
-            # press any key
-            userInput = pygame.key.get_pressed()
-
-            # 시간
-            total_time = 60  # 총 시간
-            elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
-
-            timer = font.render("TIMER: "+str(int(elapsed_time)), True, (0,0,0))
-            displaysurface.blit(timer, (10,10))
-
-            if total_time - elapsed_time <= 0:
-                print("Game Clear")
-                timer = font.render(str(int(total_time - elapsed_time)), True, (0,0,0))
-                timerRect = timer.get_rect()
-                timerRect.center = (WIDTH//2, HEIGHT//2+50)
-                displaysurface.blit(timer, timerRect)
-                player.health = -1
+        player.gravity_check()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
                 run = False
-                dial = Description()
-                dial.clear3()
-
-            if player.health == 0:
-                stage3.run3()
-            for event in pygame.event.get():
-                if event.type == hit_cooldown:
-                    player.cooldown = False
-                    pygame.time.set_timer(hit_cooldown, 0)
-                # Event handling for a range of different key presses    
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_UP:
-                        player.jump()
-                    # if event.key == pygame.K_UP and (pygame.K_LEFT or pygame.K_RIGHT):
-                    #     player.jumpAndRun()
-                    if event.key == pygame.K_p:
-                        if player.attacking == False:
-                            player.attack()
-                    if event.key == pygame.K_a and player.magic_cooldown == 1:     # a 키 누르면 공격
-                    # if event.key == pygame.K_a:     # a 키 누르면 공격
-                        if player.mana >= 6:
-                            player.mana -= 6
-                            player.attacking = True
-                            lightAttack = LightAttack()
-                            LightAttacks.add(lightAttack)
-
-                    if event.key == pygame.K_d:
-                            player.dash()
-                # Will run when the close window button is clicked    
-                if event.type == QUIT:
-                    pygame.quit()
-                    sys.exit() 
-                    
-                # For events that occur upon clicking the mouse (left click) 
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    pass
-
-
-                # Event handling for a range of different key presses    
-                if event.type == pygame.KEYDOWN:
-                    pass
-
-            # 불러오기(그리기) ------
-            background.render() 
-            ground.render()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    paused = not paused
+                    paused = pausing()
             
-            player.update()
-            if player.attacking == True:
-                player.attack() 
-            player.move()
-
-            if player.health > 0:
-                displaysurface.blit(player.imgP, player.rect)
-            health.render()
-
-            for attack in LightAttacks:
-                attack.light()
-
-            enemy.render()
-            enemy.move()
-            enemy.update()
-
-            pygame.display.update() 
-
-            FPS_CLOCK.tick(FPS)
-            # print(enemy.vel.x)
-
-    def stageThree(Self):
-        stage3 = Stage3()
-        run = True
-        while run:
-        # SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
-        # #게임 시작 시 나오는 이미지
-        # background_img =  pygame.image.load('images/background/stage2_bg.png')
-
-        # #self.background_img_rect = self.background_img.get_rect()
-        # #self.background_img_rect.x = self.X_POS
-        # #self.background_img_rect.y = self.Y_POS
-        # SCREEN.blit(background_img, (0,0))
-            bgimage = pygame.image.load("images/background/stage3_bg.png")
-            bgimage_rect = bgimage.get_rect(topleft=(0, 0))
-            displaysurface.blit(bgimage, (bgimage_rect.x, bgimage_rect.y))
-                
-            font = pygame.font.Font('freesansbold.ttf', 30)
-
-            #시작
-            if player.health > 0:
-                text = font.render("Press any Key to Start", True, (0, 0, 0))
-                #timeReset()
         
-            #Fail
-            if player.health == 0:
-                text = font.render("Continue?", True, (0, 0, 0))
-                # scoreRect = score.get_rect()
-                # scoreRect.center = (WIDTH // 2, HEIGHT // 2 + 50)
-                # displaysurface.blit(score, scoreRect)
+        if event.type == hit_cooldown:
+            player.cooldown = False
+            pygame.time.set_timer(hit_cooldown, 0)
+        # Event handling for a range of different key presses    
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP:
+                player.jump()
+            # if event.key == pygame.K_UP and (pygame.K_LEFT or pygame.K_RIGHT):
+            #     player.jumpAndRun()
+            if event.key == pygame.K_p:
+                if player.attacking == False:
+                    player.attack()
+            if event.key == pygame.K_a and player.magic_cooldown == 1:     # a 키 누르면 공격
+            # if event.key == pygame.K_a:     # a 키 누르면 공격
+                # if player.mana >= 6:
+                #     player.mana -= 6
+                #     player.attacking = True
+                #     lightAttack = LightAttack()
+                #     LightAttacks.add(lightAttack)
+                player.attacking = True
+                lightAttack = LightAttack()
+                LightAttacks.add(lightAttack)
 
-                # stage3.run3()
-
-            #클리어
-            elif player.health < 0:
-                text=font.render("Stage 3 Clear!", True, (0, 0, 0))
-                dial = Description()
-                dial.clear3()
-
-            textRect = text.get_rect()
-            textRect.center = (WIDTH // 2, HEIGHT // 2)
-            displaysurface.blit(text, textRect)
-            displaysurface.blit(RUNNING[0], (WIDTH // 2 - 20, HEIGHT // 2 - 140))
-            pygame.display.update()
+            if event.key == pygame.K_d:
+                    player.dash()
+        # Will run when the close window button is clicked    
+        if event.type == QUIT:
+            pygame.quit()
+            sys.exit() 
             
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    run = False
-                    # sys.exit()
-                if event.type == pygame.KEYDOWN:
-                    stage3.stageThree()
-                    # if event.key == pygame.K_f:
-                    #     fullscreen = not fullscreen
-                    #     if fullscreen:
-                    #         SCREEN = pygame.display.set_mode((monitor_size), pygame.FULLSCREEN)
-                    #     else:
-                    #         SCREEN = pygame.display.set_mode((SCREEN.get_width(), SCREEN.get_height()), pygame.FULLSCREEN)
-
-                # # 스크린 리사이즈
-                # if event.type == pygame.VIDEORESIZE:
-                #     if not fullscreen:
-                #         SCREEN = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)              
+        # For events that occur upon clicking the mouse (left click) 
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            pass
 
 
+        # Event handling for a range of different key presses    
+        if event.type == pygame.KEYDOWN:
+            pass
 
-if __name__ == '__main__':
-    stage3 = Stage3()
-    stage3.stageThree()
+        userInput = pygame.key.get_pressed()
+
+        # 시간
+        elapsed_time = ( pygame.time.get_ticks() - start_ticks )//1000
+        timer = font.render("TIMER: "+str(int(elapsed_time)),True,(0,0,0))
+        displaysurface.blit(timer, (10, 10))
+
+        if total_time - elapsed_time <= 0:
+            print("Game Clear")
+            timer = font.render(str(int(total_time - elapsed_time)),True,(0,0,0))
+            timerRect = timer.get_rect()
+            timerRect.center = (WIDTH//2, HEIGHT//2 + 50)
+            displaysurface.blit(timer, timerRect)
+            p_health = -1
+            run = False
+            stageThree(p_health)
+       
+       # 불러오기(그리기) ------
+        background.render() 
+        ground.render()
+        
+        player.update()
+        if player.attacking == True:
+            player.attack() 
+        player.move()
+
+        if player.health > 0:
+            displaysurface.blit(player.imgP, player.rect)
+        health.render()
+
+        for attack in LightAttacks:
+            attack.light()
+
+        enemy.render()
+        enemy.move()
+        enemy.update()
+
+        pygame.display.update() 
+
+        FPS_CLOCK.tick(FPS)
+        # print(enemy.vel.x)
+
+                
+def stageThree(p_health):
+    
+    # 게임 실행
+    run = True
+    while run:
+        
+
+        bgimage = pygame.image.load("images/background/stage3_bg.png")
+        bgimage_rect = bgimage.get_rect(topleft=(0, 0))
+        displaysurface.blit(bgimage, (bgimage_rect.x, bgimage_rect.y))
+            
+        font = pygame.font.Font('freesansbold.ttf', 30)
+
+        elapsed_time = (pygame.time.get_ticks() - start_ticks)/1000
+        monitor_size = [pygame.display.Info().current_w, pygame.display.Info().current_h]
+
+        #시작
+        if p_health > 0:
+            text = font.render("Press any Key to Start", True, (0, 0, 0))
+            #timeReset()
+    
+        #Fail
+        if p_health == 0:
+            text = font.render("Continue?", True, (0, 0, 0))
+            # scoreRect = score.get_rect()
+            # scoreRect.center = (WIDTH // 2, HEIGHT // 2 + 50)
+            # displaysurface.blit(score, scoreRect)
+
+            # stage3.run3()
+
+        #클리어
+        elif p_health < 0:
+            text=font.render("Stage 3 Clear!", True, (0, 0, 0))
+            dial = Description()
+            dial.clear3()
+
+        textRect = text.get_rect()
+        textRect.center = (WIDTH // 2, HEIGHT // 2)
+        displaysurface.blit(text, textRect)
+        displaysurface.blit(RUNNING[0], (WIDTH // 2 - 20, HEIGHT // 2 - 140))
+        pygame.display.update()
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+                # sys.exit()
+            if event.type == pygame.KEYDOWN:
+                main()
+                if event.key == pygame.K_f:
+                    fullscreen = not fullscreen
+                    if fullscreen:
+                        SCREEN = pygame.display.set_mode((monitor_size), pygame.FULLSCREEN)
+                    else:
+                        SCREEN = pygame.display.set_mode((SCREEN.get_width(), SCREEN.get_height()), pygame.FULLSCREEN)
+
+            # 스크린 리사이즈
+            if event.type == pygame.VIDEORESIZE:
+                if not fullscreen:
+                    SCREEN = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)              
+
+
+        
+
+        
+
+
+    # SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
+    # #게임 시작 시 나오는 이미지
+    # background_img =  pygame.image.load('images/background/stage2_bg.png')
+
+    # #self.background_img_rect = self.background_img.get_rect()
+    # #self.background_img_rect.x = self.X_POS
+    # #self.background_img_rect.y = self.Y_POS
+    # SCREEN.blit(background_img, (0,0))
+        
+
+
+# if __name__ == '__main__':
+#     main()
